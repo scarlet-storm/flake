@@ -80,18 +80,24 @@
 
       homeConfigurations = builtins.mapAttrs (
         name: homeModule:
-        inputs.home-manager.lib.homeManagerConfiguration {
-          pkgs = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
-          modules = [
-            { programs.home-manager.enable = true; }
-            inputs.plasma-manager.homeManagerModules.plasma-manager
-            homeModule
-          ];
-          extraSpecialArgs = {
-            homeManagerModules = config-modules.home-manager;
-            inherit (inputs) nixgl;
-          };
-        }
+        (
+          let
+            pkgs = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+          in
+          inputs.home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [
+              { programs.home-manager.enable = true; }
+              inputs.plasma-manager.homeManagerModules.plasma-manager
+              homeModule
+            ];
+            extraSpecialArgs = {
+              homeManagerModules = config-modules.home-manager;
+              inherit (inputs) nixgl;
+              mylib = import ./lib pkgs;
+            };
+          }
+        )
       ) homes.standalone;
     };
 }
