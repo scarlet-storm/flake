@@ -8,7 +8,6 @@
       paths = [ orig-pkg ];
       nativeBuildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
-        set -x
         mv $out/bin/${execName} $out/bin/${execName}-wrapped
         makeWrapper ${prefix}/bin/${prefix.name} \
                     $out/bin/${execName} \

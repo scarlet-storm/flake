@@ -70,10 +70,12 @@ in
       kopia
       keepassxc
       fastfetch
-      nixd
+      lazygit
       sops
       signal-desktop
       gdu
+      nixd
+      nixfmt-rfc-style
     ]);
 
   home.file = {
