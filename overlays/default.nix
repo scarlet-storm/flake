@@ -15,13 +15,13 @@
       );
     })
     (final: prev: {
-      libportal = prev.libportal.overrideAttrs (previousAttrs: {
-        version = "20240704";
+      libportal = prev.libportal.overrideAttrs (previousAttrs: rec {
+        version = "0.8.1";
         src = prev.fetchFromGitHub {
           owner = "flatpak";
           repo = "libportal";
-          rev = "a1530a98db296a8f3c501932d68a7d008da2ac2e";
-          hash = "sha256-40pFuHO/aYj8bkjT1VxZImcdq0ZJjhCAtBWPrEvt6Ik=";
+          rev = "${version}";
+          hash = "sha256-NAkD5pAQpmAtVxsFZt74PwURv+RbGBfqENIwyxEEUSc=";
         };
         mesonFlags = previousAttrs.mesonFlags ++ [ (lib.mesonEnable "backend-qt6" false) ];
       });

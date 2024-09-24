@@ -68,6 +68,7 @@
           modules = [
             { networking.hostName = name; }
             config-modules.nixos.base
+            ./overlays
             ./config/hosts/${name}
           ];
           specialArgs = {
