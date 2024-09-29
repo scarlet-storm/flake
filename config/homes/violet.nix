@@ -29,44 +29,46 @@ in
   };
   home.packages =
     let
+      input-leap-qt6 = pkgs.input-leap.overrideAttrs rec {
+        version = "2024-09-29";
+        src = pkgs.fetchFromGitHub {
+          owner = "input-leap";
+          repo = "input-leap";
+          rev = "95f607c6c99205a89ec04ad6c8df0c87c8e162a2";
+          hash = "sha256-iJ0pka9GjndaYeefCjyLAWi8u+JWrOhjFrD9s/Yuztc=";
+        };
+        cmakeFlags = [
+          "-DINPUTLEAP_REVISION=${builtins.substring 0 8 src.rev}"
+          "-DINPUTLEAP_BUILD_LIBEI=ON"
+          "-DINPUTLEAP_USE_EXTERNAL_GTEST=ON"
+          "-DQT_DEFAULT_MAJOR_VERSION=6"
+        ];
+        nativeBuildInputs = with pkgs; [
+          pkg-config
+          cmake
+          kdePackages.wrapQtAppsHook
+          kdePackages.qttools
+          gtest
+        ];
+        buildInputs = with pkgs; [
+          curl
+          avahi-compat
+          libei
+          libportal
+          kdePackages.qtbase
+          kdePackages.qt5compat
+          kdePackages.qtwayland
+          xorg.libX11
+          xorg.libXinerama
+          xorg.libXrandr
+          xorg.libICE
+          xorg.libSM
+          ghc_filesystem
+        ];
+      };
     in
-    # input-leap-qt6 = pkgs.input-leap.overrideAttrs rec {
-    #   version = "2024-07-27";
-    #   src = pkgs.fetchFromGitHub {
-    #     owner = "input-leap";
-    #     repo = "input-leap";
-    #     rev = "67116aba9b6ea946144eb7c417f7374fc2cd7a42";
-    #     sha256 = "1hs5wknzb4sxg9xayyxfk9nqzhswvil9wsf76s8xwg0fhry68p07";
-    #   };
-    #   cmakeFlags = [
-    #     "-DINPUTLEAP_REVISION=${builtins.substring 0 8 src.rev}"
-    #     "-DINPUTLEAP_BUILD_LIBEI=ON"
-    #     "-DINPUTLEAP_USE_EXTERNAL_GTEST=ON"
-    #     "-DQT_DEFAULT_MAJOR_VERSION=6"
-    #   ];
-    #   nativeBuildInputs = with pkgs; [
-    #     pkg-config
-    #     cmake
-    #     kdePackages.wrapQtAppsHook
-    #     kdePackages.qttools
-    #     gtest
-    #   ];
-    #   buildInputs = with pkgs; [
-    #     curl
-    #     avahi-compat
-    #     kdePackages.qtbase
-    #     libei
-    #     libportal
-    #     kdePackages.qt5compat
-    #     xorg.libX11
-    #     xorg.libXinerama
-    #     xorg.libXrandr
-    #     xorg.libICE
-    #     xorg.libSM
-    #     ghc_filesystem
-    #   ];
-    # };
-    (with pkgs; [
+    [ input-leap-qt6 ]
+    ++ (with pkgs; [
       kopia
       keepassxc
       fastfetch

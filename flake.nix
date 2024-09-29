@@ -89,6 +89,7 @@
             inherit pkgs;
             modules = [
               { programs.home-manager.enable = true; }
+              ./overlays
               inputs.plasma-manager.homeManagerModules.plasma-manager
               homeModule
             ];
