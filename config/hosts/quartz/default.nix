@@ -27,6 +27,7 @@ in
     modules.nixos.steam
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: homes."${user}@${name}");
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.nvidia.prime = {
     nvidiaBusId = "PCI:1:0:0";
     intelBusId = "PCI:0:2:0";

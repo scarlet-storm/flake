@@ -14,7 +14,8 @@
         boot.loader.supportsInitrdSecrets = lib.mkForce true;
         boot.lanzaboote = {
           enable = true;
-          pkiBundle = "/var/lib/efi-keys";
+          publicKeyFile = "/var/lib/efi-keys/db.cert.pem";
+          privateKeyFile = "/var/lib/efi-keys/db.key.pem";
         };
       }
     )
