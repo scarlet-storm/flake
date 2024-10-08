@@ -1,7 +1,7 @@
 {
-  homeManagerModules,
   pkgs,
   lib,
+  homeManagerConfig,
   ...
 }:
 let
@@ -13,7 +13,7 @@ in
 {
   imports = [
     ./violet.nix
-    homeManagerModules.plasma
+    homeManagerConfig.plasma
   ];
   home.stateVersion = "24.05";
   programs.plasma.workspace.wallpaper = "${pSetsuUnidolized2x}";

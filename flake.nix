@@ -1,5 +1,5 @@
 {
-  description = "yet another Nix flake";
+  description = "Personal nix config";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -51,50 +51,60 @@
         "aarch64-linux"
       ];
       forAllSystems = nixpkgs.lib.genAttrs systems;
-      config-modules = import ./config/modules.nix;
-      flake-modules = import ./modules;
-      hosts = import ./config/hosts.nix;
-      homes = (import ./config/homes.nix) { lib = nixpkgs.lib; };
+      nixosConfig = import ./config/nixos;
+      homeManagerConfig = import ./config/home-manager;
+      diskoConfig = import ./config/disko;
+      hosts = import ./config/hosts;
+      homes = (import ./config/homes) { lib = nixpkgs.lib; };
+      secrets = import ./secrets;
     in
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-      nixosModules = flake-modules.nixos;
+      nixosModules = import ./modules;
 
       nixosConfigurations = builtins.mapAttrs (
-        name: value:
+        name: host:
         nixpkgs.lib.nixosSystem {
-          inherit (value) system;
+          inherit (host) system;
           modules = [
             { networking.hostName = name; }
-            config-modules.nixos.base
+            nixosConfig.base
             ./overlays
-            ./config/hosts/${name}
+            host.config
           ];
           specialArgs = {
-            inherit inputs name;
-            modules = config-modules;
+            inherit
+              inputs
+              name
+              secrets
+              nixosConfig
+              diskoConfig
+              ;
             homes = homes.nixos;
+            homeManagerExtraArgs = {
+              inherit homeManagerConfig;
+            };
           };
         }
       ) hosts;
 
       homeConfigurations = builtins.mapAttrs (
-        name: homeModule:
+        name: home:
         (
           let
-            pkgs = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+            pkgs = inputs.nixpkgs-unstable.legacyPackages.${home.system};
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
               { programs.home-manager.enable = true; }
-              ./overlays
               inputs.plasma-manager.homeManagerModules.plasma-manager
-              homeModule
+              ./overlays
+              home.config
             ];
             extraSpecialArgs = {
-              homeManagerModules = config-modules.home-manager;
+              inherit homeManagerConfig;
               inherit (inputs) nixgl;
               mylib = import ./lib pkgs;
             };

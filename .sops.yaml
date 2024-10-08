@@ -1,0 +1,11 @@
+keys:
+  - &user_violet age14znucymclds0v2sqagnz9m6ptemq9uhqrdr5gtjqzhemu2kdn9rsxcq0ep
+  - &host_liella age1w7hwpamm8wd77acvezywhzml6y2ftjcg2tcqmwgaujd0g8qx8u5s97vath
+  - &host_quartz age1fnm9yafdq8lfmqxgwh5qn282ukmdxuyxzljdsurqvcgeug22kdrshnpuns
+creation_rules:
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *user_violet
+          - *host_liella
+          - *host_quartz

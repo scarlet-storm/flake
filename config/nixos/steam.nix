@@ -2,13 +2,13 @@
   config,
   lib,
   pkgs,
-  modules,
+  nixosConfig,
   ...
 }:
 
 {
   imports = [
-    modules.nixos.unfree
+    nixosConfig.unfree
   ];
   unfree.packageList = [
     "steam"

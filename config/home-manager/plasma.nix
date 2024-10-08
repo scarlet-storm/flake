@@ -5,10 +5,6 @@
 }:
 
 let
-  f1Kanata2x = pkgs.fetchurl {
-    url = "https://i.idol.st/u/card/art/2x/186Konoe-Kanata-It-s-my-turn-next-UR-92PePZ.png";
-    hash = "sha256-ZsE61EBIXGQBVP899LObmB75no3UA+Ic6aborT4zUJU=";
-  };
   catppuccin-konsole = pkgs.stdenvNoCC.mkDerivation rec {
     pname = "catppuccin-konsole";
     version = "2024-07-06";
@@ -29,10 +25,6 @@ in
     workspace = {
       clickItemTo = "open";
       lookAndFeel = "org.kde.breezedark.desktop";
-      wallpaper = lib.mkDefault "${f1Kanata2x}";
-    };
-    configFile.kdeglobals = {
-      General.AccentColor = lib.mkDefault "166,100,160";
     };
   };
   programs.konsole = {
@@ -50,9 +42,15 @@ in
     };
     profiles = {
       myProfile = {
+        font.name = "Cascadia Code";
+        font.size = 11;
         colorScheme = "catppuccin-mocha";
         extraConfig = {
+          Appearance.BoldIntense = false;
           Scrolling.HistoryMode = 2;
+          "Interaction Options" = {
+            ColorFilterEnabled = false;
+          };
         };
       };
     };

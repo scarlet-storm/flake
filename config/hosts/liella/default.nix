@@ -1,11 +1,11 @@
 {
-  config,
   lib,
-  pkgs,
   nixosConfig,
+  pkgs,
   inputs,
   name,
   homes,
+  diskoConfig,
   ...
 }:
 
@@ -16,29 +16,21 @@ in
   imports = [
     ./hardware-configuration.nix
     ./net.nix
-    inputs.lix-module.nixosModules.default
     nixosConfig.builders
     nixosConfig.hardware.intel
     nixosConfig.hardware.gpu.intel
-    nixosConfig.hardware.gpu.nvidia
     nixosConfig.lanzaboote
+    inputs.disko.nixosModules.default
+    inputs.nixos-cosmic.nixosModules.default
     nixosConfig.home-manager
-    nixosConfig.desktop.plasma
-    nixosConfig.steam
+    diskoConfig.luks-btrfs
   ] ++ builtins.map (user: nixosConfig.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: homes."${user}@${name}");
+  disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";
+  nix.settings = {
+    substituters = [ "https://cosmic.cachix.org/" ];
+    trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+  };
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.nvidia.prime = {
-    nvidiaBusId = "PCI:1:0:0";
-    intelBusId = "PCI:0:2:0";
-  };
   system.stateVersion = "24.11";
-  services = {
-    sunshine = {
-      autoStart = true;
-      enable = true;
-      capSysAdmin = true;
-      openFirewall = true;
-    };
-  };
 }

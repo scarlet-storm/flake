@@ -1,4 +1,4 @@
-{ inputs, modules, ... }:
+{ inputs, homeManagerExtraArgs, ... }:
 
 {
   imports = [
@@ -8,9 +8,7 @@
         useGlobalPkgs = true;
         verbose = true;
         sharedModules = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
-        extraSpecialArgs = {
-          homeManagerModules = modules.home-manager;
-        };
+        extraSpecialArgs = homeManagerExtraArgs;
       };
     }
   ];

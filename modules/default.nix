@@ -1,6 +1,3 @@
 {
-  nixos = {
-    default = { };
-  };
-  home-manager = { };
+  default = { };
 }

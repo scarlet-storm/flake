@@ -3,14 +3,17 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 {
-  config,
   lib,
   pkgs,
+  inputs,
+  nixosConfig,
   ...
 }:
 
 {
   imports = [
+    inputs.sops-nix.nixosModules.sops
+    nixosConfig.sops
     ./ntp.nix
     ./sdboot.nix
     ./sshd.nix
