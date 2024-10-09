@@ -21,19 +21,12 @@ in
     nixosConfig.hardware.gpu.intel
     nixosConfig.lanzaboote
     inputs.disko.nixosModules.default
-    inputs.nixos-cosmic.nixosModules.default
     nixosConfig.home-manager
-    nixosConfig.desktop.common
+    nixosConfig.desktop.plasma
     diskoConfig.luks-btrfs
   ] ++ builtins.map (user: nixosConfig.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: homes."${user}@${name}");
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";
-  nix.settings = {
-    substituters = [ "https://cosmic.cachix.org/" ];
-    trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-  };
-  services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   system.stateVersion = "24.11";
 }

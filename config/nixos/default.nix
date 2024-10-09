@@ -16,7 +16,6 @@
   unfree = ./unfree.nix;
   steam = ./steam.nix;
   desktop = {
-    common = ./desktop/common.nix;
     plasma = ./desktop/plasma.nix;
   };
   sops = ./sops.nix;
