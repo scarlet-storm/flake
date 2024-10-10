@@ -3,7 +3,7 @@ keys:
   - &host_liella age1w7hwpamm8wd77acvezywhzml6y2ftjcg2tcqmwgaujd0g8qx8u5s97vath
   - &host_quartz age1fnm9yafdq8lfmqxgwh5qn282ukmdxuyxzljdsurqvcgeug22kdrshnpuns
 creation_rules:
-  - path_regex: secrets/[^/]+\.yaml$
+  - path_regex: secrets/common\.yaml$
     key_groups:
       - age:
           - *user_violet

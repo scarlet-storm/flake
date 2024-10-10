@@ -24,6 +24,7 @@ in
     nixosConfig.lanzaboote
     nixosConfig.home-manager
     nixosConfig.desktop.plasma
+    nixosConfig.plymouth
     nixosConfig.steam
   ] ++ builtins.map (user: nixosConfig.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: homes."${user}@${name}");

@@ -20,11 +20,14 @@
     ./nix-conf.nix
     ./net.nix
   ];
-  users.users.root.hashedPassword = "$y$j9T$kRLhtuEmMGYNtSnWXCfhe1$LoAoejJ1JdrKHt9Npf0Ay/0AXIdGOtub.UZHvJRUOlC";
+  users.users.root.hashedPassword = lib.mkDefault "$y$j9T$kRLhtuEmMGYNtSnWXCfhe1$LoAoejJ1JdrKHt9Npf0Ay/0AXIdGOtub.UZHvJRUOlC";
   boot = {
     initrd = {
       systemd.enable = true;
-      availableKernelModules = [ "vfat" ];
+      availableKernelModules = [
+        "vfat"
+        "crc32c-intel"
+      ];
     };
     kernel = {
       sysctl = {
@@ -60,6 +63,12 @@
     htop
     tmux
     rsync
+    nvme-cli
+    e2fsprogs
+    efibootmgr
+    efitools
+    openssl
+    moreutils
     git
   ];
   systemd.oomd.enable = lib.mkDefault false;

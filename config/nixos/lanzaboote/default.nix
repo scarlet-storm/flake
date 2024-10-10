@@ -10,7 +10,10 @@
   imports = [
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
-  environment.systemPackages = [ pkgs.sbsigntool ];
+  environment.systemPackages = [
+    pkgs.sbsigntool
+    pkgs.mokutil
+  ];
   boot.loader.systemd-boot.enable = lib.mkForce false;
   boot.loader.supportsInitrdSecrets = lib.mkForce true;
   sops.secrets."efi/db.key.pem" = { };

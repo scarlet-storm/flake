@@ -10,6 +10,8 @@
   };
   users = {
     violet = ./users/violet.nix;
+    kanata = ./users/kanata.nix;
+    nixremote = ./users/nixremote.nix;
   };
   lanzaboote = ./lanzaboote;
   home-manager = ./home-manager.nix;
@@ -19,4 +21,5 @@
     plasma = ./desktop/plasma.nix;
   };
   sops = ./sops.nix;
+  plymouth = ./plymouth.nix;
 }
