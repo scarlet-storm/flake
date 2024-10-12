@@ -23,6 +23,7 @@ in
     inputs.disko.nixosModules.default
     nixosConfig.home-manager
     nixosConfig.desktop.plasma
+    nixosConfig.wifi
     diskoConfig.luks-btrfs
   ] ++ builtins.map (user: nixosConfig.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: homes."${user}@${name}");

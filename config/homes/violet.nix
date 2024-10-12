@@ -104,9 +104,4 @@ in
     emacs.client.enable = true;
     emacs.startWithUserSession = "graphical";
   };
-  systemd.user = {
-    tmpfiles.rules = [
-      "D %t/ssh-control - - - - -"
-    ];
-  };
 }

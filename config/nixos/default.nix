@@ -22,4 +22,5 @@
   };
   sops = ./sops.nix;
   plymouth = ./plymouth.nix;
+  wifi = ./wifi.nix;
 }

@@ -26,6 +26,7 @@ in
     nixosConfig.desktop.plasma
     nixosConfig.plymouth
     nixosConfig.steam
+    nixosConfig.wifi
   ] ++ builtins.map (user: nixosConfig.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: homes."${user}@${name}");
   boot.kernelPackages = pkgs.linuxPackages_latest;
