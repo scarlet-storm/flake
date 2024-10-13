@@ -1,9 +1,8 @@
 {
   imports = [
-    ./cloud.nix
+    ./machines.nix
   ];
   nix = {
-
     extraOptions = ''
       builders-use-substitutes = true
     '';

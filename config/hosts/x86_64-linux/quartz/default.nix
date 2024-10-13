@@ -2,10 +2,9 @@
   config,
   lib,
   pkgs,
-  nixosConfig,
+  modules,
   inputs,
-  name,
-  homes,
+  systemName,
   ...
 }:
 
@@ -17,18 +16,18 @@ in
     ./hardware-configuration.nix
     ./net.nix
     inputs.lix-module.nixosModules.default
-    nixosConfig.builders
-    nixosConfig.hardware.intel
-    nixosConfig.hardware.gpu.intel
-    nixosConfig.hardware.gpu.nvidia
-    nixosConfig.lanzaboote
-    nixosConfig.home-manager
-    nixosConfig.desktop.plasma
-    nixosConfig.plymouth
-    nixosConfig.steam
-    nixosConfig.wifi
-  ] ++ builtins.map (user: nixosConfig.users.${user}) users;
-  home-manager.users = lib.genAttrs users (user: homes."${user}@${name}");
+    modules.nixos.builders.default
+    modules.nixos.hardware.intel
+    modules.nixos.hardware.gpu.intel
+    modules.nixos.hardware.gpu.nvidia
+    modules.nixos.lanzaboote.default
+    modules.nixos.home-manager
+    modules.nixos.desktop.plasma
+    modules.nixos.plymouth
+    modules.nixos.steam
+    modules.nixos.net.wifi
+  ] ++ builtins.map (user: modules.nixos.users.${user}) users;
+  home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.nvidia.prime = {
     nvidiaBusId = "PCI:1:0:0";

@@ -2,13 +2,13 @@
   config,
   lib,
   pkgs,
-  nixosConfig,
+  modules,
   ...
 }:
 
 {
   imports = [
-    nixosConfig.unfree
+    modules.nixos.unfree
   ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {

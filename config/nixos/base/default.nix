@@ -6,14 +6,14 @@
   lib,
   pkgs,
   inputs,
-  nixosConfig,
+  modules,
   ...
 }:
 
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
-    nixosConfig.sops
+    modules.nixos.sops
     ./ntp.nix
     ./sdboot.nix
     ./sshd.nix

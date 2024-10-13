@@ -2,7 +2,7 @@
   lib,
   pkgs,
   config,
-  name,
+  systemName,
   ...
 }:
 
@@ -39,7 +39,7 @@ in
       [Resolve]
       DNS=${
         builtins.concatStringsSep " " (
-          builtins.map (ns: ns + "#${name}-" + config.sops.placeholder."net/dns-sni") nameservers
+          builtins.map (ns: ns + "#${systemName}-" + config.sops.placeholder."net/dns-sni") nameservers
         )
       }
     '';

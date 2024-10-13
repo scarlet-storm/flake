@@ -1,7 +1,14 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
+let
+  username = "kanata";
+in
 {
+  home = {
+    inherit username;
+    homeDirectory = "/home/${username}";
+  };
   imports = [
-    ./common.nix
+    ./base.nix
   ];
 
   home.packages = with pkgs; [

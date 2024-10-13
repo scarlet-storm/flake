@@ -21,7 +21,7 @@ in
 # });
 {
   imports = [
-    ./common.nix
+    ./base.nix
   ];
   home = {
     inherit username;

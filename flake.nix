@@ -26,10 +26,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-    # nixos-cosmic = {
-    #   url = "github:lilyinstarlight/nixos-cosmic";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,54 +42,57 @@
       ...
     }:
     let
+      flakeModules = import ./modules;
+      lib = nixpkgs.lib;
+      modules = lib.filesystem.packagesFromDirectoryRecursive {
+        callPackage = path: _: path;
+        directory = ./config;
+      };
+      homeManagerConfig = modules.home-manager;
       systems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
-      forAllSystems = nixpkgs.lib.genAttrs systems;
-      nixosConfig = import ./config/nixos;
-      homeManagerConfig = import ./config/home-manager;
-      diskoConfig = import ./config/disko;
-      hosts = import ./config/hosts;
-      homes = (import ./config/homes) { lib = nixpkgs.lib; };
+      forAllSystems = lib.genAttrs systems;
       secrets = import ./secrets;
     in
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
       packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-      nixosModules = import ./modules;
+      nixosModules = flakeModules;
 
-      nixosConfigurations = builtins.mapAttrs (
-        name: host:
-        nixpkgs.lib.nixosSystem {
-          inherit (host) system;
-          modules = [
-            { networking.hostName = name; }
-            nixosConfig.base
-            ./overlays
-            host.config
-          ];
-          specialArgs = {
-            inherit
-              inputs
-              name
-              secrets
-              nixosConfig
-              diskoConfig
-              ;
-            homes = homes.nixos;
-            homeManagerExtraArgs = {
-              inherit homeManagerConfig;
+      nixosConfigurations = lib.concatMapAttrs (
+        system: _:
+        builtins.mapAttrs (
+          systemName: config:
+          lib.nixosSystem {
+            inherit system;
+            modules = [
+              { networking.hostName = systemName; }
+              ./overlays
+              modules.nixos.base.default
+              config.default
+            ];
+            specialArgs = {
+              inherit
+                inputs
+                systemName
+                modules
+                secrets
+                ;
+              homeManagerExtraArgs = {
+                inherit homeManagerConfig;
+              };
             };
-          };
-        }
-      ) hosts;
+          }
+        ) modules.hosts.${system}
+      ) modules.hosts;
 
       homeConfigurations = builtins.mapAttrs (
-        name: home:
+        name: config:
         (
           let
-            pkgs = inputs.nixpkgs-unstable.legacyPackages.${home.system};
+            pkgs = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
@@ -101,7 +100,7 @@
               { programs.home-manager.enable = true; }
               inputs.plasma-manager.homeManagerModules.plasma-manager
               ./overlays
-              home.config
+              config
             ];
             extraSpecialArgs = {
               inherit homeManagerConfig;
@@ -110,6 +109,6 @@
             };
           }
         )
-      ) homes.standalone;
+      ) modules.homes.standalone;
     };
 }
