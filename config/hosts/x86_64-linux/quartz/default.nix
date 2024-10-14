@@ -14,7 +14,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ./net.nix
     inputs.lix-module.nixosModules.default
     modules.nixos.builders.default
     modules.nixos.hardware.intel
@@ -25,7 +24,7 @@ in
     modules.nixos.desktop.plasma
     modules.nixos.plymouth
     modules.nixos.steam
-    modules.nixos.net.wifi
+    modules.nixos.net.networkd-wifi
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   boot.kernelPackages = pkgs.linuxPackages_latest;

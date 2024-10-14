@@ -13,14 +13,13 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ./net.nix
     modules.nixos.builders.default
     modules.nixos.hardware.intel
     modules.nixos.hardware.gpu.intel
     modules.nixos.lanzaboote.default
     modules.nixos.home-manager
     modules.nixos.desktop.plasma
-    modules.nixos.net.wifi
+    modules.nixos.net.networkd-wifi
     inputs.disko.nixosModules.default
     modules.disko.luks-btrfs
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
