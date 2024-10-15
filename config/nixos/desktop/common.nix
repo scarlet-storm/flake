@@ -19,6 +19,7 @@
     };
     libinput.enable = true;
     flatpak.enable = true;
+    pcscd.enable = true;
   };
   fonts.packages = with pkgs; [
     noto-fonts
