@@ -78,6 +78,7 @@ in
       gdu
       nixd
       nixfmt-rfc-style
+      yubikey-manager
     ]);
 
   home.file = {
