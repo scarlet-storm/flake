@@ -37,5 +37,8 @@
     Network = {
       EnableIPv6 = false;
     };
+    DriverQuirks = {
+      PowerSaveDisable = "ath10k*";
+    };
   };
 }
