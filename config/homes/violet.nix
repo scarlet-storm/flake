@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  homeManagerConfig,
   ...
 }:
 
@@ -22,6 +23,7 @@ in
 {
   imports = [
     ./base.nix
+    homeManagerConfig.firefox
   ];
   home = {
     inherit username;

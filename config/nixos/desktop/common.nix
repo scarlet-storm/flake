@@ -37,7 +37,12 @@
     libva-utils
   ];
   programs = {
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      policies = {
+        NoDefaultBookmarks = true;
+      };
+    };
   };
   security.rtkit.enable = true;
   hardware.i2c.enable = true;
