@@ -11,12 +11,14 @@
       controlPath = "\${XDG_RUNTIME_DIR}/ssh-control/mux.%C";
       controlPersist = "10m";
     };
+    man.generateCaches = true;
   };
   home.packages = (
     with pkgs;
     [
       kopia
       fastfetch
+      age
     ]
   );
   home.sessionVariables = {

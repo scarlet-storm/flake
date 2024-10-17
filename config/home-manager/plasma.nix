@@ -64,7 +64,6 @@ in
         font.size = 11;
         colorScheme = "dracula-konsole";
         extraConfig = {
-          Appearance.BoldIntense = false;
           Scrolling.HistoryMode = 2;
           "Interaction Options" = {
             ColorFilterEnabled = false;
