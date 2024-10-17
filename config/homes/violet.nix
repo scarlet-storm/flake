@@ -9,17 +9,6 @@
 let
   username = "violet";
 in
-# imgbrd-grabber = pkgs.imgbrd-grabber.overrideAttrs (prevAttrs: {
-#   version = "2024-09-04";
-#   src = pkgs.fetchFromGitHub {
-#     owner = "Bionus";
-#     repo = "imgbrd-grabber";
-#     rev = "4e28e10411fd5ec78a03c9930e1c5671630cf23b";
-#     hash = "sha256-8uXqlCXOJf9ynIJVkxwuNTu25p/hTH5jgOoc56JtVa0=";
-#     fetchSubmodules = true;
-#   };
-#   buildInputs = prevAttrs.buildInputs ++ [ pkgs.kdePackages.qtwayland ];
-# });
 {
   imports = [
     ./base.nix
@@ -68,8 +57,22 @@ in
           ghc_filesystem
         ];
       };
+      imgbrd-grabber-head = pkgs.imgbrd-grabber.overrideAttrs (prevAttrs: {
+        version = "2024-10-14";
+        src = pkgs.fetchFromGitHub {
+          owner = "Bionus";
+          repo = "imgbrd-grabber";
+          rev = "73f6cc01b5e85eda925b945dbc8afa4746839ad2";
+          hash = "sha512-8Ls7IBDkM2uVekrYv/zg+PQe7VCb3zGbspcMRosAIYxm3kTUR8YgNnjsI0QxKhYjs7MEU9pDd7MUsekUQLCAAw==";
+          fetchSubmodules = true;
+        };
+        buildInputs = prevAttrs.buildInputs ++ [ pkgs.kdePackages.qtwayland ];
+      });
     in
-    [ input-leap-qt6 ]
+    [
+      input-leap-qt6
+      imgbrd-grabber-head
+    ]
     ++ (with pkgs; [
       kopia
       keepassxc
