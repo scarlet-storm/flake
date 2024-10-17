@@ -42,6 +42,7 @@ in
       fonts = [
         "CascadiaCode"
         "CascadiaMono"
+        "Recursive"
       ];
     })
   ];
@@ -59,7 +60,7 @@ in
     };
     profiles = {
       myProfile = {
-        font.name = "CaskaydiaCove Nerd Font";
+        font.name = "RecMonoCasual Nerd Font";
         font.size = 11;
         colorScheme = "dracula-konsole";
         extraConfig = {
