@@ -99,6 +99,7 @@ in
         "network.connectivity-service.enabled" = false;
         "network.dns.disablePrefetchFromHTTPS" = true;
         "network.dns.disablePrefetch" = true;
+        "network.trr.mode" = 5;
         "privacy.globalprivacycontrol.enabled" = true;
         "privacy.globalprivacycontrol.functionality.enabled" = true;
         "privacy.globalprivacycontrol.pbmode.enabled" = true;
