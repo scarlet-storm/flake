@@ -5,17 +5,19 @@
 }:
 
 let
-  catppuccin-konsole = pkgs.stdenvNoCC.mkDerivation rec {
-    pname = "catppuccin-konsole";
-    version = "2024-07-06";
+  dracula-konsole = pkgs.stdenvNoCC.mkDerivation rec {
+    pname = "dracula-konsole";
+    version = "2022-03-21";
+    name = "${pname}-${version}";
     src = pkgs.fetchFromGitHub {
-      owner = "catppuccin";
+      owner = "dracula";
       repo = "konsole";
-      rev = "3b64040e3f4ae5afb2347e7be8a38bc3cd8c73a8";
-      hash = "sha256-d5+ygDrNl2qBxZ5Cn4U7d836+ZHz77m6/yxTIANd9BU=";
+      rev = "030486c75f12853e9d922b59eb37c25aea4f66f4";
+      hash = "sha512-gSP3My3B3uHqE8JMnGr3A0RkIqxDykc4Qyzv9g6vUFLukkWayEIDBb6NmJ5FV76ucYCeDfJ17R/kICQPJr/ORQ==";
     };
     installPhase = ''
-      cp -avT "${src}/themes" "$out/"
+      mkdir $out
+      install -m 0644 "${src}/Dracula.colorscheme" "$out/${pname}.colorscheme"
     '';
   };
 in
@@ -26,13 +28,27 @@ in
       clickItemTo = "open";
       lookAndFeel = "org.kde.breezedark.desktop";
     };
+    configFile."kwinrc"."Wayland" = {
+      "InputMethod" = {
+        value = "fcitx5-wayland-launcher.desktop";
+        shellExpand = true;
+      };
+      VirtualKeyboardEnabled = true;
+    };
   };
+  home.packages = [
+    (pkgs.nerdfonts.override {
+      fonts = [
+        "CascadiaCode"
+        "CascadiaMono"
+      ];
+    })
+  ];
   programs.konsole = {
     enable = true;
-    customColorSchemes = lib.genAttrs [
-      "catppuccin-mocha"
-      "catppuccin-machiato"
-    ] (variant: "${catppuccin-konsole}/${variant}.colorscheme");
+    customColorSchemes = {
+      "dracula-konsole" = "${dracula-konsole}/dracula-konsole.colorscheme";
+    };
     defaultProfile = "myProfile";
     extraConfig = {
       FileLocation = {
@@ -42,9 +58,9 @@ in
     };
     profiles = {
       myProfile = {
-        font.name = "Cascadia Code";
+        font.name = "CaskaydiaCove Nerd Font";
         font.size = 11;
-        colorScheme = "catppuccin-mocha";
+        colorScheme = "dracula-konsole";
         extraConfig = {
           Appearance.BoldIntense = false;
           Scrolling.HistoryMode = 2;

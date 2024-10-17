@@ -26,12 +26,6 @@
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
-    (nerdfonts.override {
-      fonts = [
-        "CascadiaCode"
-        "CascadiaMono"
-      ];
-    })
   ];
   environment.systemPackages = with pkgs; [
     libva-utils
