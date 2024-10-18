@@ -3,6 +3,7 @@
   programs = {
     starship.enable = true;
     fish.enable = true;
+    autojump.enable = true;
     ssh = {
       enable = true;
       controlMaster = "auto";

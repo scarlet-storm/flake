@@ -15,4 +15,5 @@
       MOZ_LEGACY_PROFILES = 1;
     };
   };
+  programs.man.package = pkgs.man.override { db = pkgs.gdbm; };
 }
