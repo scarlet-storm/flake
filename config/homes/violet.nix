@@ -21,12 +21,14 @@ in
   home.packages =
     let
       input-leap-qt6 = pkgs.input-leap.overrideAttrs rec {
-        version = "2024-09-29";
+        pname = "input-leap";
+        version = "3.0.2";
+        name = "${pname}-${version}";
         src = pkgs.fetchFromGitHub {
           owner = "input-leap";
           repo = "input-leap";
-          rev = "95f607c6c99205a89ec04ad6c8df0c87c8e162a2";
-          hash = "sha256-iJ0pka9GjndaYeefCjyLAWi8u+JWrOhjFrD9s/Yuztc=";
+          rev = "7e5889dc6fc907a0dd218d94623378cc53417cb2";
+          hash = "sha512-IshXGnDI6DfSeUnyofpeBtClwbmlqVATO0WNhzKDAGvWh5LDOk0wQQMHDGen6PYjP40kUas8mhejMVnvRcmIpQ==";
         };
         cmakeFlags = [
           "-DINPUTLEAP_REVISION=${builtins.substring 0 8 src.rev}"

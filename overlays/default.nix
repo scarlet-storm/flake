@@ -8,9 +8,9 @@
           powerdevil = kprev.powerdevil.overrideAttrs (previousAttrs: {
             buildInputs = previousAttrs.buildInputs ++ [ prev.ddcutil ];
           });
-          plasma-desktop = kprev.plasma-desktop.overrideAttrs (previousAttrs: {
-            buildInputs = builtins.filter (x: x.pname != "ibus") previousAttrs.buildInputs;
-          });
+          # plasma-desktop = kprev.plasma-desktop.overrideAttrs (previousAttrs: {
+          #   buildInputs = builtins.filter (x: x.pname != "ibus") previousAttrs.buildInputs;
+          # });
         }
       );
     })
