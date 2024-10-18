@@ -40,12 +40,13 @@ in
   home.packages = [
     (pkgs.nerdfonts.override {
       fonts = [
-        "CascadiaCode"
-        "CascadiaMono"
-        "Recursive"
+        "NerdFontsSymbolsOnly"
       ];
     })
+    pkgs.recursive
+    pkgs.cascadia-code
   ];
+  fonts.fontconfig.enable = true;
   programs.konsole = {
     enable = true;
     customColorSchemes = {
@@ -60,7 +61,7 @@ in
     };
     profiles = {
       myProfile = {
-        font.name = "RecMonoCasual Nerd Font";
+        font.name = "Rec Mono SemiCasual";
         font.size = 11;
         colorScheme = "dracula-konsole";
         extraConfig = {
