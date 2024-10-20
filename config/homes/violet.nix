@@ -95,9 +95,6 @@ in
       /Downloads
     '';
   };
-  home.sessionVariables = {
-    EDITOR = "vim";
-  };
 
   programs = {
     fish.enable = true;
@@ -111,5 +108,6 @@ in
     emacs.enable = true;
     emacs.client.enable = true;
     emacs.startWithUserSession = "graphical";
+    ssh-agent.enable = true;
   };
 }
