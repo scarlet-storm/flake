@@ -12,6 +12,7 @@
   ];
   unfree.packageList = [
     "steam"
+    "steam-unwrapped"
     "steam-original"
     "steam-run"
   ];
