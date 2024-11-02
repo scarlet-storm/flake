@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   ...
 }:
 
@@ -38,7 +36,7 @@
       EnableIPv6 = false;
     };
     DriverQuirks = {
-      PowerSaveDisable = "ath10k*";
+      PowerSaveDisable = "ath10k*,ath12k*";
     };
   };
 }

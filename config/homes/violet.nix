@@ -103,6 +103,16 @@ in
       enable = true;
       package = pkgs.emacs30-pgtk;
     };
+    mpv = {
+      enable = true;
+      config = {
+        cache = "yes";
+        demuxer-max-bytes = "2GiB";
+        vo = "gpu-next,gpu,dmabuf-wayland";
+        gpu-api = "vulkan";
+        hwdec = "vulkan,nvdec,vaapi";
+      };
+    };
   };
   services = {
     emacs.enable = true;

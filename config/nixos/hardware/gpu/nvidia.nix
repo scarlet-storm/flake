@@ -13,16 +13,12 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    prime = {
-      offload.enable = true;
-      offload.enableOffloadCmd = true;
-    };
+    powerManagement.enable = true;
     open = true;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  # hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
   unfree.packageList = [
     "nvidia-settings"
     "nvidia-x11"
