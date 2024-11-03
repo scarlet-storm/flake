@@ -29,6 +29,9 @@ in
       clickItemTo = "open";
       lookAndFeel = "org.kde.breezedark.desktop";
     };
+    kwin = {
+      virtualDesktops.number = 2;
+    };
     configFile."kwinrc"."Wayland" = {
       "InputMethod" = {
         value = "fcitx5-wayland-launcher.desktop";
@@ -36,6 +39,12 @@ in
       };
       VirtualKeyboardEnabled = true;
     };
+    panels = [
+      {
+        floating = true;
+        height = 40;
+      }
+    ];
   };
   home.packages = [
     (pkgs.nerdfonts.override {

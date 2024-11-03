@@ -21,6 +21,7 @@ in
     modules.nixos.home-manager
     modules.nixos.desktop.plasma
     modules.nixos.net.networkd-wifi
+    modules.nixos.qemu
     inputs.disko.nixosModules.default
     modules.disko.luks-btrfs
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;

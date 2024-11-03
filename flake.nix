@@ -58,7 +58,13 @@
     in
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-rfc-style);
-      packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      packages = forAllSystems (
+        system:
+        lib.filesystem.packagesFromDirectoryRecursive {
+          callPackage = nixpkgs.legacyPackages.${system};
+          directory = ./pkgs;
+        }
+      );
       nixosModules = flakeModules;
 
       nixosConfigurations = lib.concatMapAttrs (
