@@ -51,6 +51,7 @@ in
       inherit patchesOpen;
     };
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
+  programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
   system.stateVersion = "24.11";
 }
