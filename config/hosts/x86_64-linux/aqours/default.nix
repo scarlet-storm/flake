@@ -24,6 +24,8 @@ in
     modules.nixos.qemu
     inputs.disko.nixosModules.default
     modules.disko.luks-btrfs
+    modules.nixos.steam
+    inputs.self.nixosModules.services.OpenLinkHub
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   # ethernet device
@@ -53,5 +55,9 @@ in
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
+  services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub;
+  services.OpenLinkHub.enable = true;
+  # ath12k
+  networking.wireless.iwd.settings.General.ControlPortOverNL80211 = false;
   system.stateVersion = "24.11";
 }

@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -17,4 +15,8 @@
       };
     };
   };
+  environment.systemPackages = [
+    pkgs.passt
+  ];
+  systemd.services.libvirtd.path = [ pkgs.passt ];
 }

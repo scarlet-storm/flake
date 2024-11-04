@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   homeManagerConfig,
   ...
@@ -85,9 +83,9 @@ in
       gdu
       nixd
       nixfmt-rfc-style
-      # yubikey-manager
+      ripgrep
+      yubikey-manager
     ]);
-
   home.file = {
     ".kopiaignore".text = ''
       /.var

@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     # nixos-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -42,8 +43,11 @@
       ...
     }:
     let
-      flakeModules = import ./modules;
       lib = nixpkgs.lib;
+      flakeModules = lib.filesystem.packagesFromDirectoryRecursive {
+        callPackage = path: _: path;
+        directory = ./modules;
+      };
       modules = lib.filesystem.packagesFromDirectoryRecursive {
         callPackage = path: _: path;
         directory = ./config;
@@ -61,7 +65,7 @@
       packages = forAllSystems (
         system:
         lib.filesystem.packagesFromDirectoryRecursive {
-          callPackage = nixpkgs.legacyPackages.${system};
+          callPackage = nixpkgs.legacyPackages.${system}.callPackage;
           directory = ./pkgs;
         }
       );
@@ -76,6 +80,17 @@
             modules = [
               { networking.hostName = systemName; }
               ./overlays
+              {
+                nixpkgs.overlays = [
+                  (final: prev: {
+                    python312Packages = prev.python312Packages.overrideScope (
+                      sfinal: sprev: {
+                        pyscard = inputs.nixpkgs-master.legacyPackages.${system}.python312Packages.pyscard;
+                      }
+                    );
+                  })
+                ];
+              }
               modules.nixos.base.default
               config.default
             ];
