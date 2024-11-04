@@ -76,18 +76,12 @@ in
     ++ (with pkgs; [
       kopia
       keepassxc
-      fastfetch
-      lazygit
       sops
       signal-desktop
       gdu
       nixd
       nixfmt-rfc-style
-      fzf
       yubikey-manager
-      # dommemacs
-      ripgrep
-      fd
     ]);
   home.file = {
     ".kopiaignore".text = ''
@@ -114,6 +108,11 @@ in
         hwdec = "vulkan,nvdec,vaapi";
       };
     };
+    fastfetch.enable = true;
+    lazygit.enable = true;
+    ripgrep.enable = true;
+    fd.enable = true;
+    fzf.enable = true;
   };
   services = {
     emacs.enable = true;
