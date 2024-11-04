@@ -35,6 +35,7 @@
       };
     };
   };
+  systemd.network.wait-online.anyInterface = true;
   networking.wireless.iwd.enable = true;
   networking.wireless.iwd.settings = {
     General = {
