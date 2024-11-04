@@ -83,8 +83,11 @@ in
       gdu
       nixd
       nixfmt-rfc-style
-      ripgrep
+      fzf
       yubikey-manager
+      # dommemacs
+      ripgrep
+      fd
     ]);
   home.file = {
     ".kopiaignore".text = ''

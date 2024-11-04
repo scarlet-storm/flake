@@ -4,9 +4,9 @@
   ...
 }:
 let
-  pSetsu2x = pkgs.fetchurl {
-    url = "https://i.idol.st/u/card/art/2x/503UR-Yuki-Setsuna-Here-s-one-for-you-Jet-Black-Wizard-9FIsqL.png";
-    sha512 = "3dq72q0v3xvj1hajyr6sia3b6y656mmsn0f326a4y25xl6pzzdi5vw4i7h5zai7xs0gagyhjlmp9h88wqi693fwniljaydjrh8py4ly";
+  f3RikoIdolized2x = pkgs.fetchurl {
+    url = "https://i.idol.st/u/card/art/2x/894UR-Sakurauchi-Riko-You-mentioned-you-liked-it-no-A-Fairy-Concert-l5NeuT.png";
+    hash = "sha512-frrj8k8ap8Rs8MIyk96TsAJWEG7mw0d477Axgv2ITJe1CsffpEhqP4zPx4jM9uLF3pSdDhMYIzxHmX8u4ztgEQ==";
   };
 in
 {
@@ -15,6 +15,6 @@ in
     homeManagerConfig.plasma
   ];
   home.stateVersion = "24.05";
-  programs.plasma.workspace.wallpaper = "${pSetsu2x}";
-  programs.plasma.configFile.kdeglobals.General.AccentColor = "216,28,47";
+  programs.plasma.workspace.wallpaper = "${f3RikoIdolized2x}";
+  programs.plasma.configFile.kdeglobals.General.AccentColor = "255,158,172";
 }
