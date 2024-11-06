@@ -25,7 +25,17 @@
         };
         mesonFlags = previousAttrs.mesonFlags ++ [ (lib.mesonEnable "backend-qt6" false) ];
       });
+      virglrenderer = prev.virglrenderer.overrideAttrs (previousAttrs: {
+        mesonFlags = previousAttrs.mesonFlags ++ [
+          (lib.mesonBool "venus" true)
+        ];
+        buildInputs = previousAttrs.buildInputs ++ [
+          prev.vulkan-loader
+          prev.vulkan-headers
+        ];
+      });
     })
+
     (final: prev: {
       intel-vaapi-driver =
         (prev.intel-vaapi-driver.overrideAttrs (previousAttrs: {

@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   modules,
   ...
 }:
@@ -17,7 +18,7 @@
     nvidiaSettings = true;
     package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
   };
-  # hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
+  hardware.graphics.extraPackages = [ pkgs.nvidia-vaapi-driver ];
   unfree.packageList = [
     "nvidia-settings"
     "nvidia-x11"

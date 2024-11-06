@@ -20,5 +20,26 @@
   programs.steam.remotePlay.openFirewall = true;
   programs.steam.localNetworkGameTransfers.openFirewall = true;
   hardware.steam-hardware.enable = true;
-
+  programs.steam.package = pkgs.steam.override {
+    buildFHSEnv =
+      p:
+      pkgs.buildFHSEnvBubblewrap (
+        p
+        // {
+          PrivateTmp = true;
+          unshareCgroup = true;
+          unsharePid = true;
+          extraBwrapArgs = p.extraBwrapArgs ++ [
+            "--tmpfs /home"
+            "--bind \$HOME/.var/apps \$HOME"
+            "--ro-bind \$HOME/.config/dconf \$HOME/.config/dconf"
+            "--ro-bind \$HOME/.config/xsettingsd \$HOME/.config/xsettingsd"
+            # https://github.com/ValveSoftware/steam-for-linux/issues/10808 ???
+            "--ro-bind /run/current-system/sw/share/icons /usr/share/icons"
+            "--chdir \$HOME"
+          ];
+        }
+      );
+  };
+  environment.systemPackages = [ pkgs.bubblewrap ];
 }

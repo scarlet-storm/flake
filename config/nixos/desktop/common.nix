@@ -29,6 +29,8 @@
   ];
   environment.systemPackages = with pkgs; [
     libva-utils
+    vulkan-tools
+    qbittorrent
   ];
   programs = {
     firefox = {
