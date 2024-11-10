@@ -3,6 +3,10 @@
   fetchFromGitHub,
   buildGoModule,
   systemd,
+  emptyDirectory,
+  nvidia ? emptyDirectory,
+  pciutils,
+  makeWrapper,
 }:
 
 buildGoModule rec {
@@ -16,6 +20,9 @@ buildGoModule rec {
     hash = "sha512-vkTTQPDQeUwX8Yz/SRAAu4Zs3sis1kdTYeThIuh77ccXXtbCISu5tRNlsUul4bodznkFk8DGgXBpuHovbHW7CQ==";
   };
   vendorHash = "sha256-57ms+wmwXIKBupsYkwuNqeWVwx8nTnu9NX3/VZ0in68=";
+  nativeBuildInputs = [
+    makeWrapper
+  ];
   buildInputs = [
     systemd
   ];
@@ -23,5 +30,12 @@ buildGoModule rec {
     mkdir -p $out/share/assets
     cp -r api static web config.json $out/share/assets
     cp -r database $out/share/
+    wrapProgram $out/bin/OpenLinkHub \
+      --prefix PATH : ${
+        lib.makeBinPath [
+          pciutils
+          nvidia
+        ]
+      };
   '';
 }

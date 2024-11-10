@@ -22,9 +22,11 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 14d";
+      randomizedDelaySec = "1d";
+      options = "--delete-older-than 15d";
     };
     channel.enable = false;
+    auto-optimise-store = true;
   };
   system.switch = {
     enable = false;

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   programs = {
     starship.enable = true;
@@ -30,5 +30,11 @@
       "D %t/ssh-control - - - - -"
     ];
     startServices = "sd-switch";
+  };
+  nix.gc = {
+    automatic = true;
+    frequency = "weekly";
+    randomizedDelaySec = "1d";
+    options = "--delete-older-than 7d";
   };
 }

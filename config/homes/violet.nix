@@ -68,10 +68,31 @@ in
         };
         buildInputs = prevAttrs.buildInputs ++ [ pkgs.kdePackages.qtwayland ];
       });
+
+      # TODO: /run socket restrictions
+      discord-wrapped = (
+        pkgs.runCommand "discord-wrapped"
+          {
+            meta.priority = -1;
+            preferLocalBuild = true;
+          }
+          ''
+            mkdir -p $out/bin
+            cat <<EOF > $out/bin/Discord
+            #! ${pkgs.runtimeShell} -e
+            systemd-run --unit app-discord@\$(uuidgen).service --slice app.slice --pty --pipe --user \
+            -p ExitType=cgroup --working-directory=\$HOME -p ProtectHome=tmpfs -p BindPaths=\$HOME/.var/apps/:\$HOME \
+            -p BindPaths=\$XDG_RUNTIME_DIR ${pkgs.discord}/bin/Discord
+            EOF
+            chmod a+x $out/bin/Discord
+          ''
+      );
     in
     [
       input-leap-qt6
       imgbrd-grabber-head
+      discord-wrapped
+      pkgs.discord
     ]
     ++ (with pkgs; [
       kopia

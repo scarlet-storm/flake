@@ -55,8 +55,27 @@ in
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
-  services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub;
+  services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub.override {
+    nvidia = config.hardware.nvidia.package;
+  };
   services.OpenLinkHub.enable = true;
+  services.hardware.openrgb.enable = true;
+  services.hardware.openrgb.package = pkgs.openrgb.overrideAttrs (prevAttrs: {
+    version = "20241110";
+    src = pkgs.fetchFromGitLab {
+      owner = "CalcProgrammer1";
+      repo = "OpenRGB";
+      rev = "7a69aef99b6772005af469bf9b69f22fd83616d7";
+      hash = "sha512-karAIFGvXMl/IKK7sTtTlR4y4Rx1YdlKqneCIP8B7kEgMBK3NwyUvO1mYjGC4JN7WFVWFbP9hBxhrA/pO1Zt8A==";
+      leaveDotGit = true;
+    };
+    postPatch = ''
+      substituteInPlace scripts/build-udev-rules.sh \
+        --replace /usr/bin/env ${pkgs.coreutils-full}/bin/env
+    '';
+    nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
+  });
+  boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
   # ath12k
   networking.wireless.iwd.settings.General.ControlPortOverNL80211 = false;
   system.stateVersion = "24.11";
