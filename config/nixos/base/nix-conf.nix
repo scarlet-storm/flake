@@ -18,6 +18,7 @@
         "cgroups"
       ];
       auto-allocate-uids = true;
+      auto-optimise-store = true;
     };
     gc = {
       automatic = true;
@@ -26,7 +27,6 @@
       options = "--delete-older-than 15d";
     };
     channel.enable = false;
-    auto-optimise-store = true;
   };
   system.switch = {
     enable = false;
