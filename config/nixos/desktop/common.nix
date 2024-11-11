@@ -42,5 +42,4 @@
   };
   security.rtkit.enable = true;
   hardware.i2c.enable = true;
-  programs.firejail.enable = true;
 }

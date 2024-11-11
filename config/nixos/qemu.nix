@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   ...
 }:
 
@@ -22,6 +21,8 @@
         ];
       };
     };
+    parallelShutdown = 2;
+    onShutdown = "shutdown";
   };
   environment.systemPackages = [
     pkgs.passt

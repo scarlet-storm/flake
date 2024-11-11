@@ -38,7 +38,7 @@ in
           WorkingDirectory = "${homeDir}";
           User = "openlinkhub";
           Group = "openlinkhub";
-          ExecStartPre = ''${pkgs.bash}/bin/bash -ce "ln -sf ${cfg.package}/share/assets/* ${homeDir}; mkdir -p database/profiles database/temperatures; ln -sf ${cfg.package}/share/database/rgb.json database/rgb.json"'';
+          ExecStartPre = ''${pkgs.bash}/bin/bash -ce "ln -sf ${cfg.package}/share/assets/* ${homeDir}; cp -rnv --dereference --no-preserve=mode ${cfg.package}/share/database ${cfg.package}/share/config.json ${homeDir}"'';
           ExecStart = "${cfg.package}/bin/OpenLinkHub";
           NoNewPrivileges = true;
           PrivateTmp = true;

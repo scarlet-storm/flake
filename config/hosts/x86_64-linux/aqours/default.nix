@@ -37,10 +37,10 @@ in
           url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/refs/heads/master/nvidia/nvidia-utils/0004-Fix-for-6.12.0-rc1-drm_mode_config_funcs.output_poll.patch";
           hash = "sha512-eyQ1sx7XM8AP9I27WLe3iFJkMI6r8h8+BNqfAOgZ8aFiNF6cZgYo+plZidt7eHS+xA8sK7w2wsnudKGZzbFQPQ==";
         })
-        (pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/refs/heads/master/nvidia/nvidia-utils/0006-silence-event-assert-until-570.patch";
-          hash = "sha512-WHpmNlYaFob0O7G4USGpPQ3eWso6rYSGVRSb24Fwpw8yYrTjjvgRutxosMp53d7Y8RoYUYK8aJm7r2q07fAPtA==";
-        })
+        # (pkgs.fetchpatch {
+        #   url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/refs/heads/master/nvidia/nvidia-utils/0006-silence-event-assert-until-570.patch";
+        #   hash = "sha512-WHpmNlYaFob0O7G4USGpPQ3eWso6rYSGVRSb24Fwpw8yYrTjjvgRutxosMp53d7Y8RoYUYK8aJm7r2q07fAPtA==";
+        # })
       ];
     in
     config.boot.kernelPackages.nvidiaPackages.mkDriver {
