@@ -76,7 +76,5 @@ in
     nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
   });
   boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
-  # ath12k
-  networking.wireless.iwd.settings.General.ControlPortOverNL80211 = false;
   system.stateVersion = "24.11";
 }

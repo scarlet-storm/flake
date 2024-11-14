@@ -49,6 +49,8 @@
     };
     DriverQuirks = {
       PowerSaveDisable = "ath10k*,ath12k*";
+      # ath12k
+      ForcePae = "ath12k*";
     };
   };
 }

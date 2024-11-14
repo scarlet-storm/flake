@@ -13,6 +13,9 @@
     xsettingsd
     kdePackages.sddm-kcm
     kdePackages.ksvg
+    p7zip # _7zz ?
+    unrar-free
+    unar # ark rar plugin
   ];
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   programs.kdeconnect.enable = true;
