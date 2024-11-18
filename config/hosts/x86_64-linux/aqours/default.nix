@@ -34,13 +34,9 @@ in
     let
       patchesOpen = [
         (pkgs.fetchpatch {
-          url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/refs/heads/master/nvidia/nvidia-utils/0004-Fix-for-6.12.0-rc1-drm_mode_config_funcs.output_poll.patch";
-          hash = "sha512-eyQ1sx7XM8AP9I27WLe3iFJkMI6r8h8+BNqfAOgZ8aFiNF6cZgYo+plZidt7eHS+xA8sK7w2wsnudKGZzbFQPQ==";
+          url = "https://github.com/Binary-Eater/open-gpu-kernel-modules/commit/8ac26d3c66ea88b0f80504bdd1e907658b41609d.patch";
+          hash = "sha512-vOcoVLx/kUFRIjSHNkl/Vzs8RJUiPlI9mqOz6hVI1xk+uFxGnrbBTDJ4KX/QYmtTdvuoU4IGmUjN8sYRo6CTFg==";
         })
-        # (pkgs.fetchpatch {
-        #   url = "https://raw.githubusercontent.com/CachyOS/CachyOS-PKGBUILDS/refs/heads/master/nvidia/nvidia-utils/0006-silence-event-assert-until-570.patch";
-        #   hash = "sha512-WHpmNlYaFob0O7G4USGpPQ3eWso6rYSGVRSb24Fwpw8yYrTjjvgRutxosMp53d7Y8RoYUYK8aJm7r2q07fAPtA==";
-        # })
       ];
     in
     config.boot.kernelPackages.nvidiaPackages.mkDriver {
@@ -56,25 +52,27 @@ in
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
   services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub.override {
-    nvidia = config.hardware.nvidia.package;
+    withNvidia = true;
+    nvidiaPackage = config.hardware.nvidia.package;
   };
   services.OpenLinkHub.enable = true;
-  services.hardware.openrgb.enable = true;
-  services.hardware.openrgb.package = pkgs.openrgb.overrideAttrs (prevAttrs: {
-    version = "20241110";
-    src = pkgs.fetchFromGitLab {
-      owner = "CalcProgrammer1";
-      repo = "OpenRGB";
-      rev = "7a69aef99b6772005af469bf9b69f22fd83616d7";
-      hash = "sha512-karAIFGvXMl/IKK7sTtTlR4y4Rx1YdlKqneCIP8B7kEgMBK3NwyUvO1mYjGC4JN7WFVWFbP9hBxhrA/pO1Zt8A==";
-      leaveDotGit = true;
-    };
-    postPatch = ''
-      substituteInPlace scripts/build-udev-rules.sh \
-        --replace /usr/bin/env ${pkgs.coreutils-full}/bin/env
-    '';
-    nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
-  });
+  # services.hardware.openrgb.enable = true;
+  # services.hardware.openrgb.package = pkgs.openrgb.overrideAttrs (prevAttrs: {
+  #   version = "20241110";
+  #   src = pkgs.fetchFromGitLab {
+  #     owner = "CalcProgrammer1";
+  #     repo = "OpenRGB";
+  #     rev = "7a69aef99b6772005af469bf9b69f22fd83616d7";
+  #     hash = "sha512-karAIFGvXMl/IKK7sTtTlR4y4Rx1YdlKqneCIP8B7kEgMBK3NwyUvO1mYjGC4JN7WFVWFbP9hBxhrA/pO1Zt8A==";
+  #     leaveDotGit = true;
+  #   };
+  #   postPatch = ''
+  #     substituteInPlace scripts/build-udev-rules.sh \
+  #       --replace /usr/bin/env ${pkgs.coreutils-full}/bin/env
+  #   '';
+  #   nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
+  # });
   boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
+  services.hardware.bolt.enable = true;
   system.stateVersion = "24.11";
 }

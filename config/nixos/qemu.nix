@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }:
 
@@ -15,6 +16,7 @@
         packages = [
           (pkgs.OVMF.override {
             secureBoot = true;
+            qemu = config.virtualisation.libvirtd.qemu.package;
             msVarsTemplate = true;
             tpmSupport = true;
           }).fd

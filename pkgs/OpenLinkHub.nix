@@ -3,9 +3,9 @@
   fetchFromGitHub,
   buildGoModule,
   systemd,
-  emptyDirectory,
-  nvidia ? emptyDirectory,
   pciutils,
+  withNvidia ? false,
+  nvidiaPackage ? null,
   makeWrapper,
   writeText,
 }:
@@ -50,10 +50,12 @@ buildGoModule rec {
     cp -r database config.json $out/share/
     wrapProgram $out/bin/OpenLinkHub \
       --prefix PATH : ${
-        lib.makeBinPath [
-          pciutils
-          nvidia
-        ]
+        lib.makeBinPath (
+          [
+            pciutils
+          ]
+          ++ lib.optional withNvidia nvidiaPackage
+        )
       };
   '';
 }
