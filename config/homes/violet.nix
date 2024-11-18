@@ -18,45 +18,6 @@ in
   };
   home.packages =
     let
-      input-leap-qt6 = pkgs.input-leap.overrideAttrs rec {
-        pname = "input-leap";
-        version = "3.0.2";
-        name = "${pname}-${version}";
-        src = pkgs.fetchFromGitHub {
-          owner = "input-leap";
-          repo = "input-leap";
-          rev = "7e5889dc6fc907a0dd218d94623378cc53417cb2";
-          hash = "sha512-IshXGnDI6DfSeUnyofpeBtClwbmlqVATO0WNhzKDAGvWh5LDOk0wQQMHDGen6PYjP40kUas8mhejMVnvRcmIpQ==";
-        };
-        cmakeFlags = [
-          "-DINPUTLEAP_REVISION=${builtins.substring 0 8 src.rev}"
-          "-DINPUTLEAP_BUILD_LIBEI=ON"
-          "-DINPUTLEAP_USE_EXTERNAL_GTEST=ON"
-          "-DQT_DEFAULT_MAJOR_VERSION=6"
-        ];
-        nativeBuildInputs = with pkgs; [
-          pkg-config
-          cmake
-          kdePackages.wrapQtAppsHook
-          kdePackages.qttools
-          gtest
-        ];
-        buildInputs = with pkgs; [
-          curl
-          avahi-compat
-          libei
-          libportal
-          kdePackages.qtbase
-          kdePackages.qt5compat
-          kdePackages.qtwayland
-          xorg.libX11
-          xorg.libXinerama
-          xorg.libXrandr
-          xorg.libICE
-          xorg.libSM
-          ghc_filesystem
-        ];
-      };
       imgbrd-grabber-head = pkgs.imgbrd-grabber.overrideAttrs (prevAttrs: {
         version = "2024-10-14";
         src = pkgs.fetchFromGitHub {
@@ -89,12 +50,12 @@ in
       );
     in
     [
-      input-leap-qt6
       imgbrd-grabber-head
       discord-wrapped
       pkgs.discord
     ]
     ++ (with pkgs; [
+      input-leap
       kopia
       keepassxc
       sops
