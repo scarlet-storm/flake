@@ -2,8 +2,7 @@
   description = "Personal nix config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,7 +30,7 @@
     };
     nixgl = {
       url = "github:nix-community/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -100,7 +99,7 @@
         name: config:
         (
           let
-            pkgs = inputs.nixpkgs-unstable.legacyPackages.x86_64-linux;
+            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
