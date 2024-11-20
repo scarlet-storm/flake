@@ -29,7 +29,7 @@ in
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   # ethernet device
-  boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.nvidia.package =
     let
       patchesOpen = [
@@ -38,16 +38,9 @@ in
           hash = "sha512-vOcoVLx/kUFRIjSHNkl/Vzs8RJUiPlI9mqOz6hVI1xk+uFxGnrbBTDJ4KX/QYmtTdvuoU4IGmUjN8sYRo6CTFg==";
         })
       ];
+      driver = config.boot.kernelPackages.nvidiaPackages.beta;
     in
-    config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      inherit (config.boot.kernelPackages.nvidiaPackages.beta) version;
-      sha256_64bit = "sha256-buvpTlheOF6IBPWnQVLfQUiHv4GcwhvZW3Ks0PsYLHo=";
-      sha256_aarch64 = "sha256-aDVc3sNTG4O3y+vKW87mw+i9AqXCY29GVqEIUlsvYfE=";
-      openSha256 = "sha256-/tM3n9huz1MTE6KKtTCBglBMBGGL/GOHi5ZSUag4zXA=";
-      settingsSha256 = "sha256-H7uEe34LdmUFcMcS6bz7sbpYhg9zPCb/5AmZZFTx1QA=";
-      persistencedSha256 = "sha256-hdszsACWNqkCh8G4VBNitDT85gk9gJe1BlQ8LdrYIkg=";
-      inherit patchesOpen;
-    };
+      driver // { open = driver.open.override{patches = patchesOpen;}; };
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
