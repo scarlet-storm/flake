@@ -10,7 +10,7 @@
     isNormalUser = true;
     extraGroups = [
       "wheel"
-    ];
+    ] ++ lib.optional (builtins.hasAttr "libvirtd" config.users.groups) "libvirtd";
     linger = false;
     uid = 1000;
     shell = pkgs.fish;

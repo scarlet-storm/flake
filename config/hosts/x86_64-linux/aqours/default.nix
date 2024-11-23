@@ -40,7 +40,7 @@ in
       ];
       driver = config.boot.kernelPackages.nvidiaPackages.beta;
     in
-      driver // { open = driver.open.override{patches = patchesOpen;}; };
+    driver // { open = driver.open.override { patches = patchesOpen; }; };
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
@@ -66,6 +66,7 @@ in
   #   nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
   # });
   boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
+  services.nixseparatedebuginfod.enable = true;
   services.hardware.bolt.enable = true;
   system.stateVersion = "24.11";
 }
