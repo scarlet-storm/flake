@@ -13,6 +13,7 @@
       virglrenderer = prev.virglrenderer.overrideAttrs (previousAttrs: {
         mesonFlags = previousAttrs.mesonFlags ++ [
           (lib.mesonBool "venus" true)
+          (lib.mesonBool "minigbm_allocation" true)
         ];
         buildInputs = previousAttrs.buildInputs ++ [
           prev.vulkan-loader

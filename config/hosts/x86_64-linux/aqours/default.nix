@@ -68,5 +68,10 @@ in
   boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
   services.nixseparatedebuginfod.enable = true;
   services.hardware.bolt.enable = true;
+  virtualisation.podman.enable = true;
+  environment.systemPackages = [
+    pkgs.crosvm
+    pkgs.distrobox
+  ];
   system.stateVersion = "24.11";
 }
