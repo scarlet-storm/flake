@@ -47,11 +47,7 @@ in
     ];
   };
   home.packages = [
-    (pkgs.nerdfonts.override {
-      fonts = [
-        "NerdFontsSymbolsOnly"
-      ];
-    })
+    pkgs.nerd-fonts.symbols-only
     pkgs.recursive
     pkgs.cascadia-code
   ];
