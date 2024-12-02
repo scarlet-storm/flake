@@ -69,9 +69,10 @@ in
   services.nixseparatedebuginfod.enable = true;
   services.hardware.bolt.enable = true;
   virtualisation.podman.enable = true;
-  environment.systemPackages = [
-    pkgs.crosvm
-    pkgs.distrobox
+  environment.systemPackages = with pkgs; [
+    distrobox
+    gdb
+    binutils
   ];
   system.stateVersion = "24.11";
 }
