@@ -33,7 +33,7 @@ in
   hardware.nvidia.package =
     let
       patchesOpen = [
-        (pkgs.fetchpatch {
+        (pkgs.fetchpatch2 {
           url = "https://github.com/Binary-Eater/open-gpu-kernel-modules/commit/8ac26d3c66ea88b0f80504bdd1e907658b41609d.patch";
           hash = "sha512-vOcoVLx/kUFRIjSHNkl/Vzs8RJUiPlI9mqOz6hVI1xk+uFxGnrbBTDJ4KX/QYmtTdvuoU4IGmUjN8sYRo6CTFg==";
         })
