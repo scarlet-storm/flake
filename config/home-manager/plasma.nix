@@ -22,7 +22,8 @@ let
   };
 in
 {
-  xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service".source = config.lib.file.mkOutOfStoreSymlink "/dev/null";
+  xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service".source =
+    config.lib.file.mkOutOfStoreSymlink "/dev/null";
   programs.plasma = {
     enable = true;
     workspace = {

@@ -25,9 +25,8 @@ in
         home = "${homeDir}";
         createHome = true;
       };
-      users.groups.openlinkhub =
-        {
-        };
+      users.groups.openlinkhub = {
+      };
       systemd.services.OpenLinkHub = {
         description = "icue link service";
         enable = true;
