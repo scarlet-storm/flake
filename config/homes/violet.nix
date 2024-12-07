@@ -74,8 +74,6 @@ in
   };
 
   programs = {
-    fish.enable = true;
-    starship.enable = true;
     emacs = {
       enable = true;
       package = pkgs.emacs30-pgtk;

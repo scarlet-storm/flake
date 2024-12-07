@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 
@@ -58,15 +59,16 @@ in
     customColorSchemes = {
       "dracula-konsole" = "${dracula-konsole}/dracula-konsole.colorscheme";
     };
-    defaultProfile = "myProfile";
+    defaultProfile = "fish";
     extraConfig = {
       FileLocation = {
         scrollbackUseCacheLocation = false;
         scrollbackUseSystemLocation = true;
       };
     };
-    profiles = {
-      myProfile = {
+    profiles = lib.genAttrs [ "fish" "nu" ] (
+      shell:
+      {
         font.name = "Rec Mono SemiCasual";
         font.size = 11;
         colorScheme = "dracula-konsole";
@@ -76,7 +78,10 @@ in
             ColorFilterEnabled = false;
           };
         };
-      };
-    };
+      }
+      // {
+        command = shell;
+      }
+    );
   };
 }
