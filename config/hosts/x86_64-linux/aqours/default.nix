@@ -30,17 +30,7 @@ in
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   # ethernet device
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.nvidia.package =
-    let
-      patchesOpen = [
-        (pkgs.fetchpatch2 {
-          url = "https://github.com/Binary-Eater/open-gpu-kernel-modules/commit/8ac26d3c66ea88b0f80504bdd1e907658b41609d.patch";
-          hash = "sha512-vOcoVLx/kUFRIjSHNkl/Vzs8RJUiPlI9mqOz6hVI1xk+uFxGnrbBTDJ4KX/QYmtTdvuoU4IGmUjN8sYRo6CTFg==";
-        })
-      ];
-      driver = config.boot.kernelPackages.nvidiaPackages.beta;
-    in
-    driver // { open = driver.open.override { patches = patchesOpen; }; };
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
