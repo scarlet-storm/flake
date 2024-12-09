@@ -24,6 +24,7 @@
   boot = {
     initrd = {
       systemd.enable = true;
+      systemd.dbus.enable = true;
       availableKernelModules = [
         "vfat"
         "crc32c-intel"
