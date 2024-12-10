@@ -1,11 +1,12 @@
 {
+  lib,
   ...
 }:
 
 {
-  nix.buildMachines = [
+  nix.buildMachines = lib.map (
+    host:
     {
-      hostName = "static.79.160.181.135.clients.your-server.de";
       sshUser = "nixremote";
       system = "x86_64-linux";
       protocol = "ssh-ng";
@@ -15,7 +16,9 @@
         "big-parallel"
         "kvm"
       ];
-      speedFactor = 20;
     }
-  ];
+    // {
+      hostName = host;
+    }
+  ) [ ];
 }
