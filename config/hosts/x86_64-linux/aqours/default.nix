@@ -64,5 +64,11 @@ in
     gdb
     binutils
   ];
+  boot.kernelPatches = [
+    {
+      name = "WCN785x-btusb";
+      patch = ./Bluetooth-btusb-Add-one-more-ID-0x0489-0xe10a-for-Qualcomm-WCN785x.diff;
+    }
+  ];
   system.stateVersion = "24.11";
 }

@@ -1,0 +1,13 @@
+diff --git a/drivers/bluetooth/btusb.c.orig b/drivers/bluetooth/btusb.c
+index 4ccaddb..f94f65a 100644
+--- a/drivers/bluetooth/btusb.c.orig
++++ b/drivers/bluetooth/btusb.c
+@@ -355,6 +355,8 @@ static const struct usb_device_id quirks_table[] = {
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe0ec), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe10a), .driver_info = BTUSB_QCA_WCN6855 |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x3023), .driver_info = BTUSB_QCA_WCN6855 |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x04ca, 0x3024), .driver_info = BTUSB_QCA_WCN6855 |
