@@ -9,10 +9,10 @@
     enable = true;
     qemu = {
       package = pkgs.qemu_kvm.overrideAttrs (prevAttrs: rec {
-        version = "9.2.0-rc1";
+        version = "9.2.0";
         src = pkgs.fetchurl {
           url = "https://download.qemu.org/qemu-${version}.tar.xz";
-          hash = "sha512-cHUAm6zEMCqzVbQVo5zNGQVOsx16bzcbndRG7FTg3uLGDT6wvDQmLwrSwn/gyqevopSUtGNUjjBEQvlq57f7Tg==";
+          hash = "sha512-+SVIYj5OMUAMgjoteEF6ik7PzLB/PuSIPi8q0zBUU50qN9B228ZN9CxshsCPp8LJdc1ugjqhTV8gzvgzSABoEw==";
         };
         # remove upstream gitlab patches
         patches = (with builtins; filter isPath prevAttrs.patches);
