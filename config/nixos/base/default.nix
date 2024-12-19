@@ -67,7 +67,6 @@
     nvme-cli
     e2fsprogs
     efibootmgr
-    efitools
     openssl
     moreutils
     git

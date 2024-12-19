@@ -16,7 +16,7 @@ in
     ./hardware-configuration.nix
     modules.nixos.builders.default
     modules.nixos.hardware.amd
-    modules.nixos.hardware.gpu.nvidia
+    # modules.nixos.hardware.gpu.nvidia
     modules.nixos.lanzaboote.default
     modules.nixos.home-manager
     modules.nixos.desktop.plasma
@@ -30,13 +30,13 @@ in
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   # ethernet device
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.beta;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
   services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub.override {
-    withNvidia = true;
-    nvidiaPackage = config.hardware.nvidia.package;
+    # withNvidia = true;
+    # nvidiaPackage = config.hardware.nvidia.package;
   };
   services.OpenLinkHub.enable = true;
   # services.hardware.openrgb.enable = true;
@@ -55,7 +55,6 @@ in
   #   '';
   #   nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
   # });
-  boot.extraModulePackages = [ config.boot.kernelPackages.nct6687d ];
   services.nixseparatedebuginfod.enable = true;
   services.hardware.bolt.enable = true;
   virtualisation.podman.enable = true;
@@ -71,4 +70,5 @@ in
     }
   ];
   system.stateVersion = "24.11";
+  boot.kernelParams = [ "nouveau.config=NvGspRm=1" ];
 }
