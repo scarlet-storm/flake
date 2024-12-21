@@ -69,6 +69,11 @@ in
       patch = ./Bluetooth-btusb-Add-one-more-ID-0x0489-0xe10a-for-Qualcomm-WCN785x.diff;
     }
   ];
-  system.stateVersion = "24.11";
   boot.kernelParams = [ "nouveau.config=NvGspRm=1" ];
+  systemd.globalEnvironment = {
+    "NOUVEAU_USE_ZINK" = "1";
+  };
+  boot.initrd.kernelModules = [ "nouveau" ];
+  services.homed.enable = true;
+  system.stateVersion = "24.11";
 }

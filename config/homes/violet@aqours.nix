@@ -6,8 +6,8 @@
 
 let
   f3KanataIdolized = pkgs.fetchurl {
-    url = "https://i.idol.st/u/card/art/xKXpzBUR-Konoe-Kanata-Like-This-And-There-Alluring-Renowned-Actress-ubVzTH.jpeg";
-    hash = "sha512-CKCSFIeWNglvXMLG3LF++CaUPNqTJIrc3YsWlM+FMBCiGkOuLd2TJC44KnHHX/Ak3C4T3exTW+lNEDMgoJseBg==";
+    url = "https://i.idol.st/u/card/art/2x/857UR-Konoe-Kanata-Like-This-And-There-Alluring-Renowned-Actress-vN37YQ.png";
+    hash = "sha512-G0NO8yLslZSpUWXremb08d/vX+OajYV1K5eRM5ULs8MBblKJbn5NLUfzLHME2DUwtSSJ4lGNvB8vO01FTloKSA==";
   };
 in
 {
