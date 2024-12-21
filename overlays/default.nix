@@ -10,6 +10,14 @@
           });
         }
       );
+      ibusEngines = prev.ibusEngines.overrideScope (
+        ifinal: iprev:
+        (lib.optionalAttrs (builtins.compareVersions (lib.getVersion iprev.mozc) "2.30.5544.102" <= 0) {
+          mozc = iprev.mozc.overrideAttrs {
+            env.NIX_CFLAGS_COMPILE = "-Wno-error=maybe-uninitialized";
+          };
+        })
+      );
       virglrenderer = prev.virglrenderer.overrideAttrs (previousAttrs: {
         mesonFlags = previousAttrs.mesonFlags ++ [
           (lib.mesonBool "venus" true)
@@ -22,6 +30,10 @@
       });
       procps = prev.procps.overrideAttrs {
         meta.priority = 9;
+      };
+      libvirt = prev.libvirt.override {
+        enableXen = false;
+        enableZfs = false;
       };
     })
 

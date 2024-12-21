@@ -27,6 +27,7 @@ in
     modules.nixos.steam
     inputs.self.nixosModules.services.OpenLinkHub
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
+  nixpkgs.config.contentAddressedByDefault = true;
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   # ethernet device
   boot.kernelPackages = pkgs.linuxPackages_latest;
