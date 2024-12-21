@@ -2,40 +2,46 @@
 
 {
   nixpkgs.overlays = [
-    (final: prev: {
-      kdePackages = prev.kdePackages.overrideScope (
-        kfinal: kprev: {
-          powerdevil = kprev.powerdevil.overrideAttrs (previousAttrs: {
-            buildInputs = previousAttrs.buildInputs ++ [ prev.ddcutil ];
-          });
-        }
-      );
-      ibusEngines = prev.ibusEngines.overrideScope (
-        ifinal: iprev:
-        (lib.optionalAttrs (builtins.compareVersions (lib.getVersion iprev.mozc) "2.30.5544.102" <= 0) {
-          mozc = iprev.mozc.overrideAttrs {
+    (
+      final: prev:
+      {
+        kdePackages = prev.kdePackages.overrideScope (
+          kfinal: kprev: {
+            powerdevil = kprev.powerdevil.overrideAttrs (previousAttrs: {
+              buildInputs = previousAttrs.buildInputs ++ [ prev.ddcutil ];
+            });
+          }
+        );
+        virglrenderer = prev.virglrenderer.overrideAttrs (previousAttrs: {
+          mesonFlags = previousAttrs.mesonFlags ++ [
+            (lib.mesonBool "venus" true)
+            (lib.mesonBool "minigbm_allocation" true)
+          ];
+          buildInputs = previousAttrs.buildInputs ++ [
+            prev.vulkan-loader
+            prev.vulkan-headers
+          ];
+        });
+        procps = prev.procps.overrideAttrs {
+          meta.priority = 9;
+        };
+        libvirt = prev.libvirt.override {
+          enableXen = false;
+          enableZfs = false;
+        };
+
+      }
+      // lib.genAttrs [ "mozc" "fcitx5-mozc" ] (
+        drv:
+        prev.${drv}.overrideAttrs (
+          previousAttrs:
+          (lib.optionalAttrs (builtins.compareVersions (previousAttrs.version) "2.30.5544.102" <= 0) {
             env.NIX_CFLAGS_COMPILE = "-Wno-error=maybe-uninitialized";
-          };
-        })
-      );
-      virglrenderer = prev.virglrenderer.overrideAttrs (previousAttrs: {
-        mesonFlags = previousAttrs.mesonFlags ++ [
-          (lib.mesonBool "venus" true)
-          (lib.mesonBool "minigbm_allocation" true)
-        ];
-        buildInputs = previousAttrs.buildInputs ++ [
-          prev.vulkan-loader
-          prev.vulkan-headers
-        ];
-      });
-      procps = prev.procps.overrideAttrs {
-        meta.priority = 9;
-      };
-      libvirt = prev.libvirt.override {
-        enableXen = false;
-        enableZfs = false;
-      };
-    })
+          })
+        )
+      )
+
+    )
 
     # (final: prev: {
     #   intel-vaapi-driver =
