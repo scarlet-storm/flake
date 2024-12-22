@@ -109,6 +109,11 @@ in
             "llvm_libdir = '${lib.getLib prev.llvmPackages.clang-unwrapped}/lib'"
           '';
       });
+      kdePackages = prev.kdePackages.overrideScope (
+        kfinal: kprev: {
+          qtwebengine = prev.emptyDirectory;
+        }
+      );
     })
   ];
   system.stateVersion = "24.11";
