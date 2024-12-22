@@ -15,7 +15,7 @@
     powerManagement.enable = true;
     open = true;
     nvidiaSettings = true;
-    package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
+    package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.latest;
   };
   unfree.packageList = [
     "nvidia-settings"
