@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   ...
 }:
 
@@ -8,16 +7,6 @@
   virtualisation.libvirtd = {
     enable = true;
     qemu = {
-      package = pkgs.qemu_kvm.overrideAttrs (prevAttrs: rec {
-        version = "9.2.0";
-        src = pkgs.fetchurl {
-          url = "https://download.qemu.org/qemu-${version}.tar.xz";
-          hash = "sha512-+SVIYj5OMUAMgjoteEF6ik7PzLB/PuSIPi8q0zBUU50qN9B228ZN9CxshsCPp8LJdc1ugjqhTV8gzvgzSABoEw==";
-        };
-        # remove upstream gitlab patches
-        patches = (with builtins; filter isPath prevAttrs.patches);
-        nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.perl ];
-      });
       runAsRoot = false;
       swtpm.enable = true;
       ovmf = {
@@ -25,7 +14,6 @@
         packages = [
           (pkgs.OVMF.override {
             secureBoot = true;
-            qemu = config.virtualisation.libvirtd.qemu.package;
             msVarsTemplate = true;
             tpmSupport = true;
           }).fd
