@@ -62,6 +62,7 @@ in
       signal-desktop
       gdu
       nixd
+      nil
       nixfmt-rfc-style
       yubikey-manager
     ]);
