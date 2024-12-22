@@ -1,3 +1,3 @@
 # nix-flake
 
-yet another nix flake
+ Personal nix config
