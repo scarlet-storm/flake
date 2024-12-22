@@ -21,4 +21,10 @@
     "nvidia-settings"
     "nvidia-x11"
   ];
+  boot.kernelModules = [
+    "nvidia"
+    "nvidia-modeset"
+    "nvidia-drm"
+    "nvidia-uvm"
+  ];
 }

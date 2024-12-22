@@ -13,7 +13,7 @@
   systemd.globalEnvironment = {
     "NOUVEAU_USE_ZINK" = "1";
   };
-  boot.initrd.kernelModules = [ "nouveau" ];
+  boot.kernelModules = [ "nouveau" ];
   nixpkgs.overlays = [
     (final: prev: {
       mesa = prev.mesa.overrideAttrs (prevAttrs: {
