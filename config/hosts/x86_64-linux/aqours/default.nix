@@ -10,6 +10,16 @@
 
 let
   users = [ "violet" ];
+  systemd-homework = pkgs.systemd.overrideAttrs (prevAttrs: {
+    patches = prevAttrs.patches ++ [
+      (pkgs.fetchpatch2 {
+        url = "https://patch-diff.githubusercontent.com/raw/systemd/systemd/pull/35776.patch";
+        hash = "sha256-XWJTAobBmY2FHfysQ1yOf6skA/ZGlPc/A6ll4x3zLv4=";
+      })
+    ];
+    meta.priority = 20;
+    version = "20241228";
+  });
 in
 {
   imports = [
@@ -62,6 +72,9 @@ in
     gdb
     binutils
   ];
+  systemd.services.systemd-homed.environment = {
+    "SYSTEMD_HOMEWORK_PATH" = "${systemd-homework}/lib/systemd/systemd-homework";
+  };
   boot.kernelPatches = [
     {
       name = "WCN785x-btusb";
@@ -80,4 +93,6 @@ in
   ];
   programs.kde-pim.enable = false;
   system.stateVersion = "24.11";
+  systemd.oomd.enable = true;
+  systemd.oomd.enableRootSlice = true;
 }
