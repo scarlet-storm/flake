@@ -18,8 +18,5 @@ in
   programs.plasma.workspace.wallpaper = "${f3KanataIdolized}";
   programs.plasma.configFile.kdeglobals.General.AccentColor = "166,100,160";
   services.syncthing.enable = true;
-  home.packages = [
-    (pkgs.zed-editor.fhsWithPackages (pkgs: [ pkgs.go ]))
-  ];
   home.stateVersion = "24.05";
 }

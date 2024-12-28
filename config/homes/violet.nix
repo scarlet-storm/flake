@@ -6,6 +6,46 @@
 
 let
   username = "violet";
+  wrapPrefix = (
+    prefix:
+    {
+      pkg,
+      execName,
+      postBuild ? "",
+      ...
+    }:
+    pkgs.symlinkJoin {
+      inherit (pkg)
+        name
+        pname
+        version
+        ;
+      inherit postBuild;
+      paths = [
+        (pkgs.runCommandLocal "${execName}-wrapped"
+          {
+
+          }
+          ''
+            mkdir -p $out/bin
+            cat <<EOF > $out/bin/${execName}
+            #! ${pkgs.runtimeShell}
+            exec ${prefix} ${pkg}/bin/${execName} \$@
+            EOF
+            chmod a+x $out/bin/${execName}
+          ''
+        )
+        pkg
+      ];
+    }
+  );
+  # TODO: /run socket restrictions
+  wrapPrivateHome =
+    id:
+    (wrapPrefix ''
+      systemd-run --unit app-${id}@\$(${pkgs.util-linux}/bin/uuidgen).service --slice app.slice --pty --pipe --user \
+      -p ExitType=cgroup --working-directory=\$HOME -p ProtectHome=tmpfs -p BindPaths=\$HOME/.var/apps/:\$HOME \
+      -p BindPaths=\$XDG_RUNTIME_DIR'');
 in
 {
   imports = [
@@ -18,7 +58,7 @@ in
   };
   home.packages =
     let
-      imgbrd-grabber-head = pkgs.imgbrd-grabber.overrideAttrs (prevAttrs: {
+      imgbrd-grabber-git = pkgs.imgbrd-grabber.overrideAttrs (prevAttrs: {
         version = "2024-10-14";
         src = pkgs.fetchFromGitHub {
           owner = "Bionus";
@@ -30,29 +70,14 @@ in
         buildInputs = prevAttrs.buildInputs ++ [ pkgs.kdePackages.qtwayland ];
       });
 
-      # TODO: /run socket restrictions
-      discord-wrapped = (
-        pkgs.runCommand "discord-wrapped"
-          {
-            meta.priority = -1;
-            preferLocalBuild = true;
-          }
-          ''
-            mkdir -p $out/bin
-            cat <<EOF > $out/bin/Discord
-            #! ${pkgs.runtimeShell} -e
-            systemd-run --unit app-discord@\$(uuidgen).service --slice app.slice --pty --pipe --user \
-            -p ExitType=cgroup --working-directory=\$HOME -p ProtectHome=tmpfs -p BindPaths=\$HOME/.var/apps/:\$HOME \
-            -p BindPaths=\$XDG_RUNTIME_DIR ${pkgs.discord}/bin/Discord
-            EOF
-            chmod a+x $out/bin/Discord
-          ''
-      );
     in
     [
-      imgbrd-grabber-head
-      discord-wrapped
-      pkgs.discord
+      imgbrd-grabber-git
+      (wrapPrivateHome "Discord" {
+        pkg = pkgs.discord;
+        execName = "Discord";
+        postBuild = "rm -fv $out/bin/discord";
+      })
     ]
     ++ (with pkgs; [
       input-leap
@@ -65,6 +90,11 @@ in
       nil
       nixfmt-rfc-style
       yubikey-manager
+      (pkgs.zed-editor.fhsWithPackages (pkgs: [
+        pkgs.go
+        pkgs.python3
+        pkgs.unzip # unzip lsp downloads by extensions
+      ]))
     ]);
   home.file = {
     ".kopiaignore".text = ''
