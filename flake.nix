@@ -122,7 +122,6 @@
             extraSpecialArgs = {
               inherit homeManagerConfig;
               inherit (inputs) nixgl;
-              mylib = import ./lib pkgs;
             };
           }
         )

@@ -15,9 +15,6 @@ in
     homeManagerConfig.plasma
   ];
   services.syncthing.enable = true;
-  home.packages = [
-    pkgs.zed-editor
-  ];
   programs.plasma.workspace.wallpaper = "${pShizuku2x}";
   programs.plasma.configFile.kdeglobals.General.AccentColor = "1,183,237";
   home.stateVersion = "24.05";
