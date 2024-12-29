@@ -3,10 +3,11 @@
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
 {
-  lib,
   pkgs,
-  inputs,
+  lib,
+  config,
   modules,
+  inputs,
   ...
 }:
 
@@ -20,7 +21,8 @@
     ./nix-conf.nix
     ./net.nix
   ];
-  users.users.root.hashedPassword = lib.mkDefault "$y$j9T$kRLhtuEmMGYNtSnWXCfhe1$LoAoejJ1JdrKHt9Npf0Ay/0AXIdGOtub.UZHvJRUOlC";
+  sops.secrets."users/root/password".neededForUsers = true;
+  users.users.root.hashedPasswordFile = lib.mkDefault config.sops.secrets."users/root/password".path;
   boot = {
     initrd = {
       systemd.enable = true;

@@ -10,6 +10,8 @@
         ];
         buildInputs = previousAttrs.buildInputs ++ [
           prev.vulkan-loader
+        ];
+        nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [
           prev.vulkan-headers
         ];
       });
