@@ -1,8 +1,9 @@
 {
   lib,
+  pkgs,
   modules,
   inputs,
-  pkgs,
+  secrets,
   ...
 }:
 let
@@ -13,6 +14,7 @@ in
   imports = [
     ./hardware-configuration.nix
     ./net.nix
+    inputs.sops-nix.nixosModules.sops
     modules.nixos.hardware.intel
     modules.nixos.lanzaboote.default
     modules.nixos.home-manager
@@ -26,7 +28,9 @@ in
   services.smartd.enable = true;
   time.timeZone = "UTC";
   i18n.defaultLocale = "en_GB.UTF-8";
-  users.users.root.hashedPassword = "$y$j9T$N4d6f/0luo4g9pnrBMKTS.$2t7Z4LzizfFdDET/Ij8DjgJLm5kRlWSU1bdzWXqVbo4";
+  sops.secrets."users/root/password" = {
+    sopsFile = secrets.marchenstar;
+  };
   services = {
     sysstat.enable = true;
     hath.enable = true;

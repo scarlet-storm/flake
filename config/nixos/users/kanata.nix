@@ -1,20 +1,26 @@
 {
+  config,
+  lib,
   pkgs,
   ...
 }:
-
+let
+  name = "kanata";
+in
 {
-  users.users.kanata = {
+  sops.secrets."users/${name}/password".neededForUsers = true;
+  users.users.${name} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+    ];
     linger = false;
     uid = 1000;
     shell = pkgs.fish;
-    createHome = true;
-    group = "kanata";
-    hashedPassword = "$y$j9T$et55Z2t4KqNaTEX.IlDIB.$Rckgxg5X/o8V1yZ5MlfCJlaJTyetNy8wOpeh3.N6VcA";
+    group = "${name}";
+    hashedPasswordFile = lib.mkDefault config.sops.secrets."users/${name}/password".path;
   };
-  users.groups.kanata = {
+  users.groups.${name} = {
     gid = 1000;
   };
 }

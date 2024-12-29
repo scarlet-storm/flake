@@ -1,5 +1,6 @@
 {
   pkgs,
+  lib,
   homeManagerConfig,
   ...
 }:
@@ -94,6 +95,8 @@ in
         pkgs.go
         pkgs.python3
         pkgs.unzip # unzip lsp downloads by extensions
+        # shared libraries for dynamically linked lanugage servers
+        (lib.getLib pkgs.openssl)
       ]))
     ]);
   home.file = {
