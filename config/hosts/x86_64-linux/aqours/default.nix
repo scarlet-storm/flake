@@ -4,7 +4,6 @@
   config,
   inputs,
   modules,
-  systemName,
   ...
 }:
 
@@ -28,7 +27,7 @@ in
     modules.nixos.hardware.amd
     modules.nixos.hardware.gpu.nvidia
     modules.nixos.lanzaboote.default
-    modules.nixos.home-manager
+    # modules.nixos.home-manager
     modules.nixos.class.desktop
     modules.nixos.desktop.plasma
     modules.nixos.net.networkd-wifi
@@ -37,8 +36,8 @@ in
     modules.disko.luks-btrfs
     modules.nixos.steam
     inputs.self.nixosModules.services.OpenLinkHub
-  ] ++ builtins.map (user: modules.nixos.users.${user}) users;
-  home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
+  ] ++ lib.map (user: modules.nixos.users.${user}) users;
+  # home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;

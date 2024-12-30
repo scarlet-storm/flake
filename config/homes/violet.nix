@@ -57,6 +57,13 @@ in
     inherit username;
     homeDirectory = "/home/${username}";
   };
+  nixpkgs.config.allowUnfreePredicate = (
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "discord"
+    ]
+  );
+  news.display = "silent";
   home.packages =
     let
       imgbrd-grabber-git = pkgs.imgbrd-grabber.overrideAttrs (prevAttrs: {
@@ -77,6 +84,7 @@ in
       (wrapPrivateHome "Discord" {
         pkg = pkgs.discord;
         execName = "Discord";
+        # why in **** hell is there two binaries ???
         postBuild = "rm -fv $out/bin/discord";
       })
     ]
