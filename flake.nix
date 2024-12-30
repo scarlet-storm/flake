@@ -115,16 +115,15 @@
             inherit pkgs;
             modules = [
               { programs.home-manager.enable = true; }
-              inputs.plasma-manager.homeManagerModules.plasma-manager
               ./overlays
+              inputs.plasma-manager.homeManagerModules.plasma-manager
               config
             ];
             extraSpecialArgs = {
-              inherit homeManagerConfig;
-              inherit (inputs) nixgl;
+              inherit homeManagerConfig inputs;
             };
           }
         )
-      ) { };
+      ) modules.homes;
     };
 }
