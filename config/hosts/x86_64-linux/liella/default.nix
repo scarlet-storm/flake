@@ -25,7 +25,6 @@ in
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.bluetooth.enable = true;
   system.stateVersion = "24.11";
 }
