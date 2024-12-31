@@ -16,11 +16,7 @@ let
       ...
     }:
     pkgs.symlinkJoin {
-      inherit (pkg)
-        name
-        pname
-        version
-        ;
+      inherit (pkg) name pname version;
       inherit postBuild;
       paths = [
         (pkgs.runCommandLocal "${execName}-wrapped"
@@ -57,12 +53,7 @@ in
     inherit username;
     homeDirectory = "/home/${username}";
   };
-  nixpkgs.config.allowUnfreePredicate = (
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "discord"
-    ]
-  );
+  nixpkgs.config.allowUnfreePredicate = (pkg: builtins.elem (lib.getName pkg) [ "discord" ]);
   news.display = "silent";
   home.packages =
     let

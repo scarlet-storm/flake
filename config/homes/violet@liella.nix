@@ -1,8 +1,4 @@
-{
-  pkgs,
-  homeManagerConfig,
-  ...
-}:
+{ pkgs, homeManagerConfig, ... }:
 let
   pShizuku2x = pkgs.fetchurl {
     url = "https://i.idol.st/u/card/art/2x/831UR-Osaka-Shizuku-That-s-So-Cute-Briar-Rose-nf1fKb.png";

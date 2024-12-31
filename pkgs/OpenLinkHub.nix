@@ -20,12 +20,8 @@ buildGoModule rec {
     hash = "sha512-RmI7reDFAkSDkLQ5siCgWxBlJaNfWmYGpB7PCKRK1mOHz7svnlwZMK6P8zmPIxMYRhXrpz0Pz8VapbqHnubqzg==";
   };
   vendorHash = "sha256-o+Ek5pJG4fjeQg8e11afAbVIvzmDvG92v2mp4yOM3x4=";
-  nativeBuildInputs = [
-    makeWrapper
-  ];
-  buildInputs = [
-    systemd
-  ];
+  nativeBuildInputs = [ makeWrapper ];
+  buildInputs = [ systemd ];
   postInstall = ''
     mkdir -p $out/share/OpenLinkHub
     touch $out/share/OpenLinkHub/atomic

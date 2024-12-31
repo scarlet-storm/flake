@@ -1,6 +1,4 @@
-{
-  ...
-}:
+{ ... }:
 
 {
   # Use NetworkManager for wifi, since all devices have GUI

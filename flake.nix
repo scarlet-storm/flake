@@ -37,10 +37,7 @@
   };
 
   outputs =
-    inputs@{
-      nixpkgs,
-      ...
-    }:
+    inputs@{ nixpkgs, ... }:
     let
       lib = nixpkgs.lib;
       flakeModules = lib.filesystem.packagesFromDirectoryRecursive {
@@ -93,9 +90,7 @@
                 modules
                 secrets
                 ;
-              homeManagerExtraArgs = {
-                inherit homeManagerConfig;
-              };
+              homeManagerExtraArgs = { inherit homeManagerConfig; };
             };
           }
         ) modules.hosts.${system}
@@ -115,9 +110,7 @@
               inputs.plasma-manager.homeManagerModules.plasma-manager
               config
             ];
-            extraSpecialArgs = {
-              inherit homeManagerConfig inputs;
-            };
+            extraSpecialArgs = { inherit homeManagerConfig inputs; };
           }
         )
       ) modules.homes;

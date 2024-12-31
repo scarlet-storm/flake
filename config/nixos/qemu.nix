@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   virtualisation.libvirtd = {
@@ -35,7 +32,5 @@
   systemd.services.libvirt-guests.unitConfig.After = [ "network-online.target" ];
   systemd.services.libvirt-guests.unitConfig.Wants = [ "network-online.target" ];
   systemd.services.libvirtd.path = [ pkgs.passt ];
-  users.users.qemu-libvirtd.extraGroups = [
-    "kvm"
-  ];
+  users.users.qemu-libvirtd.extraGroups = [ "kvm" ];
 }

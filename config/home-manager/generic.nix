@@ -1,8 +1,4 @@
-{
-  pkgs,
-  nixgl,
-  ...
-}:
+{ pkgs, nixgl, ... }:
 {
   nixpkgs.overlays = [ nixgl.overlay ];
   targets.genericLinux.enable = true;
