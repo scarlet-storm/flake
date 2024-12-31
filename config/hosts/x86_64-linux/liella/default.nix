@@ -1,7 +1,6 @@
 {
   lib,
   modules,
-  pkgs,
   inputs,
   systemName,
   ...
