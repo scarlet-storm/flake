@@ -6,9 +6,7 @@
 }:
 
 {
-  imports = [
-    modules.nixos.unfree
-  ];
+  imports = [ modules.nixos.unfree ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;

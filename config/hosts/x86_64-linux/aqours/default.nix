@@ -84,9 +84,7 @@ in
   nixpkgs.overlays = [
     (final: prev: {
       kdePackages = prev.kdePackages.overrideScope (
-        kfinal: kprev: {
-          qtwebengine = prev.emptyDirectory;
-        }
+        kfinal: kprev: { qtwebengine = prev.emptyDirectory; }
       );
     })
   ];

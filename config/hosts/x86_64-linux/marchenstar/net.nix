@@ -43,9 +43,7 @@
     mode = "0600";
   };
   boot.initrd = {
-    availableKernelModules = [
-      "r8169"
-    ];
+    availableKernelModules = [ "r8169" ];
     systemd.network.enable = true;
     systemd.network.networks."10-default" = config.systemd.network.networks."10-default";
     network = {

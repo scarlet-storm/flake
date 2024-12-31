@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}:
+{ config, pkgs, ... }:
 
 let
   catppuccin_pink = pkgs.stdenvNoCC.mkDerivation rec {
@@ -125,9 +121,7 @@ in
         "widget.use-xdg-desktop-portal.file-picker" = 1;
         # "privacy.resistFingerprinting" = true;
       };
-      extensions = [
-        catppuccin_pink
-      ];
+      extensions = [ catppuccin_pink ];
       search = {
         force = true;
         engines = {
@@ -156,9 +150,7 @@ in
           };
         };
         default = "Brave";
-        order = [
-          "Brave"
-        ];
+        order = [ "Brave" ];
       };
     };
   };

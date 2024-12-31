@@ -11,9 +11,7 @@ in
   sops.secrets."users/${name}/password".neededForUsers = true;
   users.users.${name} = {
     isNormalUser = true;
-    extraGroups = [
-      "wheel"
-    ];
+    extraGroups = [ "wheel" ];
     linger = false;
     uid = 1000;
     shell = pkgs.fish;

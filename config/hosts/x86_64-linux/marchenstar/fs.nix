@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ lib, config, ... }:
 {
   services.zfs.trim.interval = "daily";
   # for fun
@@ -157,11 +153,7 @@
               }
             ];
             cache = [ "/dev/disk/by-partlabel/cache0" ];
-            log = [
-              {
-                members = [ "/dev/disk/by-partlabel/vdev1-slog0" ];
-              }
-            ];
+            log = [ { members = [ "/dev/disk/by-partlabel/vdev1-slog0" ]; } ];
           };
         };
         options = {

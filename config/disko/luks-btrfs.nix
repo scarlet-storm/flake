@@ -49,9 +49,7 @@
                   subvolumes = {
                     "/nixos" = {
                       mountpoint = "/";
-                      mountOptions = [
-                        "compress-force=zstd"
-                      ];
+                      mountOptions = [ "compress-force=zstd" ];
                     };
                     "/nixos/root" = { };
                     "/nixos/home" = { };

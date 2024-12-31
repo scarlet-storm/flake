@@ -7,12 +7,8 @@ in
     inherit username;
     homeDirectory = "/home/${username}";
   };
-  imports = [
-    ./base.nix
-  ];
+  imports = [ ./base.nix ];
 
-  home.packages = with pkgs; [
-    fanbox-dl
-  ];
+  home.packages = with pkgs; [ fanbox-dl ];
   home.stateVersion = "24.11";
 }

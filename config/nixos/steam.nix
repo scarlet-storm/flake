@@ -1,13 +1,7 @@
-{
-  pkgs,
-  modules,
-  ...
-}:
+{ pkgs, modules, ... }:
 
 {
-  imports = [
-    modules.nixos.unfree
-  ];
+  imports = [ modules.nixos.unfree ];
   unfree.packageList = [
     "steam"
     "steam-unwrapped"

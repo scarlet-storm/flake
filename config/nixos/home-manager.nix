@@ -17,10 +17,6 @@
         extraSpecialArgs = homeManagerExtraArgs;
       };
     }
-    {
-      unfree.packageList = [
-        "discord"
-      ];
-    }
+    { unfree.packageList = [ "discord" ]; }
   ];
 }

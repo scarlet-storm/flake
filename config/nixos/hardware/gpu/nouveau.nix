@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}:
+{ pkgs, lib, ... }:
 
 # TODO: create specialisation ?
 {
@@ -37,8 +33,7 @@
               "--sysconfdir=/etc"
             ]
           ) prevAttrs.mesonFlags
-          ++ [
-          ];
+          ++ [ ];
         preConfigure =
           prevAttrs.preConfigure
           + ''

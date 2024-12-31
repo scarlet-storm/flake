@@ -1,6 +1,4 @@
-{
-  ...
-}:
+{ ... }:
 
 {
   # Wifi using systemd-networkd ??

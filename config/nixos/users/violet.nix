@@ -30,9 +30,7 @@ let
     preferredSessionLauncher = "plasma";
     preferredSessionType = "wayland";
     privileged = {
-      hashedPassword = [
-        "${config.sops.placeholder."users/${name}/password"}"
-      ];
+      hashedPassword = [ "${config.sops.placeholder."users/${name}/password"}" ];
     };
     realName = "Violet";
     shell = "/usr/bin/fish";

@@ -1,8 +1,4 @@
-{
-  pkgs,
-  homeManagerConfig,
-  ...
-}:
+{ pkgs, homeManagerConfig, ... }:
 
 let
   f3KanataIdolized = pkgs.fetchurl {

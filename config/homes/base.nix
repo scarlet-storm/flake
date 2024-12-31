@@ -27,9 +27,7 @@
     EDITOR = "vim";
   };
   systemd.user = {
-    tmpfiles.rules = [
-      "D %t/ssh-control - - - - -"
-    ];
+    tmpfiles.rules = [ "D %t/ssh-control - - - - -" ];
     startServices = "sd-switch";
   };
   nix.gc = {

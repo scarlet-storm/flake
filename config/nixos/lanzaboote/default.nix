@@ -7,9 +7,7 @@
 }:
 
 {
-  imports = [
-    inputs.lanzaboote.nixosModules.lanzaboote
-  ];
+  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
   environment.systemPackages = [
     pkgs.sbsigntool
     pkgs.mokutil
