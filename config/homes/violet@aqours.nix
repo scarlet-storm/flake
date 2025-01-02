@@ -14,5 +14,11 @@ in
   programs.plasma.workspace.wallpaper = "${f3KanataIdolized}";
   programs.plasma.configFile.kdeglobals.General.AccentColor = "166,100,160";
   services.syncthing.enable = true;
+  programs.mangohud = {
+    enable = true;
+    settings = {
+      procmem = true;
+    };
+  };
   home.stateVersion = "24.05";
 }

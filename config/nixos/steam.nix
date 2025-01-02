@@ -13,7 +13,7 @@
   programs.steam.localNetworkGameTransfers.openFirewall = true;
   hardware.steam-hardware.enable = true;
   programs.steam.package = pkgs.steam.override {
-    buildFHSEnv =
+    buildFHSEnv = (
       p:
       pkgs.buildFHSEnvBubblewrap (
         p
@@ -31,7 +31,12 @@
             "--chdir \$HOME"
           ];
         }
-      );
+      )
+    );
+    extraEnv = {
+      MANGOHUD = true;
+    };
   };
+  programs.steam.extraPackages = with pkgs; [ mangohud ];
   environment.systemPackages = [ pkgs.bubblewrap ];
 }
