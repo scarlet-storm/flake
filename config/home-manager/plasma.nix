@@ -45,6 +45,7 @@ in
       {
         floating = true;
         height = 40;
+        extraSettings = builtins.readFile ./panel.js;
       }
     ];
   };
