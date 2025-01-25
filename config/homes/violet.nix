@@ -78,18 +78,6 @@ in
         # why in **** hell is there two binaries ???
         postBuild = "rm -fv $out/bin/discord";
       })
-    ]
-    ++ (with pkgs; [
-      input-leap
-      kopia
-      keepassxc
-      sops
-      signal-desktop
-      gdu
-      nixd
-      nil
-      nixfmt-rfc-style
-      yubikey-manager
       (pkgs.zed-editor.fhsWithPackages (pkgs: [
         pkgs.go
         pkgs.python3
@@ -97,6 +85,18 @@ in
         # shared libraries for dynamically linked lanugage servers
         (lib.getLib pkgs.openssl)
       ]))
+    ]
+    ++ (with pkgs; [
+      input-leap
+      kopia
+      keepassxc
+      sops
+      signal-desktop
+      nixd
+      nil
+      nixfmt-rfc-style
+      yubikey-manager
+      virt-viewer
     ]);
   home.file = {
     ".kopiaignore".text = ''

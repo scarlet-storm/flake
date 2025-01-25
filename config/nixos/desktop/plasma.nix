@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports = [ ./common.nix ];
@@ -6,6 +6,12 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+    settings = {
+      Users = {
+        MinimumUid = 1000;
+        MaximumUid = 60513;
+      };
+    };
   };
   environment.systemPackages = with pkgs; [
     xsettingsd
