@@ -3,8 +3,8 @@
   programs = {
     starship.enable = true;
     fish.enable = true;
-    nushell.enable = true;
     autojump.enable = true;
+    atuin.enable = true;
     ssh = {
       enable = true;
       controlMaster = "auto";
@@ -14,13 +14,16 @@
       controlPersist = "10m";
     };
     man.generateCaches = true;
+    nushell = {
+      enable = true;
+      configFile.source = ./config.nu;
+    };
   };
   home.packages = (
     with pkgs;
     [
       kopia
       fastfetch
-      age
     ]
   );
   home.sessionVariables = {

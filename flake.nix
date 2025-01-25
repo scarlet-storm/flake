@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.1";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -90,7 +90,7 @@
                 modules
                 secrets
                 ;
-              homeManagerExtraArgs = { inherit homeManagerConfig; };
+              homeManagerExtraArgs = { inherit homeManagerConfig secrets; };
             };
           }
         ) modules.hosts.${system}
@@ -107,10 +107,12 @@
             modules = [
               { programs.home-manager.enable = true; }
               ./overlays
+              inputs.sops-nix.homeManagerModules.sops
+              modules.nixos.sops
               inputs.plasma-manager.homeManagerModules.plasma-manager
               config
             ];
-            extraSpecialArgs = { inherit homeManagerConfig inputs; };
+            extraSpecialArgs = { inherit homeManagerConfig secrets; };
           }
         )
       ) modules.homes;

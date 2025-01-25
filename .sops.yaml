@@ -1,13 +1,17 @@
 keys:
-  - &user_violet age14znucymclds0v2sqagnz9m6ptemq9uhqrdr5gtjqzhemu2kdn9rsxcq0ep
+  - &admin_violet age14znucymclds0v2sqagnz9m6ptemq9uhqrdr5gtjqzhemu2kdn9rsxcq0ep
   - &host_liella age17l7dkuhs6y8zqahemjqq4hcrqupd028lelhd437m4m9f7ld3xg2qqm93rs
-  - &host_quartz age1fnm9yafdq8lfmqxgwh5qn282ukmdxuyxzljdsurqvcgeug22kdrshnpuns
   - &host_aqours age10katlmf70gx4knt5w6w6z6a0ary74gfxnvuydq9gpd3mlvrhx35sr2csyr
+  - &user_violet age1wsyj3cgxa94fgcm8ylrkkan4py9e8pxh69t4q7aj45h6y9w98dzqr38hmy
 creation_rules:
   - path_regex: secrets/common\.yaml$
     key_groups:
       - age:
-          - *user_violet
+          - *admin_violet
           - *host_liella
-          - *host_quartz
           - *host_aqours
+  - path_regex: secrets/violet\.yaml$
+    key_groups:
+      - age:
+          - *admin_violet
+          - *user_violet

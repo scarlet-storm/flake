@@ -60,11 +60,14 @@ in
     customColorSchemes = {
       "dracula-konsole" = "${dracula-konsole}/dracula-konsole.colorscheme";
     };
-    defaultProfile = "fish";
+    defaultProfile = "nu";
     extraConfig = {
       FileLocation = {
         scrollbackUseCacheLocation = false;
         scrollbackUseSystemLocation = true;
+      };
+      MainWindow = {
+        MenuBar = "Disabled";
       };
     };
     profiles = lib.genAttrs [ "fish" "nu" ] (
@@ -81,7 +84,7 @@ in
         };
       }
       // {
-        command = shell;
+        command = "${shell} -i";
       }
     );
   };

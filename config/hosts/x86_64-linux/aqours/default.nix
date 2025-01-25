@@ -9,7 +9,7 @@
 
 let
   users = [ "violet" ];
-  systemd-homework = pkgs.systemd.overrideAttrs (prevAttrs: {
+  systemd-homework = (pkgs.systemd.override { withFirstboot = true; }).overrideAttrs (prevAttrs: {
     patches = prevAttrs.patches ++ [
       (pkgs.fetchpatch2 {
         url = "https://patch-diff.githubusercontent.com/raw/systemd/systemd/pull/35776.patch";
@@ -37,8 +37,7 @@ in
     modules.nixos.steam
     inputs.self.nixosModules.services.OpenLinkHub
   ] ++ lib.map (user: modules.nixos.users.${user}) users;
-  # home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
@@ -88,6 +87,7 @@ in
       );
     })
   ];
+  networking.firewall.allowedTCPPorts = [ 24800 ]; # input-leap
   programs.kde-pim.enable = false;
   system.stateVersion = "24.11";
   systemd.oomd.enable = true;

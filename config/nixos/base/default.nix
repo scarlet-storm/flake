@@ -22,6 +22,7 @@
     ./net.nix
   ];
   sops.secrets."users/root/password".neededForUsers = true;
+  security.pam.services.systemd-run0 = { };
   users.users.root.hashedPasswordFile = lib.mkDefault config.sops.secrets."users/root/password".path;
   boot = {
     initrd = {
@@ -61,6 +62,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    age
     vim
     curl
     htop
@@ -72,6 +74,7 @@
     openssl
     moreutils
     git
+    ncdu
   ];
   systemd.oomd.enable = lib.mkDefault false;
   programs = {
