@@ -7,7 +7,6 @@
 
 {
   # Disable aliased packages
-  nixpkgs.config.allowAliases = false;
   nix = {
     settings = {
       experimental-features = [
