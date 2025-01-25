@@ -34,17 +34,6 @@ in
   services = {
     sysstat.enable = true;
     hath.enable = true;
-    hath.package =
-      (import (pkgs.applyPatches {
-        src = inputs.nixpkgs;
-        name = "patch";
-        patches = [
-          (pkgs.fetchpatch {
-            url = "https://patch-diff.githubusercontent.com/raw/NixOS/nixpkgs/pull/364988.patch";
-            hash = "sha256-iQsiwUV5aJVCl3mRgofOznw1v87oJ7KLQRmug9LGWeQ=";
-          })
-        ];
-      }) { system = "x86_64-linux"; }).hentai-at-home;
   };
   system.stateVersion = "25.05";
 }

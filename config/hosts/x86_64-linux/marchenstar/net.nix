@@ -50,9 +50,7 @@
       enable = true;
       ssh = {
         enable = true;
-        authorizedKeys = [
-          "cert-authority ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAION8+4aF6hbXO1QxU5GqvZZHZWThD6MAiLcWq+bPSWD8 Gwen User CA"
-        ];
+        authorizedKeyFiles = config.services.openssh.authorizedKeysFiles;
         extraConfig = ''
           HostKey /etc/ssh/ssh_host_ed25519_key
         '';

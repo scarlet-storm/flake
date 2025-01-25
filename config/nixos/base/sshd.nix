@@ -1,15 +1,13 @@
-{ ... }:
-let
-  trustedUserCAFile = "trustedUserCA";
-in
+{ config, ... }:
 {
-  environment.etc."ssh/${trustedUserCAFile}".text = ''
-    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAION8+4aF6hbXO1QxU5GqvZZHZWThD6MAiLcWq+bPSWD8 Gwen User CA
-  '';
+  sops.secrets."services/sshd/authorized_keys" = {
+    mode = "0444";
+  };
   services = {
     openssh = {
       enable = true;
       openFirewall = true;
+      authorizedKeysFiles = [ config.sops.secrets."services/sshd/authorized_keys".path ];
       settings = {
         PermitRootLogin = "prohibit-password";
         PasswordAuthentication = false;
