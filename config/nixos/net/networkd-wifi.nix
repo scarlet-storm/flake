@@ -5,7 +5,7 @@
   networking.networkmanager.enable = false;
   systemd.network.enable = true;
   systemd.network.networks = {
-    "10-lan" = {
+    "90-lan" = {
       matchConfig.Type = "ether !wlan";
       networkConfig = {
         DHCP = "ipv4";
