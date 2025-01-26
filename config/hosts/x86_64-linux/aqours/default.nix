@@ -37,7 +37,7 @@ in
     modules.nixos.steam
     inputs.self.nixosModules.services.OpenLinkHub
   ] ++ lib.map (user: modules.nixos.users.${user}) users;
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
