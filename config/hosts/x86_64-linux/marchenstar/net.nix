@@ -50,15 +50,17 @@
       enable = true;
       ssh = {
         enable = true;
-        authorizedKeyFiles = config.services.openssh.authorizedKeysFiles;
         extraConfig = ''
           HostKey /etc/ssh/ssh_host_ed25519_key
+          AuthorizedKeysFile /etc/ssh/authorized_keys
         '';
         ignoreEmptyHostKeys = true;
+        authorizedKeys = [ "" ];
       };
     };
     secrets = {
       "/etc/ssh/ssh_host_ed25519_key" = config.sops.secrets."ssh/initrd_host_key".path;
+      "/etc/ssh/authorized_keys" = config.sops.secrets."services/sshd/authorized_keys".path;
     };
   };
 }

@@ -41,7 +41,7 @@ in
           WorkingDirectory = "${homeDir}";
           User = "hath";
           Group = "hath";
-          LoadCredential = "client_login:${config.sops.secrets."services/client_login".path}";
+          LoadCredential = "client_login:${config.sops.secrets."services/hath/client_login".path}";
           ExecStartPre = ''${pkgs.coreutils}/bin/cp -fv "''${CREDENTIALS_DIRECTORY}/client_login" "${homeDir}/data/client_login"'';
           ExecStart = "${cfg.package}/bin/HentaiAtHome";
           Restart = "on-failure";
@@ -60,7 +60,7 @@ in
         };
       };
       networking.firewall.allowedTCPPorts = [ 9443 ];
-      sops.secrets."services/client_login" = {
+      sops.secrets."services/hath/client_login" = {
         restartUnits = [ "hath.service" ];
       };
     }
