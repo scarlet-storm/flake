@@ -86,7 +86,6 @@
     fstrim.enable = true;
     locate.package = pkgs.plocate;
     locate.enable = true;
-    locate.localuser = null;
   };
 
 }
