@@ -92,4 +92,5 @@ in
   system.stateVersion = "24.11";
   systemd.oomd.enable = true;
   systemd.oomd.enableRootSlice = true;
+  boot.kernelParams = [ "split_lock_detect=off" ];
 }

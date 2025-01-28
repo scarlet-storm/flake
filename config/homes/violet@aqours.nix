@@ -36,7 +36,9 @@ in
     overrideFolders = true;
     # passwordFile = null;
     settings = {
-      #   options = { };
+      options = {
+        natEnabled = false;
+      };
       devices = {
         aqours = {
           id = "W5X4XBK-AXVMYLS-2GIP5DO-VL6V3DB-SOIRMKM-JWAIUUO-U2AFGOT-BNYK3QH";
