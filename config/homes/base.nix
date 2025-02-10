@@ -24,6 +24,8 @@
     [
       kopia
       fastfetch
+      dua
+      rclone
     ]
   );
   home.sessionVariables = {

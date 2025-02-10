@@ -41,7 +41,7 @@ let
     id:
     (wrapPrefix ''
       systemd-run --unit app-${id}@\$(${pkgs.util-linux}/bin/uuidgen).service --slice app.slice --pty --pipe --user \
-      -p ExitType=cgroup --working-directory=\$HOME -p ProtectHome=tmpfs -p BindPaths=\$HOME/.var/apps/:\$HOME \
+      -p ExitType=cgroup --working-directory=\$HOME -p ProtectHome=tmpfs -p BindPaths=\$HOME/.var/nixapps/${id}:\$HOME \
       -p BindPaths=\$XDG_RUNTIME_DIR'');
 in
 {
@@ -72,7 +72,7 @@ in
     in
     [
       imgbrd-grabber-git
-      (wrapPrivateHome "Discord" {
+      (wrapPrivateHome "discord" {
         pkg = pkgs.discord;
         execName = "Discord";
         # why in **** hell is there two binaries ???
