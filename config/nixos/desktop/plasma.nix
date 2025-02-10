@@ -29,8 +29,10 @@
       addons = [ pkgs.fcitx5-mozc ];
     };
   };
-  environment.plasma6.excludePackages = [
-    pkgs.kdePackages.discover
-    pkgs.kdePackages.khelpcenter
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    discover
+    khelpcenter
+    xwaylandvideobridge
+    krdp
   ];
 }

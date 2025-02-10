@@ -93,4 +93,10 @@ in
   systemd.oomd.enable = true;
   systemd.oomd.enableRootSlice = true;
   boot.kernelParams = [ "split_lock_detect=off" ];
+  environment.etc = rec {
+    subuid.text = ''
+      violet:524288:65536
+    '';
+    subgid = subuid;
+  };
 }

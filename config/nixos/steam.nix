@@ -23,7 +23,7 @@
             unsharePid = true;
             extraBwrapArgs = p.extraBwrapArgs ++ [
               "--tmpfs /home"
-              "--bind \$HOME/.var/apps \$HOME"
+              "--bind \$HOME/.var/nixapps/steam \$HOME"
               "--bind \$HOME/Downloads \$HOME/Downloads"
               "--ro-bind \$HOME/.config/dconf \$HOME/.config/dconf"
               "--ro-bind \$HOME/.config/xsettingsd \$HOME/.config/xsettingsd"
