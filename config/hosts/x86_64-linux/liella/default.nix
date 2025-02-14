@@ -22,7 +22,7 @@ in
     modules.nixos.net.networkd-wifi
     inputs.disko.nixosModules.default
     modules.nixos.steam
-    modules.disko.luks-btrfs
+    modules.disko.luks-xfs
   ] ++ builtins.map (user: modules.nixos.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   boot.kernelPackages = pkgs.linuxPackages_latest;
