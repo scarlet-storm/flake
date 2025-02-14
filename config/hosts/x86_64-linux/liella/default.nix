@@ -18,7 +18,7 @@ in
     modules.nixos.hardware.gpu.intel
     modules.nixos.lanzaboote.default
     modules.nixos.home-manager
-    modules.nixos.desktop.cosmic
+    modules.nixos.desktop.plasma
     modules.nixos.net.networkd-wifi
     inputs.disko.nixosModules.default
     modules.nixos.steam
