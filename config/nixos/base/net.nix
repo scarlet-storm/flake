@@ -52,7 +52,7 @@ in
     enable = lib.mkDefault true;
     logRefusedConnections = false;
     checkReversePath = "strict";
-    filterForward = false;
+    filterForward = true;
   };
   environment.systemPackages = with pkgs; [ wireguard-tools ];
 }
