@@ -1,4 +1,8 @@
 {
+  swapDevices.swapfile = {
+    device = "/swap/swapfile";
+    size = 10240;
+  };
   disko.devices = {
     disk = {
       root = {
@@ -41,7 +45,8 @@
                   allowDiscards = true;
                 };
                 content = {
-                  type = "xfs";
+                  type = "filesystem";
+                  format = "xfs";
                   extraArgs = [
                     "-L"
                     "rootfs"
