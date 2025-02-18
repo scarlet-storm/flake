@@ -53,7 +53,6 @@ in
     inherit username;
     homeDirectory = "/home/${username}";
   };
-  nixpkgs.config.allowUnfreePredicate = (pkg: builtins.elem (lib.getName pkg) [ "discord" ]);
   news.display = "silent";
   home.packages =
     let

@@ -1,8 +1,10 @@
 {
-  swapDevices.swapfile = {
-    device = "/swap/swapfile";
-    size = 10240;
-  };
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      size = 10240;
+    }
+  ];
   disko.devices = {
     disk = {
       root = {
