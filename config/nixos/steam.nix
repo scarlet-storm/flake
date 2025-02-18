@@ -1,13 +1,6 @@
 { pkgs, modules, ... }:
 
 {
-  imports = [ modules.nixos.unfree ];
-  unfree.packageList = [
-    "steam"
-    "steam-unwrapped"
-    "steam-original"
-    "steam-run"
-  ];
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;

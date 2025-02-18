@@ -6,7 +6,6 @@
 }:
 
 {
-  imports = [ modules.nixos.unfree ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
@@ -15,10 +14,6 @@
     nvidiaSettings = true;
     package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.beta;
   };
-  unfree.packageList = [
-    "nvidia-settings"
-    "nvidia-x11"
-  ];
   boot.kernelModules = [
     "nvidia"
     "nvidia-modeset"

@@ -1,14 +1,8 @@
-{
-  inputs,
-  homeManagerExtraArgs,
-  modules,
-  ...
-}:
+{ inputs, homeManagerExtraArgs, ... }:
 
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
-    modules.nixos.unfree
     {
       home-manager = {
         useGlobalPkgs = true;
@@ -20,6 +14,5 @@
         extraSpecialArgs = homeManagerExtraArgs;
       };
     }
-    { unfree.packageList = [ "discord" ]; }
   ];
 }
