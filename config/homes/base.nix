@@ -26,6 +26,7 @@
       fastfetch
       dua
       rclone
+      zellij
     ]
   );
   home.sessionVariables = {
