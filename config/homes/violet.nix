@@ -120,6 +120,14 @@ in
         hwdec = "vulkan,nvdec,vaapi";
       };
     };
+    ghostty = {
+      enable = true;
+      settings = {
+        font-family = "Rec Mono Semicasual";
+        theme = "rose-pine";
+        command = "nu -i";
+      };
+    };
     fastfetch.enable = true;
     lazygit.enable = true;
     ripgrep.enable = true;

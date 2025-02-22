@@ -63,23 +63,26 @@
 
   environment.systemPackages = with pkgs; [
     age
-    vim
     curl
-    htop
-    tmux
     rsync
     nvme-cli
     e2fsprogs
     efibootmgr
     openssl
     moreutils
-    git
     ncdu
+    zellij
   ];
   systemd.oomd.enable = lib.mkDefault false;
   programs = {
     fish.enable = true;
     command-not-found.enable = false;
+    git.enable = true;
+    htop.enable = true;
+    vim = {
+      enable = true;
+      defaultEditor = true;
+    };
   };
   users.mutableUsers = false;
   services = {
