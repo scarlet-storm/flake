@@ -68,6 +68,7 @@
     nvme-cli
     e2fsprogs
     efibootmgr
+    libarchive
     openssl
     moreutils
     ncdu
