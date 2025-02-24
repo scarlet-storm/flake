@@ -1,6 +1,7 @@
 { lib, ... }:
 
 {
+  imports = [ ./lib.nix ];
   nixpkgs.overlays = [
     (final: prev: {
       virglrenderer = prev.virglrenderer.overrideAttrs (previousAttrs: {

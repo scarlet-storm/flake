@@ -4,45 +4,8 @@
   homeManagerConfig,
   ...
 }:
-
 let
   username = "violet";
-  wrapPrefix = (
-    prefix:
-    {
-      pkg,
-      execName,
-      postBuild ? "",
-      ...
-    }:
-    pkgs.symlinkJoin {
-      inherit (pkg) name pname version;
-      inherit postBuild;
-      paths = [
-        (pkgs.runCommandLocal "${execName}-wrapped"
-          {
-
-          }
-          ''
-            mkdir -p $out/bin
-            cat <<EOF > $out/bin/${execName}
-            #! ${pkgs.runtimeShell}
-            exec ${prefix} ${pkg}/bin/${execName} \$@
-            EOF
-            chmod a+x $out/bin/${execName}
-          ''
-        )
-        pkg
-      ];
-    }
-  );
-  # TODO: /run socket restrictions
-  wrapPrivateHome =
-    id:
-    (wrapPrefix ''
-      systemd-run --unit app-${id}@\$(${pkgs.util-linux}/bin/uuidgen).service --slice app.slice --pty --pipe --user \
-      -p ExitType=cgroup --working-directory=\$HOME -p ProtectHome=tmpfs -p BindPaths=\$HOME/.var/nixapps/${id}:\$HOME \
-      -p BindPaths=\$XDG_RUNTIME_DIR'');
 in
 {
   imports = [
@@ -55,23 +18,8 @@ in
   };
   news.display = "silent";
   home.packages =
-    let
-      imgbrd-grabber-git = pkgs.imgbrd-grabber.overrideAttrs (prevAttrs: {
-        version = "2024-10-14";
-        src = pkgs.fetchFromGitHub {
-          owner = "Bionus";
-          repo = "imgbrd-grabber";
-          rev = "73f6cc01b5e85eda925b945dbc8afa4746839ad2";
-          hash = "sha512-8Ls7IBDkM2uVekrYv/zg+PQe7VCb3zGbspcMRosAIYxm3kTUR8YgNnjsI0QxKhYjs7MEU9pDd7MUsekUQLCAAw==";
-          fetchSubmodules = true;
-        };
-        buildInputs = prevAttrs.buildInputs ++ [ pkgs.kdePackages.qtwayland ];
-      });
-
-    in
     [
-      imgbrd-grabber-git
-      (wrapPrivateHome "discord" {
+      (pkgs.mylib.wrapPrivateHome "discord" {
         pkg = pkgs.discord;
         execName = "Discord";
         # why in **** hell is there two binaries ???

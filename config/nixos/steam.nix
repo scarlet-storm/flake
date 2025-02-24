@@ -1,32 +1,14 @@
-{ pkgs, modules, ... }:
-
+{ pkgs, lib, ... }:
+let
+  buildFHSEnv = pkgs.mylib.buildFHSEnvPrivate;
+in
 {
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
     package = pkgs.steam.override {
-      buildFHSEnv = (
-        p:
-        pkgs.buildFHSEnvBubblewrap (
-          p
-          // {
-            PrivateTmp = true;
-            unshareCgroup = true;
-            unsharePid = true;
-            extraBwrapArgs = p.extraBwrapArgs ++ [
-              "--tmpfs /home"
-              "--bind \$HOME/.var/nixapps/steam \$HOME"
-              "--bind \$HOME/Downloads \$HOME/Downloads"
-              "--ro-bind \$HOME/.config/dconf \$HOME/.config/dconf"
-              "--ro-bind \$HOME/.config/xsettingsd \$HOME/.config/xsettingsd"
-              # https://github.com/ValveSoftware/steam-for-linux/issues/10808 ???
-              "--ro-bind /run/current-system/sw/share/icons /usr/share/icons"
-              "--chdir \$HOME"
-            ];
-          }
-        )
-      );
+      inherit buildFHSEnv;
       extraEnv = {
         MANGOHUD = true;
       };
@@ -35,4 +17,5 @@
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
   hardware.steam-hardware.enable = true;
+  environment.systemPackages = [ (pkgs.heroic.override { inherit buildFHSEnv; }) ];
 }
