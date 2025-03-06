@@ -38,7 +38,7 @@
           (wrapPrefix ''
             systemd-run --unit app-${id}@\$(${pkgs.util-linux}/bin/uuidgen).service --slice app.slice --pty --pipe --user \
             -p ExitType=cgroup --working-directory=\$HOME -p ProtectHome=tmpfs -p BindPaths=\$HOME/.var/nixapps/${id}:\$HOME \
-            -p BindPaths=\$XDG_RUNTIME_DIR'');
+            -p BindReadOnlyPaths=\$HOME/.config/dconf -p BindPaths=\$XDG_RUNTIME_DIR -p PrivatePIDs=true -p PrivateTmp=true'');
         buildFHSEnvPrivate = (
           p:
           pkgs.buildFHSEnvBubblewrap (
