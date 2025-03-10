@@ -42,6 +42,9 @@
       url = "github:ezKEa/aagl-gtk-on-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    virglrenderer = {
+      url = "github:nixOS/nixpkgs/refs/pull/382283/head";
+    };
   };
 
   outputs =
@@ -87,6 +90,11 @@
             inherit system;
             modules = [
               { networking.hostName = systemName; }
+              {
+                nixpkgs.overlays = [
+                  (final: prev: { virglrenderer = inputs.virglrenderer.legacyPackages.${system}.virglrenderer; })
+                ];
+              }
               ./overlays
               modules.nixos.base.default
               config.default
