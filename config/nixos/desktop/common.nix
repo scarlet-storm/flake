@@ -17,6 +17,10 @@
       nssmdns4 = true;
       openFirewall = true;
     };
+    printing.enable = true;
+    printing.cups-pdf.enable = true;
+    system-config-printer.enable = true;
+    printing.drivers = with pkgs; [ hplip ];
     libinput.enable = true;
     pcscd.enable = true;
   };
