@@ -18,6 +18,7 @@
       enable = true;
       configFile.source = ./config.nu;
     };
+    zoxide.enable = true;
   };
   home.packages = (
     with pkgs;

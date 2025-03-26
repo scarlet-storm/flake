@@ -2,9 +2,7 @@
 
 {
   imports = [ ./lib.nix ];
-  nixpkgs.overlays = [
-    (final: prev: { procps = prev.procps.overrideAttrs { meta.priority = 10; }; })
-  ];
+  nixpkgs.overlays = [ ];
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
@@ -14,5 +12,6 @@
       "steam-run"
       "nvidia-x11"
       "nvidia-settings"
+      "hplip"
     ];
 }

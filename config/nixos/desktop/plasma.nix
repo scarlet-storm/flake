@@ -17,6 +17,7 @@
     xsettingsd
     kdePackages.sddm-kcm
     kdePackages.ksvg
+    kdePackages.skanlite
     unar # ark rar plugin
   ];
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

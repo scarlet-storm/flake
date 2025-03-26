@@ -17,10 +17,12 @@
       nssmdns4 = true;
       openFirewall = true;
     };
-    printing.enable = true;
-    printing.cups-pdf.enable = true;
+    printing = {
+      enable = true;
+      browsed.enable = false;
+      drivers = with pkgs; [ hplip ];
+    };
     system-config-printer.enable = true;
-    printing.drivers = with pkgs; [ hplip ];
     libinput.enable = true;
     pcscd.enable = true;
   };
@@ -44,5 +46,14 @@
     };
   };
   security.rtkit.enable = true;
-  hardware.i2c.enable = true;
+  hardware = {
+    i2c.enable = true;
+    sane = {
+      enable = true;
+      extraBackends = with pkgs; [
+        hplipWithPlugin
+        sane-airscan
+      ];
+    };
+  };
 }
