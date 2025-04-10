@@ -24,10 +24,7 @@
     initrd = {
       systemd.enable = true;
       systemd.dbus.enable = true;
-      availableKernelModules = [
-        "vfat"
-        "crc32c-intel"
-      ];
+      availableKernelModules = [ "vfat" ];
     };
     kernel = {
       sysctl = {
