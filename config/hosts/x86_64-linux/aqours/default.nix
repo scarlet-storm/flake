@@ -37,7 +37,7 @@ in
     modules.nixos.steam
     inputs.self.nixosModules.services.OpenLinkHub
   ] ++ lib.map (user: modules.nixos.users.${user}) users;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_testing;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
@@ -73,12 +73,6 @@ in
   systemd.services.systemd-homed.environment = {
     "SYSTEMD_HOMEWORK_PATH" = "${systemd-homework}/lib/systemd/systemd-homework";
   };
-  boot.kernelPatches = [
-    {
-      name = "WCN785x-btusb";
-      patch = ./Bluetooth-btusb-Add-one-more-ID-0x0489-0xe10a-for-Qualcomm-WCN785x.diff;
-    }
-  ];
   services.homed.enable = true;
   nixpkgs.overlays = [
     (final: prev: {
