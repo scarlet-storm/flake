@@ -18,6 +18,7 @@
     kdePackages.sddm-kcm
     kdePackages.ksvg
     kdePackages.skanlite
+    libreoffice-qt6-fresh
     unar # ark rar plugin
   ];
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
