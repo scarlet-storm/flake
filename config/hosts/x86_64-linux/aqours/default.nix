@@ -25,7 +25,7 @@ in
     ./hardware-configuration.nix
     modules.nixos.builders.default
     modules.nixos.hardware.amd
-    modules.nixos.hardware.gpu.nvidia
+    modules.nixos.hardware.gpu.nouveau
     modules.nixos.lanzaboote.default
     # modules.nixos.home-manager
     modules.nixos.class.desktop
@@ -42,8 +42,8 @@ in
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
   services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub.override {
-    withNvidia = true;
-    nvidiaPackage = config.hardware.nvidia.package;
+    # withNvidia = true;
+    # nvidiaPackage = config.hardware.nvidia.package;
   };
   services.OpenLinkHub.enable = true;
   # services.hardware.openrgb.enable = true;

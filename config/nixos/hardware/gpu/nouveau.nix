@@ -6,9 +6,6 @@
     "nouveau.config=NvGspRm=1"
     "nouveau.modeset=1"
   ];
-  systemd.globalEnvironment = {
-    "NOUVEAU_USE_ZINK" = "1";
-  };
   boot.kernelModules = [ "nouveau" ];
   nixpkgs.overlays = [
     (final: prev: {
@@ -17,10 +14,10 @@
           domain = "gitlab.freedesktop.org";
           owner = "mesa";
           repo = "mesa";
-          rev = "ed58b869e1ce68090d62297e06bae4afd24827be";
-          hash = "sha512-O6VarKF2Z6zKoS8tPtMNJ9oFmnV1kTj4pGD+EoQLTOZc18RIqY9wPEL55XNj5cJdMhtZJoKkCyxw0LruDEHkNA==";
+          rev = "mesa-25.1.0-rc1";
+          hash = "sha256-vQrTGGhIfy41uaCQ4rg+ZlCp43qI1wMK6QIrGKr4+Ts=";
         };
-        version = "20241221";
+        version = "25.1.0-rc1";
         patches = [ ];
         mesonFlags =
           builtins.filter (

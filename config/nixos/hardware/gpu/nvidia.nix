@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  modules,
-  ...
-}:
-
+{ config, lib, ... }:
 {
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
@@ -14,10 +8,4 @@
     nvidiaSettings = true;
     package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.beta;
   };
-  boot.kernelModules = [
-    "nvidia"
-    "nvidia-modeset"
-    "nvidia-drm"
-    "nvidia-uvm"
-  ];
 }

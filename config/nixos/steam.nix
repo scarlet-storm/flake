@@ -7,12 +7,7 @@ in
     enable = true;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
-    package = pkgs.steam.override {
-      inherit buildFHSEnv;
-      extraEnv = {
-        MANGOHUD = true;
-      };
-    };
+    package = pkgs.steam.override { inherit buildFHSEnv; };
     extraPackages = with pkgs; [ mangohud ];
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
