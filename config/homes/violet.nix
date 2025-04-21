@@ -34,7 +34,7 @@ in
       ]))
     ]
     ++ (with pkgs; [
-      input-leap
+      deskflow
       kopia
       keepassxc
       sops
