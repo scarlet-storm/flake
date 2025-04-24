@@ -25,7 +25,7 @@ in
     ./hardware-configuration.nix
     modules.nixos.builders.default
     modules.nixos.hardware.amd
-    modules.nixos.hardware.gpu.nouveau
+    modules.nixos.hardware.gpu.nvidia
     modules.nixos.lanzaboote.default
     # modules.nixos.home-manager
     modules.nixos.class.desktop
@@ -37,13 +37,13 @@ in
     modules.nixos.steam
     inputs.self.nixosModules.services.OpenLinkHub
   ] ++ lib.map (user: modules.nixos.users.${user}) users;
-  boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
   services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub.override {
-    # withNvidia = true;
-    # nvidiaPackage = config.hardware.nvidia.package;
+    withNvidia = true;
+    nvidiaPackage = config.hardware.nvidia.package;
   };
   services.OpenLinkHub.enable = true;
   # services.hardware.openrgb.enable = true;
