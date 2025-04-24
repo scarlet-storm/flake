@@ -5,6 +5,7 @@
   boot.kernelParams = [
     "nouveau.config=NvGspRm=1"
     "nouveau.modeset=1"
+    "nouveau.runpm=0"
   ];
   boot.kernelModules = [ "nouveau" ];
   nixpkgs.overlays = [
@@ -14,10 +15,10 @@
           domain = "gitlab.freedesktop.org";
           owner = "mesa";
           repo = "mesa";
-          rev = "mesa-25.1.0-rc1";
-          hash = "sha256-vQrTGGhIfy41uaCQ4rg+ZlCp43qI1wMK6QIrGKr4+Ts=";
+          rev = "300b6f73714fd7e82491eb49db283d78495c4421";
+          hash = "sha256-8jFDNsMA+MfBzPZ2PoUqSvFJ7CpIW+c11ne1P0+KrgY=";
         };
-        version = "25.1.0-rc1";
+        version = "2025-04-24";
         patches = [ ];
         mesonFlags =
           builtins.filter (
