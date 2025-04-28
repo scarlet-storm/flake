@@ -9,6 +9,7 @@ local config = {
     hide_tab_bar_if_only_one_tab = true,
     -- front_end = "WebGpu",
     default_prog = { "nu", "-i" },
+    term = "wezterm",
     mouse_bindings = {
         {
             event = { Up = { streak = 1, button = 'Left' } },
@@ -25,6 +26,15 @@ local config = {
             mods = 'NONE',
             action = act.CompleteSelection 'PrimarySelection',
         },
+    },
+    keys = {
     }
 }
+for i = 1, 8 do
+    table.insert(config.keys, {
+        key = tostring(i),
+        mods = 'ALT',
+        action = act.ActivateTab(i - 1),
+    })
+end
 return config
