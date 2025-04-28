@@ -6,6 +6,12 @@
 }:
 let
   username = "violet";
+  rose-pine-wezterm = pkgs.fetchFromGitHub {
+    owner = "neapsix";
+    repo = "wezterm";
+    rev = "7b7dff56fea74454c4844f9bb4e59e0ec9cb468c";
+    hash = "sha256-36BcK8XAOtfZfQtVNCZwqAKyY/scjE7XJS8ITkg4qZE=";
+  };
 in
 {
   imports = [
@@ -50,7 +56,15 @@ in
       /.var
       /.cache
       /Downloads
+      /src
+      /.local
+      /.config/emacs
+      /.mozilla
+      /bak
     '';
+    ".config/wezterm/lua/rose-pine.lua" = {
+      source = "${rose-pine-wezterm}/plugin/init.lua";
+    };
   };
 
   programs = {
@@ -81,6 +95,10 @@ in
     ripgrep.enable = true;
     fd.enable = true;
     fzf.enable = true;
+    wezterm = {
+      enable = true;
+      extraConfig = builtins.readFile ./wezterm.lua;
+    };
   };
   services = {
     emacs.enable = true;
