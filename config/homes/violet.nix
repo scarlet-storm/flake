@@ -10,7 +10,7 @@ let
     owner = "neapsix";
     repo = "wezterm";
     rev = "7b7dff56fea74454c4844f9bb4e59e0ec9cb468c";
-    hash = "sha256-36BcK8XAOtfZfQtVNCZwqAKyY/scjE7XJS8ITkg4qZE=";
+    hash = "sha256-RygMZUBwbqbe3YLRMfu1N1egdzntubXYWH8M2Kw3LLw=";
   };
 in
 {
