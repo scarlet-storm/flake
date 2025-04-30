@@ -10,6 +10,8 @@ local config = {
     -- front_end = "WebGpu",
     default_prog = { "nu", "-i" },
     term = "wezterm",
+    show_close_tab_button_in_tabs = false,
+    scrollback_lines = 100000,
     mouse_bindings = {
         {
             event = { Up = { streak = 1, button = 'Left' } },
@@ -26,8 +28,19 @@ local config = {
             mods = 'NONE',
             action = act.CompleteSelection 'PrimarySelection',
         },
+        -- and make CTRL-Click open hyperlinks
+        {
+            event = { Up = { streak = 1, button = 'Left' } },
+            mods = 'CTRL',
+            action = act.OpenLinkAtMouseCursor,
+        },
     },
     keys = {
+        {
+            key = 'w',
+            mods = 'CTRL',
+            action = act.CloseCurrentTab { confirm = true },
+        },
     }
 }
 for i = 1, 8 do
