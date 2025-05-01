@@ -5,14 +5,6 @@
     fish.enable = true;
     autojump.enable = true;
     atuin.enable = true;
-    ssh = {
-      enable = true;
-      controlMaster = "auto";
-      serverAliveInterval = 20;
-      serverAliveCountMax = 6;
-      controlPath = "\${XDG_RUNTIME_DIR}/ssh-control/mux.%C";
-      controlPersist = "10m";
-    };
     man.generateCaches = true;
     nushell = {
       enable = true;
@@ -42,5 +34,21 @@
     frequency = "weekly";
     randomizedDelaySec = "1d";
     options = "--delete-older-than 7d";
+  };
+  home.file = {
+    ".ssh/config" = {
+      target = ".ssh/config_store";
+      text = ''
+        Host *
+          ServerAliveInterval 20
+          ServerAliveCountMax 6
+          ControlMaster auto
+          ControlPath ''${XDG_RUNTIME_DIR}/ssh-control/mux.%C
+          ControlPersist 10m
+      '';
+      onChange = ''
+        install -m 0400 .ssh/config_store .ssh/config
+      '';
+    };
   };
 }
