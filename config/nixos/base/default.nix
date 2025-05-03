@@ -44,12 +44,7 @@
   };
   time.timeZone = lib.mkDefault "Asia/Kolkata";
   i18n = {
-    supportedLocales = [
-      "C.UTF-8/UTF-8"
-      "en_US.UTF-8/UTF-8"
-      "en_GB.UTF-8/UTF-8"
-      "en_IN/UTF-8"
-    ];
+    glibcLocales = pkgs.glibcLocales;
     defaultLocale = lib.mkDefault "en_IN.UTF-8";
     extraLocaleSettings."LC_TIME" = "en_GB.UTF-8";
   };
