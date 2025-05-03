@@ -5,23 +5,6 @@
   ...
 }:
 
-let
-  dracula-konsole = pkgs.stdenvNoCC.mkDerivation rec {
-    pname = "dracula-konsole";
-    version = "2022-03-21";
-    name = "${pname}-${version}";
-    src = pkgs.fetchFromGitHub {
-      owner = "dracula";
-      repo = "konsole";
-      rev = "030486c75f12853e9d922b59eb37c25aea4f66f4";
-      hash = "sha512-gSP3My3B3uHqE8JMnGr3A0RkIqxDykc4Qyzv9g6vUFLukkWayEIDBb6NmJ5FV76ucYCeDfJ17R/kICQPJr/ORQ==";
-    };
-    installPhase = ''
-      mkdir $out
-      install -m 0644 "${src}/Dracula.colorscheme" "$out/${pname}.colorscheme"
-    '';
-  };
-in
 {
   xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service".source =
     config.lib.file.mkOutOfStoreSymlink "/dev/null";
@@ -61,9 +44,17 @@ in
   fonts.fontconfig.enable = true;
   programs.konsole = {
     enable = true;
-    customColorSchemes = {
-      "dracula-konsole" = "${dracula-konsole}/dracula-konsole.colorscheme";
-    };
+    customColorSchemes =
+      # lib.concatMapAttrs
+      #   (k: v: { ${lib.removeSuffix ".colorscheme" k} = "${pkgs.iterm2-color-schemes}/konsole/${k}"; })
+      #   (
+      #     lib.filterAttrs (k: v: lib.hasSuffix ".colorscheme" k) (
+      #       builtins.readDir "${pkgs.iterm2-color-schemes}/konsole"
+      #     )
+      #   );
+      lib.genAttrs [ "tokyonight" "Banana Blueberry" ] (
+        color: "${pkgs.iterm2-color-schemes}/konsole/${color}.colorscheme"
+      );
     defaultProfile = "nu";
     extraConfig = {
       FileLocation = {
@@ -78,8 +69,8 @@ in
       shell:
       {
         font.name = "Rec Mono SemiCasual";
-        font.size = 11;
-        colorScheme = "dracula-konsole";
+        font.size = 12;
+        colorScheme = "tokyonight";
         extraConfig = {
           Scrolling.HistoryMode = 2;
           "Interaction Options" = {

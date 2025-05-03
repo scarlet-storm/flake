@@ -109,13 +109,15 @@
         name: config:
         (
           let
-            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+            system = "x86_64-linux";
+            pkgs = inputs.nixpkgs.legacyPackages.${system};
           in
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
               { programs.home-manager.enable = true; }
               ./overlays
+              { nixpkgs.overlays = [ (final: prev: inputs.self.packages.${system}) ]; }
               inputs.sops-nix.homeManagerModules.sops
               modules.nixos.sops
               inputs.plasma-manager.homeManagerModules.plasma-manager

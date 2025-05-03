@@ -1,7 +1,8 @@
-local rosepine = require('lua/rose-pine')
 local act = wezterm.action
 local config = {
-    colors = rosepine.main.colors(),
+    -- fixed colorscheme with green and blue swapped. revert after new wezterm release
+    color_scheme_dirs = { "@color_scheme_dirs@" },
+    color_scheme = "rose-pine",
     font = wezterm.font_with_fallback {
         "Rec Mono Semicasual",
     },
