@@ -74,7 +74,7 @@
         system:
         lib.filesystem.packagesFromDirectoryRecursive {
           callPackage = nixpkgs.legacyPackages.${system}.callPackage;
-          directory = ./pkgs;
+          directory = ./packages;
         }
       );
       nixosModules = flakeModules;
@@ -87,6 +87,7 @@
             inherit system;
             modules = [
               { networking.hostName = systemName; }
+              { nixpkgs.overlays = [ (final: prev: inputs.self.packages.${system}) ]; }
               ./overlays
               modules.nixos.base.default
               config.default

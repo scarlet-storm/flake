@@ -41,7 +41,7 @@ in
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
   hardware.bluetooth.enable = true;
-  services.OpenLinkHub.package = inputs.self.packages.x86_64-linux.OpenLinkHub.override {
+  services.OpenLinkHub.package = pkgs.OpenLinkHub.override {
     withNvidia = true;
     nvidiaPackage = config.hardware.nvidia.package;
   };

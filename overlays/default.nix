@@ -2,7 +2,6 @@
 
 {
   imports = [ ./lib.nix ];
-  nixpkgs.overlays = [ ];
   nixpkgs.config.allowUnfreePredicate =
     pkg:
     builtins.elem (lib.getName pkg) [
