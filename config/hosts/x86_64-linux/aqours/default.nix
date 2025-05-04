@@ -28,7 +28,6 @@ in
     modules.nixos.hardware.gpu.nvidia
     modules.nixos.lanzaboote.default
     # modules.nixos.home-manager
-    modules.nixos.class.desktop
     modules.nixos.desktop.plasma
     modules.nixos.net.networkd-wifi
     modules.nixos.qemu
@@ -74,13 +73,6 @@ in
     "SYSTEMD_HOMEWORK_PATH" = "${systemd-homework}/lib/systemd/systemd-homework";
   };
   services.homed.enable = true;
-  nixpkgs.overlays = [
-    (final: prev: {
-      kdePackages = prev.kdePackages.overrideScope (
-        kfinal: kprev: { qtwebengine = prev.emptyDirectory; }
-      );
-    })
-  ];
   networking.firewall.allowedTCPPorts = [ 24800 ]; # input-leap
   programs.kde-pim.enable = false;
   system.stateVersion = "24.11";
