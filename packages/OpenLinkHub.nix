@@ -11,15 +11,15 @@
 
 buildGoModule rec {
   pname = "OpenLinkHub";
-  version = "0.4.3";
+  version = "0.5.5";
   name = "${pname}-${version}";
   src = fetchFromGitHub {
     owner = "jurkovic-nikola";
     repo = "OpenLinkHub";
     rev = "${version}";
-    hash = "sha512-RmI7reDFAkSDkLQ5siCgWxBlJaNfWmYGpB7PCKRK1mOHz7svnlwZMK6P8zmPIxMYRhXrpz0Pz8VapbqHnubqzg==";
+    hash = "sha256-xcP/Ze9Ba0uYzjCvcx3awij2zA7O8Iu1nbEd/mfeS0w=";
   };
-  vendorHash = "sha256-o+Ek5pJG4fjeQg8e11afAbVIvzmDvG92v2mp4yOM3x4=";
+  vendorHash = "sha256-1GVNyCyurUurO8cteX4msh+eHuAzS7/GqMV4sGV3Wno=";
   nativeBuildInputs = [ makeWrapper ];
   buildInputs = [ systemd ];
   postInstall = ''

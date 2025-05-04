@@ -30,7 +30,10 @@ in
         User = "openlinkhub";
         Group = "openlinkhub";
         ConfigurationDirectory = "OpenLinkHub";
-        ExecStartPre = "${pkgs.coreutils}/bin/cp -urv --no-preserve=mode ${cfg.package}/share/OpenLinkHub/database /etc/OpenLinkHub/";
+        ExecStartPre = [
+          "${pkgs.coreutils}/bin/cp -urv --no-preserve=mode ${cfg.package}/share/OpenLinkHub/database /etc/OpenLinkHub/"
+          "${pkgs.coreutils}/bin/ln -sf ${cfg.package}/share/OpenLinkHub/web ${cfg.package}/share/OpenLinkHub/static /etc/OpenLinkHub"
+        ];
         ExecStart = "${cfg.package}/bin/OpenLinkHub";
         NoNewPrivileges = true;
         PrivateTmp = true;
@@ -38,7 +41,7 @@ in
       };
     };
     services.udev.extraRules = ''
-      KERNEL=="hidraw*", SUBSYSTEMS=="usb", ATTRS{idVendor}=="1b1c", MODE="0600", OWNER="openlinkhub"
+      SUBSYSTEMS=="usb", ATTRS{idVendor}=="1b1c", MODE="0600", OWNER="openlinkhub"
     '';
   };
 }
