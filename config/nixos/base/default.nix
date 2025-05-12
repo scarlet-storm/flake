@@ -53,6 +53,7 @@
     age
     curl
     rsync
+    rclone
     nvme-cli
     e2fsprogs
     efibootmgr

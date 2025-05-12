@@ -59,6 +59,9 @@ in
   };
 
   programs = {
+    chromium = {
+      enable = true;
+    };
     emacs = {
       enable = true;
       package = pkgs.emacs30-pgtk;
