@@ -1,10 +1,20 @@
 { pkgs, ... }:
 {
   programs = {
-    starship.enable = true;
+    starship = {
+      enable = true;
+    };
     fish.enable = true;
     autojump.enable = true;
-    atuin.enable = true;
+    atuin = {
+      enable = true;
+      daemon.enable = true;
+      settings = {
+        enter_accept = false;
+        auto_sync = false;
+        update_check = false;
+      };
+    };
     man.generateCaches = true;
     nushell = {
       enable = true;
