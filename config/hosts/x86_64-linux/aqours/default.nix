@@ -16,8 +16,6 @@ let
         hash = "sha256-XWJTAobBmY2FHfysQ1yOf6skA/ZGlPc/A6ll4x3zLv4=";
       })
     ];
-    meta.priority = 20;
-    version = "20241228";
   });
 in
 {
