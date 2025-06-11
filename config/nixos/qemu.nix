@@ -27,4 +27,5 @@
   systemd.services.libvirt-guests.unitConfig.Wants = [ "network-online.target" ];
   systemd.services.libvirtd.path = [ pkgs.passt ];
   users.users.qemu-libvirtd.extraGroups = [ "kvm" ];
+  environment.systemPackages = [ pkgs.passt ];
 }
