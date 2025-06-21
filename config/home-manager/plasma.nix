@@ -16,6 +16,7 @@
     };
     kwin = {
       virtualDesktops.number = 2;
+      virtualDesktops.rows = 1;
     };
     configFile."kwinrc"."Wayland" = {
       "InputMethod" = {
