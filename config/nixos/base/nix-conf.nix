@@ -27,8 +27,4 @@
     };
     channel.enable = false;
   };
-  system.switch = {
-    enable = false;
-    enableNg = true;
-  };
 }
