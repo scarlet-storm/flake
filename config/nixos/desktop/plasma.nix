@@ -18,7 +18,6 @@
     kdePackages.sddm-kcm
     kdePackages.ksvg
     kdePackages.skanlite
-    kdePackages.plasma-vault
     kdePackages.yakuake
     libreoffice-qt6-fresh
     unar # ark rar plugin
