@@ -19,6 +19,15 @@
     nushell = {
       enable = true;
       configFile.source = ./config.nu;
+      plugins = (
+        with pkgs.nushellPlugins;
+        [
+          formats
+          gstat
+          highlight
+          query
+        ]
+      );
     };
     zoxide.enable = true;
   };
