@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   programs = {
+    bat.enable = true;
     starship = {
       enable = true;
     };
@@ -23,8 +24,6 @@
         [
           formats
           gstat
-          highlight
-          query
         ]
       );
     };
