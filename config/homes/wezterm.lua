@@ -1,8 +1,8 @@
 local act = wezterm.action
 local config = {
-    -- fixed colorscheme with green and blue swapped. revert after new wezterm release
+    -- colorschemes from iterm2-color-schemes
     color_scheme_dirs = { "@color_scheme_dirs@" },
-    color_scheme = "rose-pine",
+    color_scheme = "CutiePro",
     font = wezterm.font_with_fallback {
         "Rec Mono Semicasual",
     },

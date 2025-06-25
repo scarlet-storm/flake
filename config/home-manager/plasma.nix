@@ -53,9 +53,7 @@
       #       builtins.readDir "${pkgs.iterm2-color-schemes}/konsole"
       #     )
       #   );
-      lib.genAttrs [ "tokyonight" "Banana Blueberry" ] (
-        color: "${pkgs.iterm2-color-schemes}/konsole/${color}.colorscheme"
-      );
+      lib.genAttrs [ "Everblush" ] (color: "${pkgs.iterm2-color-schemes}/konsole/${color}.colorscheme");
     defaultProfile = "nu";
     extraConfig = {
       FileLocation = {
@@ -71,7 +69,7 @@
       {
         font.name = "Rec Mono SemiCasual";
         font.size = 12;
-        colorScheme = "tokyonight";
+        colorScheme = "Everblush";
         extraConfig = {
           Scrolling.HistoryMode = 2;
           "Interaction Options" = {

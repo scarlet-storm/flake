@@ -5,7 +5,6 @@
       enable = true;
     };
     fish.enable = true;
-    autojump.enable = true;
     atuin = {
       enable = true;
       daemon.enable = true;

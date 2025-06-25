@@ -80,7 +80,7 @@ in
       enable = true;
       settings = {
         font-family = "Rec Mono Semicasual";
-        theme = "rose-pine";
+        theme = "Everblush";
         command = "nu -i";
       };
     };
@@ -91,9 +91,7 @@ in
     fzf.enable = true;
     wezterm = {
       enable = true;
-      extraConfig = builtins.readFile "${pkgs.replaceVars ./wezterm.lua {
-        color_scheme_dirs = "${pkgs.iterm2-color-schemes}/wezterm";
-      }}";
+      extraConfig = builtins.readFile ./wezterm.lua;
     };
   };
   services = {
