@@ -1,12 +1,11 @@
 # https://www.nushell.sh/cookbook/external_completers.html
 
 let fish_completer = {|spans|
-    fish --command $"complete '--do-complete=($spans | str replace "'" "\\'" | str join ' ')'"
+    fish --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
     | from tsv --flexible --noheaders --no-infer
     | rename value description
     | update value {
-        if ($in | path exists) {$'"(($in | path expand | str replace --all "\"" "\\\"" ) +
-        (if ($in | split chars | last) == "/" { "/" } else { "" }))"'} else {$in}
+        if ($in | path exists) {$'"($in | path expand --no-symlink | str replace --all "\"" "\\\"" )"'} else {$in}
     }
 }
 
@@ -30,6 +29,7 @@ let external_completer = {|spans|
 
 $env.config = {
     completions: {
+        algorithm: substring
         external: {
             enable: true
             completer: $external_completer
