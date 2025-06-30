@@ -10,6 +10,7 @@ in
 {
   imports = [
     ./base.nix
+    ./rclone.nix
     homeManagerConfig.firefox
   ];
   home = {
