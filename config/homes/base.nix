@@ -1,14 +1,15 @@
 { pkgs, ... }:
 {
   programs = {
-    bat.enable = true;
     starship = {
       enable = true;
     };
+    fd.enable = true;
     fish.enable = true;
     atuin = {
       enable = true;
       daemon.enable = true;
+      flags = [ "--disable-up-arrow" ];
       settings = {
         enter_accept = false;
         auto_sync = false;
@@ -27,6 +28,8 @@
         ]
       );
     };
+    ripgrep.enable = true;
+    skim.enable = true;
     zoxide.enable = true;
   };
   home.packages = (

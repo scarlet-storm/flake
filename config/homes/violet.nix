@@ -87,9 +87,6 @@ in
     };
     fastfetch.enable = true;
     lazygit.enable = true;
-    ripgrep.enable = true;
-    fd.enable = true;
-    fzf.enable = true;
     wezterm = {
       enable = true;
       extraConfig = builtins.readFile ./wezterm.lua;
