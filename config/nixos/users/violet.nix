@@ -65,4 +65,27 @@ in
       gid = 1000;
     };
   };
+  # newuidmap doesn't work if /etc/subuid is a symlink
+  systemd.tmpfiles.settings =
+    lib.mkIf (config.services.homed.enable && config.virtualisation.podman.enable)
+      {
+        "90-violet-uidmap" = {
+          "/etc/subuid" = {
+            "f~" = {
+              user = "root";
+              group = "root";
+              mode = "0644";
+              argument = "dmlvbGV0OjUyNDI4ODo2NTUzNg==";
+            };
+          };
+          "/etc/subgid" = {
+            "f~" = {
+              user = "root";
+              group = "root";
+              mode = "0644";
+              argument = "dmlvbGV0OjUyNDI4ODo2NTUzNg==";
+            };
+          };
+        };
+      };
 }

@@ -28,5 +28,6 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";
   hardware.bluetooth.enable = true;
+  virtualisation.podman.enable = true;
   system.stateVersion = "24.11";
 }
