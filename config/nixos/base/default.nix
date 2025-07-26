@@ -18,7 +18,6 @@
     ./net.nix
   ];
   sops.secrets."users/root/password".neededForUsers = true;
-  security.pam.services.systemd-run0 = { };
   users.users.root.hashedPasswordFile = lib.mkDefault config.sops.secrets."users/root/password".path;
   boot = {
     initrd = {
