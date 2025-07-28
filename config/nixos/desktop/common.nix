@@ -5,6 +5,7 @@
   ...
 }:
 {
+  boot.kernelParams = [ "preempt=full" ];
   services = {
     pipewire = {
       enable = true;
