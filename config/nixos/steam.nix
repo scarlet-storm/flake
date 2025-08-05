@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, config, ... }:
 let
   buildFHSEnv = pkgs.mylib.buildFHSEnvPrivate;
 in
@@ -12,5 +12,5 @@ in
     extraCompatPackages = [ pkgs.proton-ge-bin ];
   };
   hardware.steam-hardware.enable = true;
-  environment.systemPackages = [ (pkgs.heroic.override { inherit buildFHSEnv; }) ];
+  environment.systemPackages = [ (pkgs.heroic.override { steam = config.programs.steam.package; }) ];
 }
