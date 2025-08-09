@@ -59,8 +59,9 @@ in
   };
 
   programs = {
-    chromium = {
+    anki = {
       enable = true;
+      addons = [ pkgs.ankiAddons.anki-connect ];
     };
     emacs = {
       enable = true;
