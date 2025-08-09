@@ -23,7 +23,8 @@ in
     inputs.disko.nixosModules.default
     modules.nixos.steam
     modules.disko.luks-xfs
-  ] ++ builtins.map (user: modules.nixos.users.${user}) users;
+  ]
+  ++ builtins.map (user: modules.nixos.users.${user}) users;
   home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
   boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";

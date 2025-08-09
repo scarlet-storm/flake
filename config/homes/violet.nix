@@ -18,34 +18,33 @@ in
     homeDirectory = "/home/${username}";
   };
   news.display = "silent";
-  home.packages =
-    [
-      (pkgs.mylib.wrapPrivateHome "discord" {
-        pkg = pkgs.discord;
-        execName = "Discord";
-        # why in **** hell is there two binaries ???
-        postBuild = "rm -fv $out/bin/discord";
-      })
-      (pkgs.zed-editor.fhsWithPackages (pkgs: [
-        pkgs.go
-        pkgs.python3
-        pkgs.unzip # unzip lsp downloads by extensions
-        # shared libraries for dynamically linked lanugage servers
-        (lib.getLib pkgs.openssl)
-      ]))
-    ]
-    ++ (with pkgs; [
-      deskflow
-      kopia
-      keepassxc
-      sops
-      signal-desktop
-      nixd
-      nil
-      nixfmt-rfc-style
-      yubikey-manager
-      virt-viewer
-    ]);
+  home.packages = [
+    (pkgs.mylib.wrapPrivateHome "discord" {
+      pkg = pkgs.discord;
+      execName = "Discord";
+      # why in **** hell is there two binaries ???
+      postBuild = "rm -fv $out/bin/discord";
+    })
+    (pkgs.zed-editor.fhsWithPackages (pkgs: [
+      pkgs.go
+      pkgs.python3
+      pkgs.unzip # unzip lsp downloads by extensions
+      # shared libraries for dynamically linked lanugage servers
+      (lib.getLib pkgs.openssl)
+    ]))
+  ]
+  ++ (with pkgs; [
+    deskflow
+    kopia
+    keepassxc
+    sops
+    signal-desktop
+    nixd
+    nil
+    nixfmt-rfc-style
+    yubikey-manager
+    virt-viewer
+  ]);
   home.file = {
     ".kopiaignore".text = ''
       /.var
