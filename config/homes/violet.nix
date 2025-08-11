@@ -63,6 +63,11 @@ in
       enable = true;
       addons = [ pkgs.ankiAddons.anki-connect ];
     };
+    carapace = {
+      enable = true;
+      enableFishIntegration = false;
+      enableNushellIntegration = true;
+    };
     emacs = {
       enable = true;
       package = pkgs.emacs30-pgtk;
