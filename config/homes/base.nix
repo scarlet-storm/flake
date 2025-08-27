@@ -50,7 +50,7 @@
   };
   nix.gc = {
     automatic = true;
-    frequency = "weekly";
+    dates = "weekly";
     randomizedDelaySec = "1d";
     options = "--delete-older-than 7d";
   };
