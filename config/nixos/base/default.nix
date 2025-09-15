@@ -51,15 +51,15 @@
   environment.systemPackages = with pkgs; [
     age
     curl
-    rsync
-    rclone
-    nvme-cli
     e2fsprogs
     efibootmgr
+    gdb
     libarchive
+    nix-output-monitor
+    nvme-cli
     openssl
-    moreutils
-    ncdu
+    rsync
+    rclone
     zellij
   ];
   environment.enableAllTerminfo = true;

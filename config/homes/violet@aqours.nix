@@ -60,11 +60,5 @@ in
       };
     };
   };
-  programs.mangohud = {
-    enable = true;
-    settings = {
-      procmem = true;
-    };
-  };
   home.stateVersion = "24.05";
 }

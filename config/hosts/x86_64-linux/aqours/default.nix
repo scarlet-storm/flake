@@ -80,11 +80,7 @@ in
   services.nixseparatedebuginfod.enable = true;
   services.hardware.bolt.enable = true;
   virtualisation.podman.enable = true;
-  environment.systemPackages = with pkgs; [
-    distrobox
-    gdb
-    binutils
-  ];
+  environment.systemPackages = with pkgs; [ distrobox ];
   systemd.services.systemd-homed.environment = {
     "SYSTEMD_HOMEWORK_PATH" = "${systemd-homework}/lib/systemd/systemd-homework";
   };
