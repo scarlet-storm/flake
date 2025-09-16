@@ -24,6 +24,7 @@
   ];
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   programs.kdeconnect.enable = true;
+  programs.kde-pim.enable = false;
   i18n.inputMethod = {
     type = "fcitx5";
     enable = true;

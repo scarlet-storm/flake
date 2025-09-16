@@ -86,7 +86,6 @@ in
   };
   services.homed.enable = true;
   networking.firewall.allowedTCPPorts = [ 24800 ]; # input-leap
-  programs.kde-pim.enable = false;
   system.stateVersion = "24.11";
   systemd.oomd.enable = true;
   systemd.oomd.enableRootSlice = true;
