@@ -118,9 +118,9 @@
               { programs.home-manager.enable = true; }
               ./overlays
               { nixpkgs.overlays = [ (final: prev: inputs.self.packages.${system}) ]; }
-              inputs.sops-nix.homeManagerModules.sops
+              inputs.sops-nix.homeModules.sops
               modules.nixos.sops
-              inputs.plasma-manager.homeManagerModules.plasma-manager
+              inputs.plasma-manager.homeModules.plasma-manager
               config
             ];
             extraSpecialArgs = { inherit homeManagerConfig secrets; };

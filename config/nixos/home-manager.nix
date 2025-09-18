@@ -8,8 +8,8 @@
         useGlobalPkgs = true;
         verbose = true;
         sharedModules = [
-          inputs.plasma-manager.homeManagerModules.plasma-manager
-          inputs.sops-nix.homeManagerModules.sops
+          inputs.plasma-manager.homeModules.plasma-manager
+          inputs.sops-nix.homeModules.sops
         ];
         extraSpecialArgs = homeManagerExtraArgs;
       };
