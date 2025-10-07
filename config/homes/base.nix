@@ -16,6 +16,12 @@
         update_check = false;
       };
     };
+    direnv = {
+      enable = true;
+      nix-direnv = {
+        enable = true;
+      };
+    };
     man.generateCaches = true;
     nushell = {
       enable = true;
