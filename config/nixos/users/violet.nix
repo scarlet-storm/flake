@@ -72,7 +72,7 @@ in
       {
         "90-violet-uidmap" = {
           "/etc/subuid" = {
-            "f~" = {
+            "f+~" = {
               user = "root";
               group = "root";
               mode = "0644";
@@ -80,7 +80,7 @@ in
             };
           };
           "/etc/subgid" = {
-            "f~" = {
+            "f+~" = {
               user = "root";
               group = "root";
               mode = "0644";
