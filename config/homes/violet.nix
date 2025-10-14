@@ -70,7 +70,7 @@ in
     };
     emacs = {
       enable = true;
-      package = pkgs.emacs30-pgtk;
+      package = pkgs.emacs-pgtk;
     };
     mpv = {
       enable = true;
