@@ -35,7 +35,6 @@
   };
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     discover
-    xwaylandvideobridge
     krdp
   ];
   services.orca.enable = false;
