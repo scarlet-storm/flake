@@ -10,29 +10,7 @@
 let
   users = [ "violet" ];
   systemd-homework = (pkgs.systemd.override { withFirstboot = true; }).overrideAttrs (prevAttrs: {
-    patches = prevAttrs.patches ++ [
-      (pkgs.fetchpatch2 {
-        url = "https://patch-diff.githubusercontent.com/raw/systemd/systemd/pull/35776.patch";
-        hash = "sha256-XWJTAobBmY2FHfysQ1yOf6skA/ZGlPc/A6ll4x3zLv4=";
-      })
-      (pkgs.writeText "disable-login-trim" ''
-        diff --git a/src/home/homework-luks.c b/src/home/homework-luks.c
-        index 7ae15b8133..55c35fbaa3 100644
-        --- a/src/home/homework-luks.c
-        +++ b/src/home/homework-luks.c
-        @@ -1474,8 +1474,8 @@ int home_setup_luks(
-                         if (setup->root_fd < 0)
-                                 return log_error_errno(errno, "Failed to open home directory: %m");
-
-        -                if (user_record_luks_discard(h))
-        -                        (void) run_fitrim(setup->root_fd);
-        +                // if (user_record_luks_discard(h))
-        +                        // (void) run_fitrim(setup->root_fd);
-
-                         setup->do_offline_fallocate = !(setup->do_offline_fitrim = user_record_luks_offline_discard(h));
-                 }
-      '')
-    ];
+    patches = prevAttrs.patches ++ [ ./systemd.patch ];
   });
 in
 {
@@ -77,7 +55,7 @@ in
   #   '';
   #   nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
   # });
-  services.nixseparatedebuginfod.enable = true;
+  services.nixseparatedebuginfod2.enable = true;
   services.hardware.bolt.enable = true;
   virtualisation.podman.enable = true;
   environment.systemPackages = with pkgs; [ distrobox ];
