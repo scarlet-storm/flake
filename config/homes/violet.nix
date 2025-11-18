@@ -71,6 +71,11 @@ in
     emacs = {
       enable = true;
       package = pkgs.emacs-pgtk;
+      extraPackages =
+        epkgs: with epkgs; [
+          vterm
+          treesit-grammars.with-all-grammars
+        ];
     };
     mpv = {
       enable = true;
