@@ -65,8 +65,6 @@ in
     };
     carapace = {
       enable = true;
-      enableFishIntegration = false;
-      enableNushellIntegration = true;
     };
     emacs = {
       enable = true;

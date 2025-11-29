@@ -65,7 +65,7 @@
   environment.enableAllTerminfo = false;
   systemd.oomd.enable = lib.mkDefault false;
   programs = {
-    fish.enable = true;
+    zsh.enable = true;
     command-not-found.enable = false;
     git.enable = true;
     htop.enable = true;

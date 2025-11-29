@@ -5,7 +5,7 @@
       enable = true;
     };
     fd.enable = true;
-    fish.enable = true;
+    zsh.enable = true;
     atuin = {
       enable = true;
       daemon.enable = true;

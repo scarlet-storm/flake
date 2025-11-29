@@ -64,7 +64,7 @@
         MenuBar = "Disabled";
       };
     };
-    profiles = lib.genAttrs [ "fish" "nu" ] (
+    profiles = lib.genAttrs [ "zsh" "nu" ] (
       shell:
       {
         font.name = "Rec Mono SemiCasual";

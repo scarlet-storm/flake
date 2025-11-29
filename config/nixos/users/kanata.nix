@@ -14,7 +14,7 @@ in
     extraGroups = [ "wheel" ];
     linger = false;
     uid = 1000;
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     group = "${name}";
     hashedPasswordFile = lib.mkDefault config.sops.secrets."users/${name}/password".path;
   };

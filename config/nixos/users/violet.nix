@@ -24,7 +24,7 @@ let
         imagePath = "/dev/disk/by-path/pci-0000:02:00.0-nvme-1";
         matchHostname = "aqours";
         storage = "luks";
-        shell = "/run/current-system/sw/bin/fish";
+        shell = "/run/current-system/sw/bin/zsh";
       }
     ];
     preferredSessionLauncher = "plasma";
@@ -33,7 +33,7 @@ let
       hashedPassword = [ "${config.sops.placeholder."users/${name}/password"}" ];
     };
     realName = "Violet";
-    shell = "/usr/bin/fish";
+    shell = "/usr/bin/zsh";
     userName = "${name}";
   };
 in
@@ -58,7 +58,7 @@ in
       ++ lib.optional (builtins.hasAttr "libvirtd" config.users.groups) "libvirtd";
       linger = false;
       uid = 1000;
-      shell = pkgs.fish;
+      shell = pkgs.zsh;
       group = "${name}";
       hashedPasswordFile = lib.mkDefault config.sops.secrets."users/${name}/password".path;
     };
