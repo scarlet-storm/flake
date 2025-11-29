@@ -9,8 +9,27 @@
 
 let
   users = [ "violet" ];
-  systemd-homework = (pkgs.systemd.override { withFirstboot = true; }).overrideAttrs (prevAttrs: {
-    patches = prevAttrs.patches ++ [ ./systemd.patch ];
+  systemd-homework = pkgs.systemd.overrideAttrs (prevAttrs: {
+    src = pkgs.fetchFromGitHub {
+      repo = "systemd";
+      owner = "systemd";
+      rev = "v259-rc2";
+      hash = "sha256-2iD7SMxGaD6wBkAfQlWZZg6ibkjJl9vxinN8UA5oxAM=";
+    };
+    version = "259-rc2";
+    patches = [
+      (pkgs.fetchpatch {
+        url = "https://github.com/systemd/systemd/compare/329ec5278d9218bee367c96deec5bea8a9c1047c.patch";
+        hash = "sha256-47QVaJqEhcpP9Gv1/ubRABj8UIWzP0lcxpHbxTdlQiE=";
+      })
+      ./discard.patch
+    ];
+    mesonFlags = prevAttrs.mesonFlags ++ [
+      "--sysconfdir=${placeholder "out"}/etc"
+      "--localstatedir=${placeholder "out"}/var"
+    ];
+    doCheck = false;
+    dontCheckForBrokenSymlinks = true;
   });
 in
 {
