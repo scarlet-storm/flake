@@ -62,7 +62,7 @@
     rclone
     zellij
   ];
-  environment.enableAllTerminfo = true;
+  environment.enableAllTerminfo = false;
   systemd.oomd.enable = lib.mkDefault false;
   programs = {
     fish.enable = true;
