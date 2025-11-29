@@ -72,10 +72,17 @@ in
       enable = true;
       package = pkgs.emacs-pgtk;
       extraPackages =
-        epkgs: with epkgs; [
+        epkgs:
+        (with epkgs; [
           vterm
           treesit-grammars.with-all-grammars
-        ];
+        ])
+        ++ (with pkgs; [
+          ripgrep
+          fd
+          # treemacs
+          python3
+        ]);
     };
     mpv = {
       enable = true;
