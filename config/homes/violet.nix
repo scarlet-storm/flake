@@ -87,9 +87,11 @@ in
       config = {
         cache = "yes";
         demuxer-max-bytes = "2GiB";
-        vo = "gpu-next,gpu,dmabuf-wayland";
-        gpu-api = "vulkan";
-        hwdec = "vulkan,nvdec,vaapi";
+        vo = "gpu-next,dmabuf-wayland,gpu";
+        ao = "pipewire,alsa";
+        gpu-context = "waylandvk,wayland,drm";
+        gpu-api = "vulkan,opengl";
+        hwdec = "vulkan,vaapi,drm";
       };
     };
     ghostty = {
