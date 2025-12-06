@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   # Wifi using systemd-networkd ??
@@ -51,4 +51,5 @@
       ForcePae = "ath12k*";
     };
   };
+  environment.systemPackages = [ pkgs.iw ];
 }
