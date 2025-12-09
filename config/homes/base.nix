@@ -26,6 +26,9 @@
     nushell = {
       enable = true;
       configFile.source = ./config.nu;
+      envFile.text = ''
+        $env.SHELL = "nu"
+      '';
       plugins = (
         with pkgs.nushellPlugins;
         [
