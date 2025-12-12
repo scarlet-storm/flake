@@ -80,6 +80,7 @@ in
           fd
           # treemacs
           python3
+          pandoc
         ]);
     };
     mpv = {
