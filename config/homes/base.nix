@@ -25,10 +25,6 @@
     man.generateCaches = true;
     nushell = {
       enable = true;
-      configFile.source = ./config.nu;
-      envFile.text = ''
-        $env.SHELL = "nu"
-      '';
       plugins = (
         with pkgs.nushellPlugins;
         [
@@ -36,6 +32,13 @@
           gstat
         ]
       );
+      settings = {
+        show_banner = "short";
+        completions.algorithm = "fuzzy";
+      };
+      environmentVariables = {
+        SHELL = "nu";
+      };
     };
     ripgrep.enable = true;
     skim.enable = true;
@@ -78,5 +81,6 @@
         install -m 0400 .ssh/config_store .ssh/config
       '';
     };
+    ".config/nushell/autoload".source = ./files/.config/nushell/autoload;
   };
 }
