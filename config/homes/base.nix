@@ -30,6 +30,7 @@
         [
           formats
           gstat
+          query
         ]
       );
       settings = {
