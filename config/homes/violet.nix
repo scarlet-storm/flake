@@ -56,6 +56,7 @@ in
       /.mozilla
       /bak
     '';
+    ".config/doom".source = ./files/.config/doom;
   };
 
   programs = {
@@ -72,15 +73,16 @@ in
       extraPackages =
         epkgs:
         (with epkgs; [
-          vterm
           treesit-grammars.with-all-grammars
+          vterm
         ])
         ++ (with pkgs; [
-          ripgrep
           fd
-          # treemacs
-          python3
           pandoc
+          ripgrep
+          shfmt
+          shellcheck
+          python3Packages.grip
         ]);
     };
     mpv = {
