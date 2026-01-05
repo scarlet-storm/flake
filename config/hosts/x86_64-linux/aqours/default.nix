@@ -13,14 +13,14 @@ let
     src = pkgs.fetchFromGitHub {
       repo = "systemd";
       owner = "systemd";
-      rev = "v259-rc2";
-      hash = "sha256-2iD7SMxGaD6wBkAfQlWZZg6ibkjJl9vxinN8UA5oxAM=";
+      rev = "v259-rc3";
+      hash = "sha256-z7u9Ww2agDLxgsSs+DPEDfIKFBMg8Wv1tvx65571LtM=";
     };
-    version = "259-rc2";
+    version = "259-rc3";
     patches = [
       (pkgs.fetchpatch {
-        url = "https://github.com/systemd/systemd/compare/329ec5278d9218bee367c96deec5bea8a9c1047c.patch";
-        hash = "sha256-47QVaJqEhcpP9Gv1/ubRABj8UIWzP0lcxpHbxTdlQiE=";
+        url = "https://github.com/systemd/systemd/compare/e239c23780e9524f5a618ad5d43505d0bd73d532.patch";
+        hash = "sha256-t6jr91QSQXNZAncbQxywwdJx7e7iZnURNzKDn6meWC8=";
       })
       ./discard.patch
     ];
