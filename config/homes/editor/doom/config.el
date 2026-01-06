@@ -79,3 +79,5 @@
 (after! magit
   (setq magit-revision-insert-related-refs t))
 (setq auth-sources '(default))
+
+(use-package! nushell-ts-mode)

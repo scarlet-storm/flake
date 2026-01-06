@@ -44,11 +44,11 @@
         callPackage = path: _: path;
         directory = ./modules;
       };
-      modules = lib.filesystem.packagesFromDirectoryRecursive {
+      configModules = lib.filesystem.packagesFromDirectoryRecursive {
         callPackage = path: _: path;
         directory = ./config;
       };
-      homeManagerConfig = modules.home-manager;
+      homeManagerConfig = configModules.home-manager;
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -81,21 +81,22 @@
               { networking.hostName = systemName; }
               { nixpkgs.overlays = [ (final: prev: inputs.self.packages.${system}) ]; }
               ./overlays
-              modules.nixos.base.default
+              configModules.nixos.base.default
               config.default
             ];
             specialArgs = {
               inherit
                 inputs
                 systemName
-                modules
+
                 secrets
                 ;
+              modules = configModules;
               homeManagerExtraArgs = { inherit homeManagerConfig secrets; };
             };
           }
-        ) modules.hosts.${system}
-      ) modules.hosts;
+        ) configModules.hosts.${system}
+      ) configModules.hosts;
 
       homeConfigurations = builtins.mapAttrs (
         name: config:
@@ -111,13 +112,14 @@
               ./overlays
               { nixpkgs.overlays = [ (final: prev: inputs.self.packages.${system}) ]; }
               inputs.sops-nix.homeModules.sops
-              modules.nixos.sops
+              configModules.nixos.sops
               inputs.plasma-manager.homeModules.plasma-manager
               config
             ];
             extraSpecialArgs = { inherit homeManagerConfig secrets; };
           }
         )
-      ) modules.homes;
+      ) configModules.homes;
+      inherit configModules;
     };
 }

@@ -11,6 +11,7 @@ in
   imports = [
     ./base.nix
     ./rclone.nix
+    ./editor/emacs.nix
     homeManagerConfig.firefox
   ];
   home = {
@@ -56,7 +57,6 @@ in
       /.mozilla
       /bak
     '';
-    ".config/doom".source = ./files/.config/doom;
   };
 
   programs = {
@@ -66,24 +66,6 @@ in
     };
     carapace = {
       enable = true;
-    };
-    emacs = {
-      enable = true;
-      package = pkgs.emacs-pgtk;
-      extraPackages =
-        epkgs:
-        (with epkgs; [
-          treesit-grammars.with-all-grammars
-          vterm
-        ])
-        ++ (with pkgs; [
-          fd
-          pandoc
-          ripgrep
-          shfmt
-          shellcheck
-          python3Packages.grip
-        ]);
     };
     mpv = {
       enable = true;
@@ -113,9 +95,6 @@ in
     };
   };
   services = {
-    emacs.enable = true;
-    emacs.client.enable = true;
-    emacs.startWithUserSession = "graphical";
     ssh-agent.enable = true;
   };
 }

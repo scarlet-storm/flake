@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  imports = [ ./editor/nvim.nix ];
   programs = {
     starship = {
       enable = true;
@@ -54,9 +55,6 @@
       zellij
     ]
   );
-  home.sessionVariables = {
-    EDITOR = "vim";
-  };
   systemd.user = {
     tmpfiles.rules = [ "D %t/ssh-control - - - - -" ];
     startServices = "sd-switch";
