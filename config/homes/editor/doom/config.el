@@ -81,3 +81,7 @@
 (setq auth-sources '(default))
 
 (use-package! nushell-ts-mode)
+
+;; zed keybindings
+(map! :nv "gA" #'+lookup/references
+      :nv "g/" #'+default/search-project-for-symbol-at-point)
