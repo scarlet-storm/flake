@@ -41,7 +41,6 @@ in
     sops
     signal-desktop
     nixd
-    nil
     nixfmt-rfc-style
     yubikey-manager
     virt-viewer
