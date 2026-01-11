@@ -29,7 +29,7 @@ in
     sops
     signal-desktop
     nixd
-    nixfmt-rfc-style
+    nixfmt
     yubikey-manager
     virt-viewer
   ]);
