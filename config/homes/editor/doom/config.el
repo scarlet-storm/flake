@@ -33,7 +33,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-horizon)
+(setq doom-theme 'doom-rose-pine)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -85,3 +85,12 @@
 ;; zed keybindings
 (map! :nv "gA" #'+lookup/references
       :nv "g/" #'+default/search-project-for-symbol-at-point)
+
+(setq-default eglot-workspace-configuration
+              '(:nixd (:formatting (:command ["nixfmt" "-s"]))))
+
+(after! python
+  (set-formatter! 'ruff :modes '(python-mode python-ts-mode)))
+(after! tramp
+  (setq tramp-remote-path
+        (append tramp-remote-path '(tramp-own-remote-path))))

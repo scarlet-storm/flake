@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  homeManagerConfig,
-  ...
-}:
+{ pkgs, homeManagerConfig, ... }:
 let
   username = "violet";
 in
@@ -11,7 +6,7 @@ in
   imports = [
     ./base.nix
     ./rclone.nix
-    ./editor/emacs.nix
+    ./editor
     homeManagerConfig.firefox
   ];
   home = {
@@ -26,13 +21,6 @@ in
       # why in **** hell is there two binaries ???
       postBuild = "rm -fv $out/bin/discord";
     })
-    (pkgs.zed-editor.fhsWithPackages (pkgs: [
-      pkgs.go
-      pkgs.python3
-      pkgs.unzip # unzip lsp downloads by extensions
-      # shared libraries for dynamically linked lanugage servers
-      (lib.getLib pkgs.openssl)
-    ]))
   ]
   ++ (with pkgs; [
     deskflow
