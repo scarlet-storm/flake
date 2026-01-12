@@ -2,17 +2,7 @@
 {
   programs.zed-editor = {
     enable = true;
-    # TODO: REVERT
-    package = pkgs.zed-editor.override {
-      rustPlatform = pkgs.rustPlatform // {
-        buildRustPackage = (
-          args:
-          pkgs.rustPlatform.buildRustPackage (
-            finalAttrs: lib.removeAttrs (args finalAttrs // { useNextest = true; }) [ "checkFlags" ]
-          )
-        );
-      };
-    };
+    package = pkgs.zed-editor;
     extraPackages = with pkgs; [
       lazygit
       # common stuff for some random tools ?
