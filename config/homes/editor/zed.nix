@@ -1,8 +1,17 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   programs.zed-editor = {
     enable = true;
-    package = pkgs.zed-editor;
+    package =
+      if config.targets.genericLinux.enable then
+        config.lib.nixGL.wrap pkgs.zed-editor
+      else
+        pkgs.zed-editor;
     extraPackages = with pkgs; [
       lazygit
       # common stuff for some random tools ?
