@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  imports = [ ./editor/nvim.nix ];
   programs = {
     starship = {
       enable = true;

@@ -55,12 +55,11 @@
       theme = {
         mode = "system";
         light = "Tokyo Night Light";
-        dark = "Catppuccin Mocha";
+        dark = "Rosé Pine";
       };
       disable_ai = lib.mkDefault true;
       buffer_font_family = "Rec Mono Semicasual";
       buffer_font_size = 16;
-      colorize_brackets = true;
       load_direnv = "direct";
       ui_font_size = 16;
       use_system_path_prompts = false;

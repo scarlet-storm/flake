@@ -55,3 +55,4 @@
 
 (package! nushell-ts-mode
   :recipe (:host github :repo "herbertjones/nushell-ts-mode"))
+(package! catppuccin-theme)
