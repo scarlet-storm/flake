@@ -55,7 +55,7 @@
     ]
   );
   systemd.user = {
-    tmpfiles.rules = [ "D %t/ssh-control - - - - -" ];
+    tmpfiles.rules = [ "D %C/ssh/control - - - - -" ];
     startServices = "sd-switch";
   };
   nix.gc = {
@@ -72,7 +72,7 @@
           ServerAliveInterval 20
           ServerAliveCountMax 6
           ControlMaster auto
-          ControlPath ''${XDG_RUNTIME_DIR}/ssh-control/mux.%C
+          ControlPath ''${HOME}/.cache/ssh/control/%C
           ControlPersist 10m
       '';
       onChange = ''
