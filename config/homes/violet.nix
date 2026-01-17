@@ -54,6 +54,30 @@ in
     carapace = {
       enable = true;
     };
+    git = {
+      enable = true;
+      includes = [
+        {
+          condition = "hasconfig:remote.*.url:*github.com*scarlet-storm/**";
+          contents = {
+            user = {
+              name = "scarlet-storm";
+              email = "12461256+scarlet-storm@users.noreply.github.com";
+              signingKey = "~/.ssh/id_ed25519.pub";
+            };
+            commit.gpgSign = true;
+            tag.gpgSign = true;
+          };
+        }
+      ];
+      ignores = [ ".direnv" ];
+      signing = {
+        format = "ssh";
+      };
+      lfs = {
+        enable = true;
+      };
+    };
     mpv = {
       enable = true;
       config = {

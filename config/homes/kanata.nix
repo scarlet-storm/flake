@@ -9,6 +9,5 @@ in
   };
   imports = [ ./base.nix ];
 
-  home.packages = with pkgs; [ fanbox-dl ];
   home.stateVersion = "24.11";
 }
