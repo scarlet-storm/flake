@@ -21,31 +21,29 @@ in
   services = {
     resolved = {
       enable = true;
-      llmnr = "false";
-      extraConfig = ''
-        MulticastDNS=false
-      '';
-      fallbackDns = [ ];
-      dnsovertls = "true";
-      dnssec = "false";
-      domains = [ "~." ];
+      settings.Resolve = {
+        FallbackDNS = "";
+        LLMNR = false;
+        MulticastDNS = false;
+        DNSSEC = false;
+        DNSOverTLS = true;
+        Domains = [ ];
+        DNS = [ ];
+      };
     };
   };
-  sops.secrets."net/dns-sni" = {
+  sops.secrets."net/dns-sni" = { };
+  sops.templates."network.dns" = {
+    content = "${builtins.concatStringsSep " " (
+      map (ns: ns + "#${systemName}-" + config.sops.placeholder."net/dns-sni") nameservers
+    )}";
     reloadUnits = [ "systemd-resolved.service" ];
   };
-  sops.templates."nameservers.conf" = {
-    content = ''
-      [Resolve]
-      DNS=${
-        builtins.concatStringsSep " " (
-          builtins.map (ns: ns + "#${systemName}-" + config.sops.placeholder."net/dns-sni") nameservers
-        )
-      }
-    '';
-    path = "/etc/systemd/resolved.conf.d/10-nameservers.conf";
-    group = "systemd-resolve";
-    mode = "0440";
+  systemd.services.systemd-resolved = {
+    serviceConfig = {
+      LoadCredential = "network.dns:${config.sops.templates."network.dns".path}";
+      SetCredential = "network.search_domains:~.";
+    };
   };
   networking.nftables.enable = true;
   networking.firewall = {
