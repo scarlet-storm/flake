@@ -31,28 +31,9 @@
     startWithUserSession = "graphical";
   };
   xdg.configFile = {
-    "doom" = {
-      source = pkgs.symlinkJoin {
-        name = "doom-emacs-themes";
-        paths = [
-          (pkgs.stdenv.mkDerivation {
-            name = "rose-pine-doom-emacs";
-            src = pkgs.fetchFromGitHub {
-              owner = "donniebreve";
-              repo = "rose-pine-doom-emacs";
-              rev = "78100823087f2fa727cdd5c06f8deb17988520b6";
-              hash = "sha256-QcV+f7qxWO5o9p9yusJHVRzxBTiSAhR85HDE4I4fuA4=";
-            };
-            dontBuild = true;
-            installPhase = ''
-              runHook preInstall
-              make TARGETPATH=$out/themes install
-              runHook postInstall
-            '';
-          })
-          ./doom
-        ];
-      };
+    doom = {
+      source = ./doom;
+      recursive = true;
     };
   };
   systemd.user.services =
@@ -66,7 +47,7 @@
           ConditionFileIsExecutable = doomBinary;
           X-Restart-Triggers = [
             config.programs.emacs.finalPackage
-            config.xdg.configFile.doom.source
+            "${config.xdg.configFile.doom.source}"
           ];
           Before = "emacs.service";
           X-SwitchMethod = "restart";
