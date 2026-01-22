@@ -22,6 +22,8 @@
           shfmt
           shellcheck
           python3Packages.grip
+          clangStdenv.cc
+          clang-tools
         ]);
     };
   };
