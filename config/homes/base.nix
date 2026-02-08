@@ -37,9 +37,11 @@
         show_banner = "short";
         completions.algorithm = "fuzzy";
       };
-      environmentVariables = {
-        SHELL = "nu";
-      };
+      extraConfig = ''
+        load-env {
+          SHELL: $nu.current-exe
+        }
+      '';
     };
     ripgrep.enable = true;
     skim.enable = true;
