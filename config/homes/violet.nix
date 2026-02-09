@@ -82,7 +82,7 @@ in
       enable = true;
       config = {
         cache = "yes";
-        demuxer-max-bytes = "2GiB";
+        demuxer-max-bytes = "4GiB";
         vo = "gpu-next,dmabuf-wayland,gpu";
         ao = "pipewire,alsa";
         gpu-context = "waylandvk,wayland,drm";
@@ -94,8 +94,9 @@ in
       enable = true;
       settings = {
         font-family = "Rec Mono Semicasual";
-        theme = "Everblush";
+        theme = "Catppuccin Mocha";
         command = "nu -i";
+        scrollback-limit = 1 * 1024 * 1024 * 1024; # 1 GiB per pane
       };
     };
     fastfetch.enable = true;

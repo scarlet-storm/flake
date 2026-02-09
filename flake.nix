@@ -34,6 +34,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    ghostty = {
+      url = "github:ghostty-org/ghostty/tip";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -110,7 +114,14 @@
             modules = [
               { programs.home-manager.enable = true; }
               ./overlays
-              { nixpkgs.overlays = [ (final: prev: inputs.self.packages.${system}) ]; }
+              {
+                nixpkgs.overlays = [
+                  (
+                    final: prev:
+                    inputs.self.packages.${system} // { ghostty = inputs.ghostty.packages.${system}.ghostty; }
+                  )
+                ];
+              }
               inputs.sops-nix.homeModules.sops
               configModules.nixos.sops
               inputs.plasma-manager.homeModules.plasma-manager
