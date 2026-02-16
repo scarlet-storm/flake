@@ -121,7 +121,7 @@ in
         "widget.use-xdg-desktop-portal.file-picker" = 1;
         # "privacy.resistFingerprinting" = true;
       };
-      extensions.packages = [ catppuccin_pink ];
+      # extensions.packages = [ catppuccin_pink ];
       search = {
         force = true;
         engines = {

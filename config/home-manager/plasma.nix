@@ -34,7 +34,6 @@
     ];
     shortcuts = {
       "services/org.kde.konsole.desktop"."_launch" = [ ];
-      "services/org.wezfurlong.wezterm.desktop"."_launch" = "Ctrl+Alt+T";
     };
   };
   home.packages = [
