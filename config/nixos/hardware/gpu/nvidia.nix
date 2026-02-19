@@ -6,5 +6,6 @@
     open = true;
     nvidiaSettings = true;
     package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
+    videoAcceleration = false;
   };
 }
