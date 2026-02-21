@@ -1,17 +1,28 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   imports = [ ./common.nix ];
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
     settings = {
       Users = {
         MinimumUid = 1000;
         MaximumUid = 60513;
       };
     };
+  }
+  // lib.optionalAttrs config.services.homed.enable {
+    package = lib.mkForce (
+      pkgs.kdePackages.sddm.overrideAttrs (prevAttrs: {
+        qtWrapperArgs = [ "--suffix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.systemd ]}" ];
+      })
+    );
   };
   environment.systemPackages = with pkgs; [
     xsettingsd
