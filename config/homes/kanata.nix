@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, homeManagerConfig, ... }:
 let
   username = "kanata";
 in
@@ -7,7 +7,7 @@ in
     inherit username;
     homeDirectory = "/home/${username}";
   };
-  imports = [ ./base.nix ];
+  imports = [ homeManagerConfig.headless ];
 
   home.stateVersion = "24.11";
 }

@@ -1,11 +1,6 @@
 { pkgs, ... }:
 {
   programs = {
-    starship = {
-      enable = true;
-    };
-    fd.enable = true;
-    zsh.enable = true;
     atuin = {
       enable = true;
       daemon.enable = true;
@@ -16,13 +11,27 @@
         update_check = false;
       };
     };
+    carapace = {
+      enable = true;
+      enableZshIntegration = false;
+    };
     direnv = {
       enable = true;
       nix-direnv = {
         enable = true;
       };
     };
-    man.generateCaches = true;
+    fastfetch.enable = true;
+    fd.enable = true;
+    git = {
+      enable = true;
+      ignores = [ ".direnv" ];
+    };
+    lazygit.enable = true;
+    man = {
+      enable = true;
+      generateCaches = true;
+    };
     nushell = {
       enable = true;
       plugins = (
@@ -45,20 +54,24 @@
     };
     ripgrep.enable = true;
     skim.enable = true;
+    starship = {
+      enable = true;
+    };
+    zellij = {
+      enable = true;
+    };
     zoxide.enable = true;
+    zsh.enable = true;
   };
   home.packages = (
     with pkgs;
     [
       kopia
-      fastfetch
       dua
-      zellij
     ]
   );
   systemd.user = {
     tmpfiles.rules = [ "D %C/ssh/control - - - - -" ];
-    startServices = "sd-switch";
   };
   nix.gc = {
     automatic = true;

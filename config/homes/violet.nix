@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ./base.nix
+    homeManagerConfig.headless
     ./rclone.nix
     ./editor
     homeManagerConfig.firefox
@@ -51,9 +51,6 @@ in
       enable = true;
       addons = [ pkgs.ankiAddons.anki-connect ];
     };
-    carapace = {
-      enable = true;
-    };
     git = {
       enable = true;
       includes = [
@@ -70,7 +67,6 @@ in
           };
         }
       ];
-      ignores = [ ".direnv" ];
       signing = {
         format = "ssh";
       };
