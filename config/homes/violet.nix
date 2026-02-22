@@ -1,17 +1,18 @@
-{ pkgs, homeManagerConfig, ... }:
-let
-  username = "violet";
-in
+{
+  pkgs,
+  homeManagerConfig,
+  lib,
+  ...
+}:
 {
   imports = [
-    homeManagerConfig.headless
+    homeManagerConfig.common
     ./rclone.nix
-    ./editor
     homeManagerConfig.firefox
   ];
   home = {
-    inherit username;
-    homeDirectory = "/home/${username}";
+    username = "violet";
+    desktopEnvironment = "plasma";
   };
   news.display = "silent";
   home.packages = [
@@ -96,14 +97,9 @@ in
         window-inherit-working-directory = false;
       };
     };
-    fastfetch.enable = true;
-    lazygit.enable = true;
-    wezterm = {
-      enable = true;
-      extraConfig = builtins.readFile ./wezterm.lua;
-    };
   };
   services = {
     ssh-agent.enable = true;
   };
+  home.stateVersion = lib.mkDefault "24.05";
 }

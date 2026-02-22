@@ -1,13 +1,7 @@
-{ pkgs, homeManagerConfig, ... }:
-let
-  username = "kanata";
-in
+{ homeManagerConfig, lib, ... }:
 {
-  home = {
-    inherit username;
-    homeDirectory = "/home/${username}";
-  };
-  imports = [ homeManagerConfig.headless ];
+  imports = [ homeManagerConfig.common ];
+  home.username = "kanata";
 
-  home.stateVersion = "24.11";
+  home.stateVersion = lib.mkDefault "24.11";
 }
