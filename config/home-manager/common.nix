@@ -87,36 +87,22 @@ let
         dua
       ]
     );
-    systemd.user = {
-      tmpfiles.rules = [ "D %C/ssh/control - - - - -" ];
-    };
     nix.gc = {
       automatic = true;
       dates = "weekly";
       randomizedDelaySec = "1d";
-      options = "--delete-older-than 7d";
+      options = "--delete-older-than 15d";
     };
     home.file = {
-      ".ssh/config" = {
-        target = ".ssh/config_store";
-        text = ''
-          Host *
-            ServerAliveInterval 20
-            ServerAliveCountMax 6
-            ControlMaster auto
-            ControlPath ''${HOME}/.cache/ssh/control/%C
-            ControlPersist 10m
-        '';
-        onChange = ''
-          install -m 0400 .ssh/config_store .ssh/config
-        '';
-      };
       ".config/nushell/autoload".source = ./files/.config/nushell/autoload;
     };
   };
 in
 {
-  imports = [ ./editor ];
+  imports = [
+    ./editor
+    ./ssh.nix
+  ];
   options.home = {
     desktopEnvironment = lib.mkOption {
       default = null;
