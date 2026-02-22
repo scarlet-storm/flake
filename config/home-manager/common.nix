@@ -4,21 +4,8 @@
   config,
   ...
 }:
-{
-  imports = [ ./editor ];
-  options.home = {
-    desktopEnvironment = lib.mkOption {
-      default = null;
-      description = "Desktop Environment used for Home";
-      type = lib.types.enum [
-        null
-        "cosmic"
-        "gnome"
-        "plasma"
-      ];
-    };
-  };
-  config = {
+let
+  commonConfig = {
     home = {
       homeDirectory = lib.mkDefault "/home/${config.home.username}";
     };
@@ -48,6 +35,14 @@
       git = {
         enable = true;
         ignores = [ ".direnv" ];
+      };
+      go = {
+        enable = true;
+        env = {
+          GOPATH = "${config.xdg.cacheHome}/go";
+          GOBIN = "${config.xdg.dataHome}/go/bin";
+        };
+        package = lib.mkDefault null;
       };
       lazygit.enable = true;
       man = {
@@ -119,4 +114,20 @@
       ".config/nushell/autoload".source = ./files/.config/nushell/autoload;
     };
   };
+in
+{
+  imports = [ ./editor ];
+  options.home = {
+    desktopEnvironment = lib.mkOption {
+      default = null;
+      description = "Desktop Environment used for Home";
+      type = lib.types.enum [
+        null
+        "cosmic"
+        "gnome"
+        "plasma"
+      ];
+    };
+  };
+  config = commonConfig;
 }
