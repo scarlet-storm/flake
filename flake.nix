@@ -89,12 +89,7 @@
               config.default
             ];
             specialArgs = {
-              inherit
-                inputs
-                systemName
-
-                secrets
-                ;
+              inherit inputs systemName secrets;
               modules = configModules;
               homeManagerExtraArgs = { inherit homeManagerConfig secrets; };
             };

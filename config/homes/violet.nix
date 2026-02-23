@@ -75,28 +75,6 @@
         enable = true;
       };
     };
-    mpv = {
-      enable = true;
-      config = {
-        cache = "yes";
-        demuxer-max-bytes = "4GiB";
-        vo = "gpu-next,dmabuf-wayland,gpu";
-        ao = "pipewire,alsa";
-        gpu-context = "waylandvk,wayland,drm";
-        gpu-api = "vulkan,opengl";
-        hwdec = "vulkan,vaapi,drm";
-      };
-    };
-    ghostty = {
-      enable = true;
-      settings = {
-        font-family = "Rec Mono Semicasual";
-        theme = "Catppuccin Mocha";
-        command = "nu -i";
-        scrollback-limit = 1 * 1024 * 1024 * 1024; # 1 GiB per pane
-        window-inherit-working-directory = false;
-      };
-    };
   };
   services = {
     ssh-agent.enable = true;

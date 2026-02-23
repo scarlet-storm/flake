@@ -102,6 +102,7 @@ in
   imports = [
     ./editor
     ./ssh.nix
+    ./wm.nix
   ];
   options.home = {
     desktopEnvironment = lib.mkOption {
