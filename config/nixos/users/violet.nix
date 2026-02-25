@@ -76,7 +76,7 @@ in
               user = "root";
               group = "root";
               mode = "0644";
-              argument = "dmlvbGV0OjUyNDI4ODo2NTUzNg==";
+              argument = "dmlvbGV0OjUyNDI4ODo2NTUzNgo=";
             };
           };
           "/etc/subgid" = {
@@ -84,7 +84,7 @@ in
               user = "root";
               group = "root";
               mode = "0644";
-              argument = "dmlvbGV0OjUyNDI4ODo2NTUzNg==";
+              argument = "dmlvbGV0OjUyNDI4ODo2NTUzNgo=";
             };
           };
         };
