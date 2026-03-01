@@ -18,6 +18,7 @@
       #   ]
       # '';
     };
+    onBoot = "ignore";
   };
   systemd.services.libvirt-guests.unitConfig.After = [ "network-online.target" ];
   systemd.services.libvirt-guests.unitConfig.Wants = [ "network-online.target" ];

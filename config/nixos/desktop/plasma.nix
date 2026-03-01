@@ -8,25 +8,14 @@
 {
   imports = [ ./common.nix ];
   services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm = {
+  services.displayManager.plasma-login-manager = {
     enable = true;
-    settings = {
-      Users = {
-        MinimumUid = 1000;
-        MaximumUid = 60513;
-      };
+    package = pkgs.kdePackages.plasma-login-manager.overrideAttrs {
+      qtWrapperArgs = [ "--suffix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.systemd ]}" ];
     };
-  }
-  // lib.optionalAttrs config.services.homed.enable {
-    package = lib.mkForce (
-      pkgs.kdePackages.sddm.overrideAttrs (prevAttrs: {
-        qtWrapperArgs = [ "--suffix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.systemd ]}" ];
-      })
-    );
   };
   environment.systemPackages = with pkgs; [
     xsettingsd
-    kdePackages.sddm-kcm
     kdePackages.ksvg
     kdePackages.skanlite
     kdePackages.yakuake
