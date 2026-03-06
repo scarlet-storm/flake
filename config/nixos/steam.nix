@@ -1,15 +1,40 @@
 { pkgs, config, ... }:
 let
-  buildFHSEnv = pkgs.mylib.buildFHSEnvPrivate;
 in
 {
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
-    package = pkgs.steam.override { inherit buildFHSEnv; };
     extraCompatPackages = [ pkgs.proton-ge-bin ];
+    extraPackages = with pkgs; [ kdePackages.breeze ];
+    package = pkgs.mylib.wrapPrivateHome {
+      id = "com.valvesoftware.Steam";
+      devices = [
+        "dri"
+        "input"
+      ];
+      dbus = {
+        owns = [ "com.steampowered.*" ];
+        talks = [
+          "org.freedesktop.Notifications"
+          "org.freedesktop.ScreenSaver"
+          "org.freedesktop.PowerManagement"
+          "org.kde.StatusNotifierWatcher"
+          "org.freedesktop.portal.Desktop"
+        ];
+      };
+    } { pkg = pkgs.steam; };
   };
   hardware.steam-hardware.enable = true;
-  environment.systemPackages = [ (pkgs.heroic.override { steam = config.programs.steam.package; }) ];
+  # environment.systemPackages = with pkgs; [
+  #   # uses steam env
+  #   (heroic.override { steam = config.programs.steam.package; })
+  #   # # uses buildFHSEnv again
+  #   (lutris.override {
+  #     inherit buildFHSEnv;
+  #     # We don't want to call bwrap twice
+  #     steamSupport = false;
+  #   })
+  # ];
 }

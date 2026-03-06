@@ -16,12 +16,23 @@
   };
   news.display = "silent";
   home.packages = [
-    (pkgs.mylib.wrapPrivateHome "discord" {
-      pkg = pkgs.discord;
-      execName = "Discord";
-      # why in **** hell is there two binaries ???
-      postBuild = "rm -fv $out/bin/discord";
-    })
+    (pkgs.mylib.wrapPrivateHome
+      {
+        id = "com.discordapp.Discord";
+        dbus = {
+          talks = [
+            "org.freedesktop.Notifications"
+            "org.freedesktop.portal.Desktop"
+            "org.kde.StatusNotifierWatcher"
+          ];
+        };
+      }
+      {
+        pkg = pkgs.discord;
+        # why in **** hell is there two binaries ???
+        postBuild = "rm -fv $out/bin/discord";
+      }
+    )
   ]
   ++ (with pkgs; [
     deskflow
