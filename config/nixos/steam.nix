@@ -12,6 +12,7 @@
         "dri"
         "input"
       ];
+      x11 = true;
       dbus = {
         owns = [ "com.steampowered.*" ];
         talks = [

@@ -25,6 +25,8 @@
           "org.kde.StatusNotifierWatcher"
         ];
       };
+      # who knows why this doesn't start if x11 socket is not available ?
+      x11 = true;
     } (pkgs.discord.override { withTTS = false; }))
   ]
   ++ (with pkgs; [

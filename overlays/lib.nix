@@ -42,8 +42,9 @@
             extraBinds ? [ ], # rw bind mounts
             roBinds ? [ ], # ro bind mounts
             devices ? [ ], # devices
-            display ? true,
             audio ? true,
+            display ? true,
+            x11 ? false,
           }:
           let
             dbusProxyArgs = {
@@ -64,12 +65,16 @@
             displayFlags = lib.concatStringsSep " " (
               lib.optionals display [
                 "-p BindPaths=$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY"
-                "-p BindReadOnlyPaths=-$XAUTHORITY"
                 "-p BindReadOnlyPaths=-$HOME/.config/dconf"
+                "-p Environment=NIXOS_OZONE_WL=1"
+              ]
+            );
+            xFlags = lib.concatStringsSep " " (
+              lib.optionals x11 [
+                "-p BindReadOnlyPaths=-$XAUTHORITY"
                 "-p BindPaths=-/tmp/.X11-unix"
                 "-p BindPaths=/dev/shm"
-                "-p Environment=\"NIXOS_OZONE_WL=1\""
-                # I don't really know if this should be based on dri flag or display flag, but opengl doesn't work without this KEKW
+                # I don't really know if this should be based on dri flag or x11 flag, but opengl doesn't work without this KEKW
                 "-p BindPaths=-/dev/nvidiactl -p DeviceAllow='/dev/nvidiactl rw'"
                 "-p BindPaths=-/dev/nvidia-modeset -p DeviceAllow='/dev/nvidia-modeset rw'"
                 "-p BindPaths=-/dev/nvidia-uvm -p DeviceAllow='/dev/nvidia-uvm rw'"
@@ -106,9 +111,9 @@
                 set +e
                 systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait \
                   -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs \
-                  -p PrivateDevices=true -p PrivateTmp=true \
+                  -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true --collect\
                   -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
-                  ${displayFlags} ${audioFlags} \
+                  ${displayFlags} ${audioFlags} ${xFlags} \
                   ${bindFlags} \
                   ${roBindFlags} \
                   ${deviceFlags} \
