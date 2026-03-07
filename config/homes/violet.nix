@@ -28,7 +28,7 @@
         };
       }
       {
-        pkg = pkgs.discord;
+        pkg = pkgs.discord.override { withTTS = false; };
         # why in **** hell is there two binaries ???
         postBuild = "rm -fv $out/bin/discord";
       }
