@@ -4,21 +4,10 @@
     (final: prev: {
       mylib = rec {
         wrapPrefix = (
-          prefix:
-          {
-            pkg,
-            postBuild ? "",
-            ...
-          }@wrapArgs:
+          prefix: pkg:
           let
             wrapped = pkgs.symlinkJoin {
-              inherit (pkg)
-                name
-                pname
-                version
-                meta
-                ;
-              inherit postBuild;
+              inherit (pkg) name pname version;
               paths = [
                 (pkgs.runCommandLocal "${pkg.name}-wrapped" { } ''
                   mkdir -p $out/bin
@@ -30,8 +19,8 @@
                   EOF
                     chmod a+x $out/bin/$execName
                   done
-                  if grep -ar ${pkg} "${pkg}/share/applications/"; then
-                    echo "Store path in desktop file ?"
+                  if grep -ar ${pkg} "${pkg}/share/" "${pkg}/lib/systemd"; then
+                    echo "Store path in desktop file / systemd unit ?"
                     exit 5
                   fi
                 '')
@@ -42,7 +31,8 @@
           pkg
           // wrapped
           // {
-            override = args: (wrapPrefix prefix (wrapArgs // { pkg = pkg.override args; }));
+            override = args: (wrapPrefix prefix (pkg.override args));
+            overrideAttrs = abort "not implemented";
           }
         );
         wrapPrivateHome =

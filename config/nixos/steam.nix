@@ -1,6 +1,4 @@
-{ pkgs, config, ... }:
-let
-in
+{ pkgs, ... }:
 {
   programs.steam = {
     enable = true;
@@ -24,7 +22,7 @@ in
           "org.freedesktop.portal.Desktop"
         ];
       };
-    } { pkg = pkgs.steam; };
+    } pkgs.steam;
   };
   hardware.steam-hardware.enable = true;
   # environment.systemPackages = with pkgs; [

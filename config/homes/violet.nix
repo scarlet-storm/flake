@@ -16,23 +16,16 @@
   };
   news.display = "silent";
   home.packages = [
-    (pkgs.mylib.wrapPrivateHome
-      {
-        id = "com.discordapp.Discord";
-        dbus = {
-          talks = [
-            "org.freedesktop.Notifications"
-            "org.freedesktop.portal.Desktop"
-            "org.kde.StatusNotifierWatcher"
-          ];
-        };
-      }
-      {
-        pkg = pkgs.discord.override { withTTS = false; };
-        # why in **** hell is there two binaries ???
-        postBuild = "rm -fv $out/bin/discord";
-      }
-    )
+    (pkgs.mylib.wrapPrivateHome {
+      id = "com.discordapp.Discord";
+      dbus = {
+        talks = [
+          "org.freedesktop.Notifications"
+          "org.freedesktop.portal.Desktop"
+          "org.kde.StatusNotifierWatcher"
+        ];
+      };
+    } (pkgs.discord.override { withTTS = false; }))
   ]
   ++ (with pkgs; [
     deskflow
