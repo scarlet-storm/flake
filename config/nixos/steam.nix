@@ -23,6 +23,10 @@
           "org.freedesktop.portal.Desktop"
         ];
       };
+      extraBinds = [ ''"$HOME/.local/share/Steam"'' ];
+      extraSetup = ''
+        mkdir -p "$HOME/.local/share/Steam"
+      '';
     } pkgs.steam;
   };
   hardware.steam-hardware.enable = true;

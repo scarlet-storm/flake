@@ -45,6 +45,7 @@
             audio ? true,
             display ? true,
             x11 ? false,
+            extraSetup ? "",
           }:
           let
             dbusProxyArgs = {
@@ -93,6 +94,7 @@
               ''
                 set -eu
                 mkdir -p "$HOME/.var/nixapps/${id}"
+                ${extraSetup}
                 READY_PIPE="$XDG_RUNTIME_DIR/proxy-ready-$$"
                 PROXY_DIR="$XDG_RUNTIME_DIR/proxy-$$"
                 mkfifo "$READY_PIPE"
