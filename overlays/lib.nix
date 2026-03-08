@@ -50,10 +50,16 @@
           let
             dbusProxyArgs = {
               talks = lib.concatStringsSep " " (map (x: "--talk=${x}") (dbus.talks or [ ]));
-              owns = lib.concatStringsSep " " (map (x: "--own=${x}") (dbus.owns or [ ] ++ [ id ])); # apparently flatpak's behaviour is to allow ownership for the id https://docs.flatpak.org/en/latest/sandbox-permissions.html
+              owns = lib.concatStringsSep " " (map (x: "--own=${x}") (dbus.owns or [ ] ++ [ "${id}.*" ])); # apparently flatpak's behaviour is to allow ownership for the id https://docs.flatpak.org/en/latest/sandbox-permissions.html
               sees = lib.concatStringsSep " " (map (x: "--see=${x}") (dbus.sees or [ ]));
-              calls = lib.concatStringsSep " " (map (x: "--call=${x}") (dbus.calls or [ ]));
-              broadcasts = lib.concatStringsSep " " (map (x: "--broadcast=${x}") (dbus.broadcasts or [ ]));
+              calls = lib.concatStringsSep " " (
+                map (x: "--call=${x}") (dbus.calls or [ ] ++ [ "org.freedesktop.portal.*=*" ]) # default flatpak permissions
+              );
+              broadcasts = lib.concatStringsSep " " (
+                map (x: "--broadcast=${x}") (
+                  dbus.broadcasts or [ ] ++ [ "org.freedesktop.portal.*=@/org/freedesktop/portal/*" ]
+                )
+              );
             };
             bindFlags = lib.concatStringsSep " " (map (x: "-p BindPaths=${x}") extraBinds);
             roBindFlags = lib.concatStringsSep " " (map (x: "-p BindReadOnlyPaths=${x}") roBinds);
@@ -113,7 +119,7 @@
                 set +e
                 systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait \
                   -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs \
-                  -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true --collect\
+                  -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true --collect -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
                   -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
                   ${displayFlags} ${audioFlags} ${xFlags} \
                   ${bindFlags} \

@@ -20,7 +20,6 @@
           "org.freedesktop.ScreenSaver"
           "org.freedesktop.PowerManagement"
           "org.kde.StatusNotifierWatcher"
-          "org.freedesktop.portal.Desktop"
         ];
       };
       extraBinds = [ ''"$HOME/.local/share/Steam"'' ];

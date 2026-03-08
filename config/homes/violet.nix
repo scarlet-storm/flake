@@ -21,7 +21,6 @@
       dbus = {
         talks = [
           "org.freedesktop.Notifications"
-          "org.freedesktop.portal.Desktop"
           "org.kde.StatusNotifierWatcher"
         ];
       };
