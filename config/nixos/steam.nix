@@ -6,7 +6,7 @@
     localNetworkGameTransfers.openFirewall = true;
     extraCompatPackages = [ pkgs.proton-ge-bin ];
     extraPackages = with pkgs; [ kdePackages.breeze ];
-    package = pkgs.mylib.wrapPrivateHome {
+    package = pkgs.wrapPrivateHome {
       id = "com.valvesoftware.Steam";
       devices = [
         "dri"

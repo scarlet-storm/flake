@@ -16,7 +16,7 @@
   };
   news.display = "silent";
   home.packages = [
-    (pkgs.mylib.wrapPrivateHome {
+    (pkgs.wrapPrivateHome {
       id = "com.discordapp.Discord";
       dbus = {
         talks = [

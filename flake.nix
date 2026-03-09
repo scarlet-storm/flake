@@ -48,6 +48,7 @@
         callPackage = path: _: path;
         directory = ./modules;
       };
+      overlays = (import ./overlays) { inherit lib; };
       configModules = lib.filesystem.packagesFromDirectoryRecursive {
         callPackage = path: _: path;
         directory = ./config;
@@ -61,6 +62,7 @@
       secrets = import ./secrets;
     in
     {
+      ### standard flake outputs ###
       formatter = forAllSystems (
         system:
         (inputs.treefmt-nix.lib.evalModule nixpkgs.legacyPackages.${system} ./treefmt.nix)
@@ -69,12 +71,16 @@
       packages = forAllSystems (
         system:
         lib.filesystem.packagesFromDirectoryRecursive {
-          callPackage = nixpkgs.legacyPackages.${system}.callPackage;
+          inherit (nixpkgs.legacyPackages.${system}) callPackage;
           directory = ./packages;
         }
       );
-      nixosModules = flakeModules;
+      nixosModules = flakeModules // {
+        configs = configModules.nixos;
+      };
+      inherit overlays;
 
+      # nixosConfigurations
       nixosConfigurations = lib.concatMapAttrs (
         system: _:
         builtins.mapAttrs (
@@ -82,9 +88,14 @@
           lib.nixosSystem {
             inherit system;
             modules = [
+              configModules.nixpkgs
               { networking.hostName = systemName; }
-              { nixpkgs.overlays = [ (final: prev: inputs.self.packages.${system}) ]; }
-              ./overlays
+              {
+                nixpkgs.overlays = [
+                  (final: prev: inputs.self.packages.${system})
+                  overlays.wrappers
+                ];
+              }
               configModules.nixos.base.default
               config.default
             ];
@@ -97,6 +108,8 @@
         ) configModules.hosts.${system}
       ) configModules.hosts;
 
+      ### non-standard flake outputs ###
+      # homeConfigurations
       homeConfigurations = builtins.mapAttrs (
         name: config:
         (
@@ -107,14 +120,15 @@
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
+              configModules.nixpkgs
               { programs.home-manager.enable = true; }
-              ./overlays
               {
                 nixpkgs.overlays = [
                   (
                     final: prev:
                     inputs.self.packages.${system} // { ghostty = inputs.ghostty.packages.${system}.ghostty; }
                   )
+                  overlays.wrappers
                 ];
               }
               inputs.sops-nix.homeModules.sops
@@ -126,6 +140,10 @@
           }
         )
       ) configModules.homes;
-      inherit configModules;
+
+      # homeModules
+      homeModules = {
+        configs = configModules.home-manager;
+      };
     };
 }
