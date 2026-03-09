@@ -2,7 +2,7 @@
   lib,
   wrapPrefix,
   writeShellScript,
-  runtimeShell,
+  coreutils,
   xdg-dbus-proxy,
 }:
 {
@@ -65,42 +65,61 @@ let
       "-p BindPaths=-$XDG_RUNTIME_DIR/pulse"
     ]
   );
-  init = writeShellScript "private-script-${id}" (
+  proxy-init = writeShellScript "proxy-init-${id}" (
     with dbusProxyArgs;
     ''
       set -eu
-      mkdir -p "$HOME/.var/nixapps/${id}"
-      ${extraSetup}
-      READY_PIPE="$XDG_RUNTIME_DIR/proxy-ready-$$"
-      PROXY_DIR="$XDG_RUNTIME_DIR/proxy-$$"
-      mkfifo "$READY_PIPE"
-      systemd-run --unit "xdg-dbus-proxy-$$" --user -p RuntimeDirectory="proxy-$$" \
-        --description="DBUS socket for ${id}" --collect \
-        ${runtimeShell} -c "exec ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 \"$DBUS_SESSION_BUS_ADDRESS\" \"$PROXY_DIR/bus\" \
-          --filter ${
-            lib.optionalString (dbus ? log) "--log"
-          } ${owns} ${talks} ${sees} ${calls} ${broadcasts} 3>\"$READY_PIPE\""
-      exec 4<> "$READY_PIPE"
-      read -t 10 -n 1 <&4 || {
-        echo "Error: Proxy failed to initialize"
-        systemctl --user stop xdg-dbus-proxy-$$ || :
-        rm -f "$READY_PIPE"
-        exit 1
-      }
-      echo "Proxy ready"
-      set +e
-      systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait \
-        -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs -p TemporaryFileSystem=$XDG_RUNTIME_DIR \
-        -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true --collect -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
-        -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
-        ${displayFlags} ${audioFlags} ${xFlags} \
-        ${bindFlags} \
-        ${roBindFlags} \
-        ${deviceFlags} ${lib.concatStringsSep " " extraArgs} \
-        "$@"
-      EXIT_CODE=$?
-      exit $EXIT_CODE
+      ${coreutils}/bin/cat <<EOF > /.flatpak-info
+      [Application]
+      name=${id}
+
+      [Instance]
+      instance-id=$INSTANCE_ID
+      EOF
+      echo "{\"child-pid\": $$}" > "$XDG_RUNTIME_DIR/.flatpak/$INSTANCE_ID/bwrapinfo.json"
+      exec ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 "$@" \
+      --filter ${owns} ${talks} ${sees} ${calls} ${broadcasts} 3>"$READY_PIPE"
     ''
   );
+  init = writeShellScript "private-script-${id}" ''
+    set -eu
+    mkdir -p "$HOME/.var/nixapps/${id}"
+    ${extraSetup}
+    READY_PIPE="$XDG_RUNTIME_DIR/proxy-ready-$$"
+    PROXY_DIR="$XDG_RUNTIME_DIR/proxy-$$"
+
+    INSTANCE_ID=$(uuidgen | tr -d "-")
+
+    mkfifo "$READY_PIPE"
+    systemd-run --unit "xdg-dbus-proxy-$$" --user --collect --description="DBUS socket for ${id}" -p Type=exec \
+      -p RuntimeDirectory="proxy-$$" -p RuntimeDirectory=.flatpak/$INSTANCE_ID \
+      -p Environment="INSTANCE_ID=$INSTANCE_ID" -p Environment="READY_PIPE=$READY_PIPE" \
+      -p TemporaryFileSystem=/ -p BindReadOnlyPaths=/nix -p ProtectHome=tmpfs -p BindPaths=$XDG_RUNTIME_DIR \
+      ${proxy-init} "$DBUS_SESSION_BUS_ADDRESS" "$PROXY_DIR/bus"
+
+    exec 4<> "$READY_PIPE"
+    read -t 10 -n 1 <&4 || {
+      echo "Error: Proxy failed to initialize"
+      systemctl --user stop xdg-dbus-proxy-$$ || :
+      rm -f "$READY_PIPE"
+      exit 1
+    }
+
+    echo "Proxy ready"
+    set +e
+    systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait \
+      -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs -p Type=exec \
+      -p TemporaryFileSystem=/ -p BindPaths=/run -p BindReadOnlyPaths=/etc \
+      -p BindReadOnlyPaths=/nix -p BindReadOnlyPaths=/usr -p TemporaryFileSystem=$XDG_RUNTIME_DIR \
+      -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true --collect -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
+      -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
+      ${displayFlags} ${audioFlags} ${xFlags} \
+      ${bindFlags} \
+      ${roBindFlags} \
+      ${deviceFlags} ${lib.concatStringsSep " " extraArgs} \
+      "$@"
+    EXIT_CODE=$?
+    exit $EXIT_CODE
+  '';
 in
 wrapPrefix init
