@@ -77,7 +77,9 @@ let
       systemd-run --unit "xdg-dbus-proxy-$$" --user -p RuntimeDirectory="proxy-$$" \
         --description="DBUS socket for ${id}" --collect \
         ${runtimeShell} -c "exec ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 \"$DBUS_SESSION_BUS_ADDRESS\" \"$PROXY_DIR/bus\" \
-          --filter ${owns} ${talks} ${sees} ${calls} ${broadcasts} 3>\"$READY_PIPE\""
+          --filter ${
+            lib.optionalString (dbus ? log) "--log"
+          } ${owns} ${talks} ${sees} ${calls} ${broadcasts} 3>\"$READY_PIPE\""
       exec 4<> "$READY_PIPE"
       read -t 10 -n 1 <&4 || {
         echo "Error: Proxy failed to initialize"
