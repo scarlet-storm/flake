@@ -34,14 +34,20 @@ let
   roBindFlags = lib.concatStringsSep " " (map (x: "-p BindReadOnlyPaths=${x}") roBinds);
   deviceArgs = {
     # flatpak inspired
-    dri = "-p BindPaths=-/dev/dri -p DeviceAllow='/dev/dri rw'";
+    dri = lib.concatStringsSep " " [
+      "-p BindPaths=-/dev/dri -p DeviceAllow='/dev/dri rw'"
+      "-p BindPaths=-/dev/nvidiactl -p DeviceAllow='/dev/nvidiactl rw'"
+      "-p BindPaths=-/dev/nvidia-modeset -p DeviceAllow='/dev/nvidia-modeset rw'"
+      "-p BindPaths=-/dev/nvidia-uvm -p DeviceAllow='/dev/nvidia-uvm rw'"
+      "-p BindPaths=-/dev/nvidia-uvm-tools -p DeviceAllow='/dev/nvidia-uvm-tools rw'"
+      "-p BindPaths=-/dev/nvidia0 -p DeviceAllow='/dev/nvidia0 rw'"
+    ];
     input = "-p BindPaths=-/dev/input -p DeviceAllow='/dev/input rw' -p BindPaths=-/dev/uinput -p DeviceAllow='/dev/uinput rw'";
   };
   deviceFlags = lib.concatStringsSep " " (map (dev: deviceArgs.${dev}) devices);
   displayFlags = lib.concatStringsSep " " (
     lib.optionals display [
       "-p BindPaths=$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY"
-      "-p BindReadOnlyPaths=-$HOME/.config/dconf"
       "-p Environment=NIXOS_OZONE_WL=1"
     ]
   );
@@ -50,12 +56,6 @@ let
       "-p BindReadOnlyPaths=-$XAUTHORITY"
       "-p BindPaths=-/tmp/.X11-unix"
       "-p BindPaths=/dev/shm"
-      # I don't really know if this should be based on dri flag or x11 flag, but opengl doesn't work without this KEKW
-      "-p BindPaths=-/dev/nvidiactl -p DeviceAllow='/dev/nvidiactl rw'"
-      "-p BindPaths=-/dev/nvidia-modeset -p DeviceAllow='/dev/nvidia-modeset rw'"
-      "-p BindPaths=-/dev/nvidia-uvm -p DeviceAllow='/dev/nvidia-uvm rw'"
-      "-p BindPaths=-/dev/nvidia-uvm-tools -p DeviceAllow='/dev/nvidia-uvm-tools rw'"
-      "-p BindPaths=-/dev/nvidia0 -p DeviceAllow='/dev/nvidia0 rw'"
     ]
   );
   audioFlags = lib.concatStringsSep " " (
