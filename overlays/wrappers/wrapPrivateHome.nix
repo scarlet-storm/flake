@@ -87,7 +87,7 @@ let
       echo "Proxy ready"
       set +e
       systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait \
-        -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs \
+        -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs -p TemporaryFileSystem=$XDG_RUNTIME_DIR \
         -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true --collect -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
         -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
         ${displayFlags} ${audioFlags} ${xFlags} \
