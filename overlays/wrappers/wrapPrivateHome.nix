@@ -15,6 +15,7 @@
   display ? true,
   x11 ? false,
   extraSetup ? "",
+  extraArgs ? [ ],
 }:
 let
   dbusProxyArgs = {
@@ -93,7 +94,7 @@ let
         ${displayFlags} ${audioFlags} ${xFlags} \
         ${bindFlags} \
         ${roBindFlags} \
-        ${deviceFlags} \
+        ${deviceFlags} ${lib.concatStringsSep " " extraArgs} \
         "$@"
       EXIT_CODE=$?
       exit $EXIT_CODE
