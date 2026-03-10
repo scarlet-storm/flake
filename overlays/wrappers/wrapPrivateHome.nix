@@ -69,16 +69,18 @@ let
     with dbusProxyArgs;
     ''
       set -eu
-      ${coreutils}/bin/cat <<EOF > /.flatpak-info
-      [Application]
-      name=${id}
+      # ${coreutils}/bin/cat <<EOF > /.flatpak-info
+      # [Application]
+      # name=${id}
 
-      [Instance]
-      instance-id=$INSTANCE_ID
-      EOF
-      echo "{\"child-pid\": $$}" > "$XDG_RUNTIME_DIR/.flatpak/$INSTANCE_ID/bwrapinfo.json"
-      exec ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 "$@" \
-      --filter ${owns} ${talks} ${sees} ${calls} ${broadcasts} 3>"$READY_PIPE"
+      # [Instance]
+      # instance-id=$INSTANCE_ID
+      # EOF
+      # echo "{\"child-pid\": $$}" > "$XDG_RUNTIME_DIR/.flatpak/$INSTANCE_ID/bwrapinfo.json"
+      exec ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 "$@" --filter \
+      ${
+        lib.optionalString (dbus ? log && dbus.log) "--log"
+      } ${owns} ${talks} ${sees} ${calls} ${broadcasts} 3>"$READY_PIPE"
     ''
   );
   init = writeShellScript "private-script-${id}" ''
@@ -94,7 +96,6 @@ let
     systemd-run --unit "xdg-dbus-proxy-$$" --user --collect --description="DBUS socket for ${id}" -p Type=exec \
       -p RuntimeDirectory="proxy-$$" -p RuntimeDirectory=.flatpak/$INSTANCE_ID \
       -p Environment="INSTANCE_ID=$INSTANCE_ID" -p Environment="READY_PIPE=$READY_PIPE" \
-      -p TemporaryFileSystem=/ -p BindReadOnlyPaths=/nix -p ProtectHome=tmpfs -p BindPaths=$XDG_RUNTIME_DIR \
       ${proxy-init} "$DBUS_SESSION_BUS_ADDRESS" "$PROXY_DIR/bus"
 
     exec 4<> "$READY_PIPE"
@@ -107,11 +108,10 @@ let
 
     echo "Proxy ready"
     set +e
-    systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait \
+    systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait --collect \
       -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs -p Type=exec \
-      -p TemporaryFileSystem=/ -p BindPaths=/run -p BindReadOnlyPaths=/etc \
-      -p BindReadOnlyPaths=/nix -p BindReadOnlyPaths=/usr -p TemporaryFileSystem=$XDG_RUNTIME_DIR \
-      -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true --collect -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
+      -p TemporaryFileSystem=$XDG_RUNTIME_DIR \
+      -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
       -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
       ${displayFlags} ${audioFlags} ${xFlags} \
       ${bindFlags} \
