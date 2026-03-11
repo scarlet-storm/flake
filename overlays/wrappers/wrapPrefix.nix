@@ -11,7 +11,6 @@ let
       paths = [
         (runCommandLocal "${pkg.name}-wrapped" { } ''
           mkdir -p $out/bin
-          mkdir -p "$out/share/applications"
           for bin in ${pkg}/bin/*; do
             execName=$(basename $bin)
             cat <<EOF > $out/bin/$execName
@@ -20,15 +19,14 @@ let
           EOF
             chmod a+x $out/bin/$execName
           done
-          for app in ${pkg}/share/applications/*.desktop; do
-            appName=$(basename $app)
-            dest="$out/share/applications/$appName"
-            cp -av "$app" "$dest"
-            if grep -q "${pkg}" $dest ; then
-              echo "Replacing store path in $dest"
-              substituteInPlace "$dest" --replace-fail "${pkg}" "$out"
-            fi
-          done
+          if grep -q ${pkg} ${pkg}/share/applications/*.desktop; then
+            echo "Replacing store paths in desktop files"
+            mkdir -p $out/share
+            cp -RLv ${pkg}/share/. $out/share/
+            for app in $out/share/applications/*.desktop; do
+              substituteInPlace "$app" --replace-fail "${pkg}" "$out"
+            done
+          fi
           if grep -qar ${pkg} "${pkg}/lib/systemd"; then
             echo "Store path in systemd unit ?"
             exit 5
