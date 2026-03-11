@@ -29,14 +29,4 @@
     } pkgs.steam;
   };
   hardware.steam-hardware.enable = true;
-  # environment.systemPackages = with pkgs; [
-  #   # uses steam env
-  #   (heroic.override { steam = config.programs.steam.package; })
-  #   # # uses buildFHSEnv again
-  #   (lutris.override {
-  #     inherit buildFHSEnv;
-  #     # We don't want to call bwrap twice
-  #     steamSupport = false;
-  #   })
-  # ];
 }

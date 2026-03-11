@@ -15,32 +15,48 @@
     desktopEnvironment = "plasma";
   };
   news.display = "silent";
-  home.packages = [
-    (pkgs.wrapPrivateHome {
-      id = "com.discordapp.Discord";
-      dbus = {
-        talks = [
-          "org.freedesktop.Notifications"
-          "org.kde.StatusNotifierWatcher"
+  home.packages = (
+    with pkgs;
+    [
+      deskflow
+      kopia
+      keepassxc
+      sops
+      signal-desktop
+      nixd
+      nixfmt
+      yubikey-manager
+      virt-viewer
+      (wrapPrivateHome {
+        id = "io.github.Faugus.faugus-launcher";
+        dbus = {
+          talks = [ "org.kde.StatusNotifierWatcher" ];
+        };
+        devices = [ "dri" ];
+        roBinds = [ "-$HOME/.config/dconf" ];
+      } faugus-launcher)
+      (wrapPrivateHome {
+        id = "com.heroicgameslauncher.hgl";
+        dbus = {
+          talks = [
+            "org.kde.StatusNotifierWatcher"
+            "org.freedesktop.ScreenSaver"
+          ];
+        };
+        devices = [ "dri" ];
+        extraBinds = [
+          "$HOME/.local/share/Steam"
+          "$HOME/.local/share/umu"
+          "$HOME/Games"
         ];
-      };
-      devices = [ "dri" ];
-      # who knows why this doesn't start if x11 socket is not available ?
-      x11 = true;
-      extraArgs = [ "-p PrivateTmp=false" ];
-    } (pkgs.discord.override { withTTS = false; }))
-  ]
-  ++ (with pkgs; [
-    deskflow
-    kopia
-    keepassxc
-    sops
-    signal-desktop
-    nixd
-    nixfmt
-    yubikey-manager
-    virt-viewer
-  ]);
+        extraSetup = ''
+          mkdir -p $HOME/.local/share/Steam
+          mkdir -p $HOME/.local/share/umu
+          mkdir -p $HOME/Games
+        '';
+      } heroic)
+    ]
+  );
   home.file = {
     ".kopiaignore".text = ''
       /.var
@@ -58,6 +74,22 @@
     anki = {
       enable = true;
       addons = [ pkgs.ankiAddons.anki-connect ];
+    };
+    discord = {
+      enable = true;
+      package = pkgs.wrapPrivateHome {
+        id = "com.discordapp.Discord";
+        dbus = {
+          talks = [
+            "org.freedesktop.Notifications"
+            "org.kde.StatusNotifierWatcher"
+          ];
+        };
+        devices = [ "dri" ];
+        # who knows why this doesn't start if x11 socket is not available ?
+        x11 = true;
+        extraArgs = [ "-p PrivateTmp=false" ];
+      } (pkgs.discord.override { withTTS = false; });
     };
     git = {
       enable = true;
