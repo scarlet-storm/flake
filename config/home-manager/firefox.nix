@@ -21,6 +21,7 @@ in
 {
 
   programs.firefox = {
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     enable = true;
     package = null;
     profiles."${config.home.username}" = {

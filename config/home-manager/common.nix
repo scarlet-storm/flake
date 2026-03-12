@@ -8,6 +8,7 @@ let
   commonConfig = {
     home = {
       homeDirectory = lib.mkDefault "/home/${config.home.username}";
+      preferXdgDirectories = true;
     };
     programs = {
       atuin = {
