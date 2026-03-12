@@ -86,6 +86,8 @@ let
   init = writeShellScript "private-script-${id}" ''
     set -eu
     mkdir -p "$HOME/.var/nixapps/${id}"
+    APP_TMP="$XDG_RUNTIME_DIR/private-tmp/${id}"
+    mkdir -p "$APP_TMP"
     ${extraSetup}
     READY_PIPE="$XDG_RUNTIME_DIR/proxy-ready-$$"
     PROXY_DIR="$XDG_RUNTIME_DIR/proxy-$$"
@@ -110,8 +112,9 @@ let
     set +e
     systemd-run --unit "app-${id}-$$" --slice app.slice --pty --pipe --user --wait --collect \
       -p ExitType=cgroup --working-directory=$HOME -p ProtectHome=tmpfs -p Type=exec \
-      -p TemporaryFileSystem=$XDG_RUNTIME_DIR \
-      -p PrivateDevices=true -p PrivateTmp=true -p PrivatePIDs=true -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
+      -p TemporaryFileSystem=$XDG_RUNTIME_DIR -p PrivateTmp=true -p BindPaths="$APP_TMP:/tmp" \
+      -p PrivateDevices=true -p PrivatePIDs=true \
+      -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
       -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
       ${displayFlags} ${audioFlags} ${xFlags} \
       ${bindFlags} \

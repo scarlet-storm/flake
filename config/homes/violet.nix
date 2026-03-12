@@ -88,7 +88,6 @@
         devices = [ "dri" ];
         # who knows why this doesn't start if x11 socket is not available ?
         x11 = true;
-        extraArgs = [ "-p PrivateTmp=false" ];
       } (pkgs.discord.override { withTTS = false; });
     };
     git = {
