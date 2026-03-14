@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 {
   programs.helix = {
     enable = true;
-    extraConfig = builtins.readFile "${(pkgs.formats.toml { }).generate "helix-config" {
+    settings = {
       theme = "nyxvamp-obsidian";
-    }}";
+    };
   };
 }

@@ -18,6 +18,7 @@
       ];
       auto-allocate-uids = true;
       auto-optimise-store = true;
+      allow-import-from-derivation = false;
     };
     gc = {
       automatic = true;
