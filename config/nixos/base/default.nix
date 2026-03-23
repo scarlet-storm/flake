@@ -80,5 +80,7 @@
     locate.package = pkgs.plocate;
     locate.enable = true;
   };
-
+  security = {
+    sudo.enable = false;
+  };
 }
