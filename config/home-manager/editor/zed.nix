@@ -4,8 +4,23 @@
   config,
   ...
 }:
+let
+  lgConfig = pkgs.writers.writeYAML "zed-lg-config" {
+    os = {
+      editPreset = "zed";
+    };
+  };
+in
 {
   config = lib.mkIf (config.home.desktopEnvironment != null) {
+    programs.lazygit.enable = true;
+    # symlink zed to zeditor
+    home.packages = [
+      (pkgs.runCommandLocal "zed-symlink" { } ''
+        mkdir -p $out/bin
+        ln -s "${config.programs.zed-editor.package}/bin/zeditor" "$out/bin/zed"
+      '')
+    ];
     programs.zed-editor = {
       enable = true;
       package =
@@ -66,6 +81,35 @@
         use_system_path_prompts = false;
         vim_mode = true;
       };
+      userTasks = [
+        {
+          label = "lazygit";
+          command = "lazygit";
+          args = [ "--use-config-file=${lgConfig}" ];
+          allow_concurrent_runs = false;
+          hide = "on_success";
+          reveal = "always";
+          reveal_target = "center";
+          use_new_terminal = false;
+        }
+      ];
+      userKeymaps = [
+        {
+          context = "Editor && vim_mode == normal && vim_operator == none && !VimWaiting";
+          bindings = {
+            "space g g" = [
+              "task::Spawn"
+              {
+                task_name = "lazygit";
+                reveal_target = "center";
+              }
+            ];
+          };
+        }
+      ];
+      mutableUserSettings = true;
+      mutableUserTasks = true;
+      mutableUserKeymaps = true;
       extensions = [
         # themes
         "catppuccin"
@@ -85,7 +129,6 @@
         "nu"
         "toml"
       ];
-      mutableUserSettings = true;
     };
   };
 }
