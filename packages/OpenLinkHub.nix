@@ -4,24 +4,34 @@
   buildGoModule,
   systemd,
   pciutils,
+  pkgconf,
+  pipewire,
   withNvidia ? false,
   nvidiaPackage ? null,
   makeWrapper,
 }:
 
-buildGoModule rec {
+buildGoModule (finalAttrs: {
   pname = "OpenLinkHub";
-  version = "0.5.5";
-  name = "${pname}-${version}";
+  version = "0.8.2";
+  env = {
+    CGO_CFLAGS_ALLOW = "-fno-strict-overflow";
+  };
   src = fetchFromGitHub {
     owner = "jurkovic-nikola";
     repo = "OpenLinkHub";
-    rev = "${version}";
-    hash = "sha256-xcP/Ze9Ba0uYzjCvcx3awij2zA7O8Iu1nbEd/mfeS0w=";
+    rev = finalAttrs.version;
+    hash = "sha256-uOu9cdsqKdI15Nkl9/WnVqU+NIdyeec66aUTYl02zY4=";
   };
-  vendorHash = "sha256-1GVNyCyurUurO8cteX4msh+eHuAzS7/GqMV4sGV3Wno=";
-  nativeBuildInputs = [ makeWrapper ];
-  buildInputs = [ systemd ];
+  vendorHash = "sha256-ibR0F2b5mgNsi/aq1f3FO0lJTJrGt5zePv5dpuu9HCo=";
+  nativeBuildInputs = [
+    makeWrapper
+    pkgconf
+  ];
+  buildInputs = [
+    systemd
+    pipewire
+  ];
   postInstall = ''
     mkdir -p $out/share/OpenLinkHub
     touch $out/share/OpenLinkHub/atomic
@@ -37,4 +47,4 @@ buildGoModule rec {
         )
       };
   '';
-}
+})
