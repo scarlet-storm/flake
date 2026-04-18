@@ -34,10 +34,6 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    ghostty = {
-      url = "github:ghostty-org/ghostty/tip";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -124,10 +120,7 @@
               { programs.home-manager.enable = true; }
               {
                 nixpkgs.overlays = [
-                  (
-                    final: prev:
-                    inputs.self.packages.${system} // { ghostty = inputs.ghostty.packages.${system}.ghostty; }
-                  )
+                  (final: prev: inputs.self.packages.${system})
                   overlays.wrappers
                 ];
               }
