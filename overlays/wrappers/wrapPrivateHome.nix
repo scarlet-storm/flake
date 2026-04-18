@@ -44,6 +44,7 @@ let
       "-p BindPaths=-/dev/nvidia0 -p DeviceAllow='/dev/nvidia0 rw'"
     ];
     input = "-p BindPaths=-/dev/input -p DeviceAllow='/dev/input rw' -p BindPaths=-/dev/uinput -p DeviceAllow='/dev/uinput rw'";
+    ntsync = "-p BindPaths=-/dev/ntsync -p DeviceAllow='/dev/ntsync rw'";
   };
   deviceFlags = lib.concatStringsSep " " (map (dev: deviceArgs.${dev}) devices);
   displayFlags = lib.concatStringsSep " " (

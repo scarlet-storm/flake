@@ -11,6 +11,7 @@
       devices = [
         "dri"
         "input"
+        "ntsync"
       ];
       x11 = true;
       dbus = {

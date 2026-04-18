@@ -87,6 +87,7 @@ in
   systemd.oomd.enable = true;
   systemd.oomd.enableRootSlice = true;
   boot.kernelParams = [ "split_lock_detect=off" ];
+  boot.kernelModules = [ "ntsync" ];
   boot.extraModprobeConfig = ''
     options btusb enable_autosuspend=N
   '';
