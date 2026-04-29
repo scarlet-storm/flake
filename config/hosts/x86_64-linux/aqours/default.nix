@@ -10,26 +10,7 @@
 let
   users = [ "violet" ];
   systemd-homework = pkgs.systemd.overrideAttrs (prevAttrs: {
-    src = pkgs.fetchFromGitHub {
-      repo = "systemd";
-      owner = "systemd";
-      rev = "v259-rc3";
-      hash = "sha256-z7u9Ww2agDLxgsSs+DPEDfIKFBMg8Wv1tvx65571LtM=";
-    };
-    version = "259-rc3";
-    patches = [
-      (pkgs.fetchpatch {
-        url = "https://github.com/systemd/systemd/compare/e239c23780e9524f5a618ad5d43505d0bd73d532.patch";
-        hash = "sha256-t6jr91QSQXNZAncbQxywwdJx7e7iZnURNzKDn6meWC8=";
-      })
-      ./discard.patch
-    ];
-    mesonFlags = prevAttrs.mesonFlags ++ [
-      "--sysconfdir=${placeholder "out"}/etc"
-      "--localstatedir=${placeholder "out"}/var"
-    ];
-    doCheck = false;
-    dontCheckForBrokenSymlinks = true;
+    patches = prevAttrs.patches ++ [ ./discard.patch ];
   });
 in
 {
