@@ -18,7 +18,6 @@
     xsettingsd
     kdePackages.ksvg
     kdePackages.skanlite
-    kdePackages.yakuake
     libreoffice-qt6-fresh
     unar # ark rar plugin
   ];
