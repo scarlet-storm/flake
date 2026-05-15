@@ -8,6 +8,14 @@
 {
   xdg.configFile."systemd/user/app-org.fcitx.Fcitx5@autostart.service".source =
     config.lib.file.mkOutOfStoreSymlink "/dev/null";
+  i18n.inputMethod = {
+    type = "fcitx5";
+    enable = true;
+    fcitx5 = {
+      waylandFrontend = true;
+      addons = [ pkgs.fcitx5-mozc ];
+    };
+  };
   programs.plasma = {
     enable = true;
     workspace = {
@@ -20,7 +28,7 @@
     };
     configFile."kwinrc"."Wayland" = {
       "InputMethod" = {
-        value = "fcitx5-wayland-launcher.desktop";
+        value = "${config.i18n.inputMethod.package}/share/applications/org.fcitx.Fcitx5.desktop";
         shellExpand = true;
       };
       VirtualKeyboardEnabled = true;
