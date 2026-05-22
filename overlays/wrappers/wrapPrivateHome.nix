@@ -117,6 +117,7 @@ let
       -p PrivateDevices=true -p PrivatePIDs=true \
       -p Environment=NIXOS_XDG_OPEN_USE_PORTAL=1 \
       -p BindPaths=$HOME/.var/nixapps/${id}:$HOME -p BindPaths="$PROXY_DIR/bus:$XDG_RUNTIME_DIR/bus" \
+      -p BindPaths=/run/nscd \
       ${displayFlags} ${audioFlags} ${xFlags} \
       ${bindFlags} \
       ${roBindFlags} \
