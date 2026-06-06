@@ -33,6 +33,23 @@
       };
       VirtualKeyboardEnabled = true;
     };
+    configFile.baloofilerc.General = {
+      "exclude folders" = {
+        value = "$HOME";
+        shellExpand = true;
+      };
+      "folders" = {
+        value = lib.concatStringsSep "," [
+          "$HOME/Documents"
+          "$HOME/Downloads"
+          "$HOME/Music"
+          "$HOME/Pictures"
+          "$HOME/Videos"
+        ];
+        shellExpand = true;
+      };
+      "index hidden folders" = true;
+    };
     panels = [
       {
         floating = true;
