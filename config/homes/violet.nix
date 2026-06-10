@@ -55,6 +55,7 @@
           mkdir -p $HOME/Games
         '';
       } heroic)
+      (anki.withAddons (with pkgs.ankiAddons; [ anki-connect ]))
     ]
   );
   home.file = {
@@ -71,10 +72,10 @@
   };
 
   programs = {
-    anki = {
-      enable = true;
-      addons = [ pkgs.ankiAddons.anki-connect ];
-    };
+    #   anki = {
+    #     enable = true;
+    #     addons = [ pkgs.ankiAddons.anki-connect ];
+    #   };
     discord = {
       enable = true;
       package = pkgs.wrapPrivateHome {
