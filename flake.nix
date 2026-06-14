@@ -138,5 +138,9 @@
       homeModules = {
         configs = configModules.home-manager;
       };
+      diskoConfigurations = lib.filesystem.packagesFromDirectoryRecursive {
+        callPackage = path: _: import path;
+        directory = ./config/disko;
+      };
     };
 }
