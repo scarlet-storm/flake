@@ -40,16 +40,11 @@
     inputs@{ nixpkgs, ... }:
     let
       lib = nixpkgs.lib;
-      flakeModules = lib.filesystem.packagesFromDirectoryRecursive {
+      modules = lib.filesystem.packagesFromDirectoryRecursive {
         callPackage = path: _: path;
         directory = ./modules;
       };
       overlays = (import ./overlays) { inherit lib; };
-      configModules = lib.filesystem.packagesFromDirectoryRecursive {
-        callPackage = path: _: path;
-        directory = ./config;
-      };
-      homeManagerConfig = configModules.home-manager;
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -71,11 +66,8 @@
           directory = ./packages;
         }
       );
-      nixosModules = flakeModules // {
-        configs = configModules.nixos;
-      };
+      nixosModules = modules.nixos;
       inherit overlays;
-
       nixosConfigurations = lib.concatMapAttrs (
         system: _:
         builtins.mapAttrs (
@@ -83,7 +75,7 @@
           lib.nixosSystem {
             inherit system;
             modules = [
-              configModules.nixpkgs
+              ./nixpkgs.nix
               { networking.hostName = systemName; }
               {
                 nixpkgs.overlays = [
@@ -91,17 +83,13 @@
                   overlays.wrappers
                 ];
               }
-              configModules.nixos.base.default
+              modules.nixos.mixins.base.default
               config.default
             ];
-            specialArgs = {
-              inherit inputs secrets;
-              modules = configModules;
-              homeManagerExtraArgs = { inherit homeManagerConfig secrets; };
-            };
+            specialArgs = { inherit inputs secrets modules; };
           }
-        ) configModules.hosts.${system}
-      ) configModules.hosts;
+        ) modules.hosts.${system}
+      ) modules.hosts;
 
       ### non-standard flake outputs ###
       homeConfigurations = builtins.mapAttrs (
@@ -114,7 +102,7 @@
           inputs.home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
-              configModules.nixpkgs
+              ./nixpkgs.nix
               { programs.home-manager.enable = true; }
               {
                 nixpkgs.overlays = [
@@ -123,22 +111,16 @@
                 ];
               }
               inputs.sops-nix.homeModules.sops
-              configModules.nixos.sops
               inputs.plasma-manager.homeModules.plasma-manager
               config
             ];
-            extraSpecialArgs = { inherit homeManagerConfig secrets; };
+            extraSpecialArgs = { inherit modules secrets; };
           }
         )
-      ) configModules.homes;
+      ) modules.homes;
 
-      homeModules = {
-        configs = configModules.home-manager;
-      };
+      homeModules = modules.home-manager;
 
-      diskoConfigurations = lib.filesystem.packagesFromDirectoryRecursive {
-        callPackage = path: _: import path;
-        directory = ./config/disko;
-      };
+      diskoConfigurations = lib.mapAttrs (_: path: import path) modules.disko;
     };
 }

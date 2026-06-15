@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   users.users.nixremote = {
     isSystemUser = true;
     group = "nixremote";

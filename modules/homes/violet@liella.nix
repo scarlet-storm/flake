@@ -1,11 +1,11 @@
-{ pkgs, homeManagerConfig, ... }:
+{ pkgs, modules, ... }:
 let
   wallpapers = import ./wallpapers.nix { inherit (pkgs) fetchurl; };
 in
 {
   imports = [
     ./violet.nix
-    homeManagerConfig.plasma
+    modules.home-manager.mixins.plasma
   ];
   services.syncthing.enable = true;
   programs.plasma.workspace.wallpaper = "${wallpapers.pShizukuIdolized}";

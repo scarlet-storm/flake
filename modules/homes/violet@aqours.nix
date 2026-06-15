@@ -2,7 +2,7 @@
   lib,
   config,
   pkgs,
-  homeManagerConfig,
+  modules,
   secrets,
   ...
 }:
@@ -13,7 +13,7 @@ in
 {
   imports = [
     ./violet.nix
-    homeManagerConfig.plasma
+    modules.home-manager.mixins.plasma
   ];
   sops.age.keyFile = lib.mkForce "${config.home.homeDirectory}/.local/share/sops-nix/key.txt";
   programs.plasma.workspace.wallpaper = "${wallpapers.f1KanataIdolized}";

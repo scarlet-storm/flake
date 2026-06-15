@@ -1,14 +1,14 @@
 {
   pkgs,
-  homeManagerConfig,
   lib,
+  modules,
   ...
 }:
 {
   imports = [
-    homeManagerConfig.common
+    modules.home-manager.mixins.common
     ./rclone.nix
-    homeManagerConfig.firefox
+    modules.home-manager.mixins.firefox
   ];
   home = {
     username = "violet";

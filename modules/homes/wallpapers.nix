@@ -1,5 +1,4 @@
-{ fetchurl, ... }:
-{
+{ fetchurl, ... }: {
   f1KanataIdolized = fetchurl {
     url = "https://i.idol.st/u/card/art/2x/186Konoe-Kanata-It-s-my-turn-next-UR-92PePZ.png";
     hash = "sha512-jBFtmDa+GJhmCOXVkYjOstgpr0qnOdFMQLGRk65D+ZHvuOKBazT44kCZi+qxxLROfESCjcIldFNAx+pQg9/DLg==";

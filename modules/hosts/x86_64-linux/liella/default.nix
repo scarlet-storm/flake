@@ -13,18 +13,18 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.nixos.builders.default
-    modules.nixos.hardware.intel
-    modules.nixos.hardware.gpu.intel
-    modules.nixos.lanzaboote.default
-    modules.nixos.home-manager
-    modules.nixos.desktop.plasma
-    modules.nixos.net.networkd-wifi
+    modules.nixos.mixins.builders.default
+    modules.nixos.mixins.hardware.intel
+    modules.nixos.mixins.hardware.gpu.intel
+    modules.nixos.mixins.lanzaboote.default
+    modules.nixos.mixins.home-manager
+    modules.nixos.mixins.desktop.plasma
+    modules.nixos.mixins.net.networkd-wifi
     inputs.disko.nixosModules.default
-    modules.nixos.steam
+    modules.nixos.mixins.steam
     modules.disko.luks-xfs
   ]
-  ++ builtins.map (user: modules.nixos.users.${user}) users;
+  ++ builtins.map (user: modules.nixos.mixins.users.${user}) users;
   home-manager.users = lib.genAttrs users (
     user: modules.homes."${user}@${config.networking.hostName}"
   );

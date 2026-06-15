@@ -10,7 +10,7 @@
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
-    modules.nixos.sops
+    modules.nixos.mixins.sops
     ./ntp.nix
     ./sdboot.nix
     ./sshd.nix

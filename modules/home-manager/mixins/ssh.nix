@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   home.file.".ssh/config" = {
     target = ".ssh/config_store";
     text = ''

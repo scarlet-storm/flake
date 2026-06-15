@@ -1,4 +1,4 @@
-{ inputs, homeManagerExtraArgs, ... }:
+{ inputs, modules, ... }:
 
 {
   imports = [
@@ -11,7 +11,7 @@
           inputs.plasma-manager.homeModules.plasma-manager
           inputs.sops-nix.homeModules.sops
         ];
-        extraSpecialArgs = homeManagerExtraArgs;
+        extraSpecialArgs = { inherit modules; };
       };
     }
   ];

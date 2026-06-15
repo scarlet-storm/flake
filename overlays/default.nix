@@ -1,5 +1,4 @@
-{ lib }:
-{
+{ lib }: {
   wrappers =
     final: prev:
     (lib.filesystem.packagesFromDirectoryRecursive {

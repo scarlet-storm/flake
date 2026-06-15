@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   sops.secrets."services/sshd/authorized_keys" = {
     mode = "0444";
   };

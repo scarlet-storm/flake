@@ -16,20 +16,20 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.nixos.builders.default
-    modules.nixos.hardware.amd
-    modules.nixos.hardware.gpu.nvidia
-    modules.nixos.lanzaboote.default
+    modules.nixos.mixins.builders.default
+    modules.nixos.mixins.hardware.amd
+    modules.nixos.mixins.hardware.gpu.nvidia
+    modules.nixos.mixins.lanzaboote.default
     # modules.nixos.home-manager
-    modules.nixos.desktop.plasma
-    modules.nixos.net.networkd-wifi
-    modules.nixos.qemu
+    modules.nixos.mixins.desktop.plasma
+    modules.nixos.mixins.net.networkd-wifi
+    modules.nixos.mixins.qemu
     inputs.disko.nixosModules.default
     modules.disko.luks-btrfs
-    modules.nixos.steam
+    modules.nixos.mixins.steam
     inputs.self.nixosModules.services.OpenLinkHub
   ]
-  ++ lib.map (user: modules.nixos.users.${user}) users;
+  ++ lib.map (user: modules.nixos.mixins.users.${user}) users;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:09:00.0-nvme-1";
   programs.virt-manager.enable = true;
