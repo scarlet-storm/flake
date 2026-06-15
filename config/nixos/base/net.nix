@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  systemName,
   ...
 }:
 
@@ -35,7 +34,7 @@ in
   sops.secrets."net/dns-sni" = { };
   sops.templates."network.dns" = {
     content = "${builtins.concatStringsSep " " (
-      map (ns: ns + "#${systemName}-" + config.sops.placeholder."net/dns-sni") nameservers
+      map (ns: ns + "#${config.networking.hostName}-" + config.sops.placeholder."net/dns-sni") nameservers
     )}";
     reloadUnits = [ "systemd-resolved.service" ];
   };

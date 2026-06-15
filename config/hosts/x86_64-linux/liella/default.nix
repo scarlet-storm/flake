@@ -3,7 +3,7 @@
   modules,
   pkgs,
   inputs,
-  systemName,
+  config,
   ...
 }:
 
@@ -25,7 +25,9 @@ in
     modules.disko.luks-xfs
   ]
   ++ builtins.map (user: modules.nixos.users.${user}) users;
-  home-manager.users = lib.genAttrs users (user: modules.homes."${user}@${systemName}");
+  home-manager.users = lib.genAttrs users (
+    user: modules.homes."${user}@${config.networking.hostName}"
+  );
   boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";
   hardware.bluetooth.enable = true;

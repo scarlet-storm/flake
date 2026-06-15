@@ -76,7 +76,6 @@
       };
       inherit overlays;
 
-      # nixosConfigurations
       nixosConfigurations = lib.concatMapAttrs (
         system: _:
         builtins.mapAttrs (
@@ -96,7 +95,7 @@
               config.default
             ];
             specialArgs = {
-              inherit inputs systemName secrets;
+              inherit inputs secrets;
               modules = configModules;
               homeManagerExtraArgs = { inherit homeManagerConfig secrets; };
             };
@@ -105,7 +104,6 @@
       ) configModules.hosts;
 
       ### non-standard flake outputs ###
-      # homeConfigurations
       homeConfigurations = builtins.mapAttrs (
         name: config:
         (
@@ -134,10 +132,10 @@
         )
       ) configModules.homes;
 
-      # homeModules
       homeModules = {
         configs = configModules.home-manager;
       };
+
       diskoConfigurations = lib.filesystem.packagesFromDirectoryRecursive {
         callPackage = path: _: import path;
         directory = ./config/disko;
