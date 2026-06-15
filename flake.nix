@@ -68,27 +68,23 @@
       );
       nixosModules = modules.nixos;
       inherit overlays;
-      nixosConfigurations = lib.concatMapAttrs (
-        system: _:
-        builtins.mapAttrs (
-          systemName: config:
-          lib.nixosSystem {
-            inherit system;
-            modules = [
-              ./nixpkgs.nix
-              { networking.hostName = systemName; }
-              {
-                nixpkgs.overlays = [
-                  (final: prev: inputs.self.packages.${system})
-                  overlays.wrappers
-                ];
-              }
-              modules.nixos.mixins.base.default
-              config.default
-            ];
-            specialArgs = { inherit inputs secrets modules; };
-          }
-        ) modules.hosts.${system}
+      nixosConfigurations = builtins.mapAttrs (
+        systemName: config:
+        lib.nixosSystem {
+          modules = [
+            ./nixpkgs.nix
+            { networking.hostName = systemName; }
+            {
+              nixpkgs.overlays = [
+                (final: prev: inputs.self.packages.${prev.stdenv.hostPlatform.system} or { })
+                overlays.wrappers
+              ];
+            }
+            modules.nixos.mixins.base.default
+            config.default
+          ];
+          specialArgs = { inherit inputs secrets modules; };
+        }
       ) modules.hosts;
 
       ### non-standard flake outputs ###
