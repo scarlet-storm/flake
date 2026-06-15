@@ -26,7 +26,7 @@ in
   ]
   ++ builtins.map (user: modules.nixos.mixins.users.${user}) users;
   home-manager.users = lib.genAttrs users (
-    user: modules.homes."${user}@${config.networking.hostName}"
+    user: modules.homes.x86_64-linux."${user}@${config.networking.hostName}"
   );
   boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";
