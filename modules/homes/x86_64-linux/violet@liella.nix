@@ -1,10 +1,12 @@
 { pkgs, modules, ... }:
 let
-  wallpapers = import ./wallpapers.nix { inherit (pkgs) fetchurl; };
+  wallpapers = import modules.home-manager.mixins.users.violet.wallpapers {
+    inherit (pkgs) fetchurl;
+  };
 in
 {
   imports = [
-    ./violet.nix
+    modules.home-manager.mixins.users.violet.default
     modules.home-manager.mixins.plasma
   ];
   services.syncthing.enable = true;

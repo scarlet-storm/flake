@@ -88,15 +88,12 @@
       ) modules.hosts;
 
       ### non-standard flake outputs ###
-      homeConfigurations = builtins.mapAttrs (
-        name: config:
-        (
-          let
-            system = "x86_64-linux";
+      homeConfigurations = lib.concatMapAttrs (
+        system: homes:
+        (lib.mapAttrs (
+          home: config:
+          (inputs.home-manager.lib.homeManagerConfiguration {
             pkgs = inputs.nixpkgs.legacyPackages.${system};
-          in
-          inputs.home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
             modules = [
               ./nixpkgs.nix
               { programs.home-manager.enable = true; }
@@ -111,8 +108,8 @@
               config
             ];
             extraSpecialArgs = { inherit modules secrets; };
-          }
-        )
+          })
+        ) homes)
       ) modules.homes;
 
       homeModules = modules.home-manager;
