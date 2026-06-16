@@ -1,8 +1,7 @@
+{ inputs, ... }:
 {
   lib,
-  modules,
   pkgs,
-  inputs,
   config,
   ...
 }:
@@ -13,20 +12,20 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.nixos.mixins.builders
-    modules.nixos.mixins.hardware.intel
-    modules.nixos.mixins.hardware.gpu.intel
-    modules.nixos.mixins.lanzaboote
-    modules.nixos.mixins.home-manager
-    modules.nixos.mixins.desktop.plasma
-    modules.nixos.mixins.net.networkd-wifi
+    inputs.self.nixosModules.mixins.builders
+    inputs.self.nixosModules.mixins.hardware.intel
+    inputs.self.nixosModules.mixins.hardware.gpu.intel
+    inputs.self.nixosModules.mixins.lanzaboote
+    inputs.self.nixosModules.mixins.home-manager
+    inputs.self.nixosModules.mixins.desktop.plasma
+    inputs.self.nixosModules.mixins.net.networkd-wifi
     inputs.disko.nixosModules.default
-    modules.nixos.mixins.steam
-    modules.disko.luks-xfs
+    inputs.self.nixosModules.mixins.steam
+    inputs.self.diskoConfigurations.luks-xfs
   ]
-  ++ builtins.map (user: modules.nixos.mixins.users.${user}) users;
+  ++ map (user: inputs.self.nixosModules.mixins.users.${user}) users;
   home-manager.users = lib.genAttrs users (
-    user: modules.homes.x86_64-linux."${user}@${config.networking.hostName}"
+    user: inputs.self.homeModules.nixos-homes."${user}@${config.networking.hostName}"
   );
   boot.kernelPackages = pkgs.linuxPackages_latest;
   disko.devices.disk.root.device = "/dev/disk/by-path/pci-0000:6e:00.0-nvme-1";

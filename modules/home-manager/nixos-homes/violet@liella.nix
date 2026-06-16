@@ -1,7 +1,7 @@
-{ pkgs, modules, ... }: {
+{ inputs, ... }: { pkgs, ... }: {
   imports = [
-    modules.home-manager.mixins.users.violet
-    modules.home-manager.mixins.plasma
+    inputs.self.homeModules.mixins.users.violet
+    inputs.self.homeModules.mixins.plasma
   ];
   services.syncthing.enable = true;
   programs.plasma.workspace.wallpaper = "${pkgs.wallpapers.sifas.cards.pShizukuIdolized}";

@@ -1,16 +1,15 @@
+{ inputs, ... }:
 {
   pkgs,
   lib,
   config,
-  modules,
-  inputs,
   ...
 }:
 
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
-    modules.nixos.mixins.sops
+    inputs.self.nixosModules.mixins.sops
     ./ntp.nix
     ./sdboot.nix
     ./sshd.nix

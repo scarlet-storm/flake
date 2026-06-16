@@ -47,8 +47,7 @@
           module = import path;
         in
         if builtins.isFunction module && (builtins.functionArgs module) ? inputs then
-          #module { inherit inputs; }
-          module
+          module { inherit inputs; }
         else
           module;
       modules = mylib.modulesFromDirectory {
@@ -94,7 +93,7 @@
             modules.nixos.mixins.base
             host
           ];
-          specialArgs = { inherit inputs secrets modules; };
+          specialArgs = { inherit secrets; };
         }
       ) modules.hosts;
 
@@ -118,13 +117,13 @@
               inputs.plasma-manager.homeModules.plasma-manager
               config
             ];
-            extraSpecialArgs = { inherit modules secrets; };
+            extraSpecialArgs = { inherit secrets; };
           })
         ) homes)
       ) modules.homes;
 
       homeModules = modules.home-manager;
       lib = mylib;
-      diskoConfigurations = lib.mapAttrs (_: path: import path) modules.disko;
+      diskoConfigurations = modules.disko;
     };
 }

@@ -1,15 +1,15 @@
+{ inputs, ... }:
 {
   lib,
   config,
   pkgs,
-  modules,
   secrets,
   ...
 }:
 {
   imports = [
-    modules.home-manager.mixins.users.violet
-    modules.home-manager.mixins.plasma
+    inputs.self.homeModules.mixins.users.violet
+    inputs.self.homeModules.mixins.plasma
   ];
   sops.age.keyFile = lib.mkForce "${config.home.homeDirectory}/.local/share/sops-nix/key.txt";
   programs.plasma.workspace.wallpaper = "${pkgs.wallpapers.sifas.cards.f1KanataIdolized}";

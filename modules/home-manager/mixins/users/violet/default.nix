@@ -1,14 +1,8 @@
-{
-  pkgs,
-  lib,
-  modules,
-  ...
-}:
-{
+{ inputs, ... }: { pkgs, lib, ... }: {
   imports = [
-    modules.home-manager.mixins.common
+    inputs.self.homeModules.mixins.common
+    inputs.self.homeModules.mixins.firefox
     ./rclone.nix
-    modules.home-manager.mixins.firefox
   ];
   home = {
     username = "violet";
