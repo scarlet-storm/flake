@@ -6,19 +6,13 @@
   secrets,
   ...
 }:
-
-let
-  wallpapers = import modules.home-manager.mixins.users.violet.wallpapers {
-    inherit (pkgs) fetchurl;
-  };
-in
 {
   imports = [
-    modules.home-manager.mixins.users.violet.default
+    modules.home-manager.mixins.users.violet
     modules.home-manager.mixins.plasma
   ];
   sops.age.keyFile = lib.mkForce "${config.home.homeDirectory}/.local/share/sops-nix/key.txt";
-  programs.plasma.workspace.wallpaper = "${wallpapers.f1KanataIdolized}";
+  programs.plasma.workspace.wallpaper = "${pkgs.wallpapers.sifas.cards.f1KanataIdolized}";
   programs.plasma.configFile.kdeglobals.General.AccentColor = "166,100,160";
   sops.secrets."services/syncthing/devices/aqours/key" = {
     sopsFile = secrets."violet@aqours";

@@ -13,10 +13,10 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    modules.nixos.mixins.builders.default
+    modules.nixos.mixins.builders
     modules.nixos.mixins.hardware.intel
     modules.nixos.mixins.hardware.gpu.intel
-    modules.nixos.mixins.lanzaboote.default
+    modules.nixos.mixins.lanzaboote
     modules.nixos.mixins.home-manager
     modules.nixos.mixins.desktop.plasma
     modules.nixos.mixins.net.networkd-wifi

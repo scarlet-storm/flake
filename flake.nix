@@ -40,8 +40,19 @@
     inputs@{ nixpkgs, ... }:
     let
       lib = nixpkgs.lib;
-      modules = lib.filesystem.packagesFromDirectoryRecursive {
-        callPackage = path: _: path;
+      mylib = import ./lib { inherit lib; };
+      callModule =
+        path:
+        let
+          module = import path;
+        in
+        if builtins.isFunction module && (builtins.functionArgs module) ? inputs then
+          #module { inherit inputs; }
+          module
+        else
+          module;
+      modules = mylib.modulesFromDirectory {
+        inherit callModule;
         directory = ./modules;
       };
       overlays = (import ./overlays) { inherit lib; };
@@ -69,7 +80,7 @@
       nixosModules = modules.nixos;
       inherit overlays;
       nixosConfigurations = builtins.mapAttrs (
-        systemName: config:
+        systemName: host:
         lib.nixosSystem {
           modules = [
             ./nixpkgs.nix
@@ -80,8 +91,8 @@
                 overlays.wrappers
               ];
             }
-            modules.nixos.mixins.base.default
-            config.default
+            modules.nixos.mixins.base
+            host
           ];
           specialArgs = { inherit inputs secrets modules; };
         }
@@ -113,7 +124,7 @@
       ) modules.homes;
 
       homeModules = modules.home-manager;
-
+      lib = mylib;
       diskoConfigurations = lib.mapAttrs (_: path: import path) modules.disko;
     };
 }
