@@ -93,7 +93,6 @@
             modules.nixos.mixins.base
             host
           ];
-          specialArgs = { inherit secrets; };
         }
       ) modules.hosts;
 
@@ -117,7 +116,6 @@
               inputs.plasma-manager.homeModules.plasma-manager
               config
             ];
-            extraSpecialArgs = { inherit secrets; };
           })
         ) homes)
       ) modules.homes;

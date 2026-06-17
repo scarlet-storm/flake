@@ -3,9 +3,11 @@
   lib,
   config,
   pkgs,
-  secrets,
   ...
 }:
+let
+  sopsFile = inputs.self + "/secrets/violet.yaml";
+in
 {
   imports = [
     inputs.self.homeModules.mixins.users.violet
@@ -14,12 +16,8 @@
   sops.age.keyFile = lib.mkForce "${config.home.homeDirectory}/.local/share/sops-nix/key.txt";
   programs.plasma.workspace.wallpaper = "${pkgs.wallpapers.sifas.cards.f1KanataIdolized}";
   programs.plasma.configFile.kdeglobals.General.AccentColor = "166,100,160";
-  sops.secrets."services/syncthing/devices/aqours/key" = {
-    sopsFile = secrets."violet@aqours";
-  };
-  sops.secrets."services/syncthing/devices/aqours/cert" = {
-    sopsFile = secrets."violet@aqours";
-  };
+  sops.secrets."services/syncthing/devices/aqours/key" = { inherit sopsFile; };
+  sops.secrets."services/syncthing/devices/aqours/cert" = { inherit sopsFile; };
   services.syncthing = {
     enable = true;
     key = config.sops.secrets."services/syncthing/devices/aqours/key".path;

@@ -9,13 +9,17 @@
 {
   imports = [
     inputs.sops-nix.nixosModules.sops
-    inputs.self.nixosModules.mixins.sops
     ./ntp.nix
     ./sdboot.nix
     ./sshd.nix
     ./nix-conf.nix
     ./net.nix
   ];
+  sops.defaultSopsFile = inputs.self + "/secrets/common.yaml";
+  sops.age.sshKeyPaths = [ ];
+  sops.gnupg.sshKeyPaths = [ ];
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+  sops.age.generateKey = false;
   sops.secrets."users/root/password".neededForUsers = true;
   users.users.root.hashedPasswordFile = lib.mkDefault config.sops.secrets."users/root/password".path;
   boot = {
