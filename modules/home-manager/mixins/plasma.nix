@@ -14,6 +14,27 @@
     fcitx5 = {
       waylandFrontend = true;
       addons = [ pkgs.fcitx5-mozc ];
+      settings = {
+        globalOptions = {
+          "Hotkey/TriggerKeys"."0" = "Super+space";
+        };
+        inputMethod = {
+          GroupOrder = {
+            "0" = "Default";
+          };
+          "Groups/0" = {
+            Name = "default";
+            "Default Layout" = "us";
+            DefaultIM = "keyboard-us";
+          };
+          "Groups/0/Items/0" = {
+            Name = "keyboard-us";
+          };
+          "Groups/0/Items/1" = {
+            Name = "mozc";
+          };
+        };
+      };
     };
   };
   programs.plasma = {

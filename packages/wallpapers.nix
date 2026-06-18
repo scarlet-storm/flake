@@ -14,6 +14,10 @@ let
         url = "https://i.idol.st/u/card/art/2x/831UR-Osaka-Shizuku-That-s-So-Cute-Briar-Rose-nf1fKb.png";
         hash = "sha512-Y04vU1Cw9l0otEQbB9G7XM2Dn8FI+nIlM8oubt3Y6yXGZH98smz+0qVtMzTV57iCuAqesDFYHtuWrZBHbIPsJw==";
       };
+      f3RikoIdolized = fetchurl {
+        url = "https://i.idol.st/u/card/art/2x/894UR-Sakurauchi-Riko-You-mentioned-you-liked-it-no-A-Fairy-Concert-l5NeuT.png";
+        hash = "sha256-fvxIfHBuEJUSuH66cYUiLjmDCG/2ZGGU+iPp2kpWgUI=";
+      };
     };
   };
 in
