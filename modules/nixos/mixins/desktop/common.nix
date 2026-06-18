@@ -15,7 +15,8 @@
     };
     avahi = {
       enable = true;
-      nssmdns4 = true;
+      publish.enable = false;
+      nssmdns4 = false;
       openFirewall = true;
     };
     printing = {

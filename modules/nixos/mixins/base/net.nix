@@ -23,7 +23,7 @@ in
       settings.Resolve = {
         FallbackDNS = "";
         LLMNR = false;
-        MulticastDNS = false;
+        MulticastDNS = true;
         DNSSEC = false;
         DNSOverTLS = true;
         Domains = [ ];

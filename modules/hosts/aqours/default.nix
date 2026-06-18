@@ -54,6 +54,7 @@ in
   #   nativeBuildInputs = prevAttrs.nativeBuildInputs ++ [ pkgs.git ];
   # });
   services.nixseparatedebuginfod2.enable = true;
+  systemd.network.networks."90-lan".networkConfig.MulticastDNS = true;
   services.hardware.bolt.enable = true;
   virtualisation.podman.enable = true;
   environment.systemPackages = with pkgs; [ distrobox ];

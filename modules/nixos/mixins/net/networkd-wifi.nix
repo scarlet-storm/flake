@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # Wifi using systemd-networkd ??
@@ -14,6 +14,7 @@
         IPv6PrivacyExtensions = "yes";
         IPv6AcceptRA = "yes";
         IPv4ReversePathFilter = "strict";
+        MulticastDNS = lib.mkDefault false;
       };
     };
     "20-wifi" = {
@@ -27,6 +28,7 @@
         IPv6AcceptRA = "yes";
         IPv4ReversePathFilter = "strict";
         IgnoreCarrierLoss = "10s";
+        MulticastDNS = false;
       };
       dhcpV4Config = {
         Anonymize = "yes";

@@ -17,6 +17,7 @@
       "ipv6.ip6-privacy" = 2;
       "ipv6.addr-gen-mode" = "stable-privacy";
       "ipv4.dhcp-client-id" = "stable";
+      "ipv4.dhcp-send-hostname" = 0;
     };
   };
 }
