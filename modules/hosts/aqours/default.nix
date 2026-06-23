@@ -1,10 +1,5 @@
 { inputs, ... }:
-{
-  lib,
-  pkgs,
-  config,
-  ...
-}:
+{ pkgs, config, ... }:
 
 let
   users = [ "violet" ];
@@ -26,6 +21,7 @@ in
     inputs.self.diskoConfigurations.luks-btrfs
     inputs.self.nixosModules.mixins.steam
     inputs.self.nixosModules.services.OpenLinkHub
+    inputs.aagl.nixosModules.default
   ]
   ++ map (user: inputs.self.nixosModules.mixins.users.${user}) users;
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -71,4 +67,14 @@ in
   boot.extraModprobeConfig = ''
     options btusb enable_autosuspend=N
   '';
+  programs.anime-game-launcher = {
+    enable = true;
+    package = pkgs.wrapPrivateHome {
+      id = "moe.launcher.an-anime-game-launcher";
+      devices = [
+        "dri"
+        "input"
+      ];
+    } pkgs.anime-game-launcher;
+  };
 }
