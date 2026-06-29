@@ -10,9 +10,11 @@
   services.desktopManager.plasma6.enable = true;
   services.displayManager.plasma-login-manager = {
     enable = true;
-    package = pkgs.kdePackages.plasma-login-manager.overrideAttrs {
-      qtWrapperArgs = [ "--suffix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.systemd ]}" ];
-    };
+    package = lib.mkIf config.services.homed.enable (
+      pkgs.kdePackages.plasma-login-manager.overrideAttrs {
+        qtWrapperArgs = [ "--suffix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.systemd ]}" ];
+      }
+    );
   };
   environment.systemPackages = with pkgs; [
     xsettingsd
