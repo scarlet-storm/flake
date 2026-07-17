@@ -90,15 +90,8 @@
   fonts.fontconfig.enable = true;
   programs.konsole = {
     enable = true;
-    customColorSchemes =
-      # lib.concatMapAttrs
-      #   (k: v: { ${lib.removeSuffix ".colorscheme" k} = "${pkgs.iterm2-color-schemes}/konsole/${k}"; })
-      #   (
-      #     lib.filterAttrs (k: v: lib.hasSuffix ".colorscheme" k) (
-      #       builtins.readDir "${pkgs.iterm2-color-schemes}/konsole"
-      #     )
-      #   );
-      lib.genAttrs [ "Everblush" ] (color: "${pkgs.iterm2-color-schemes}/konsole/${color}.colorscheme");
+    # customColorSchemes =
+    # lib.genAttrs [ "Everblush" ] (color: "${pkgs.iterm2-color-schemes}/konsole/${color}.colorscheme");
     defaultProfile = "nu";
     extraConfig = {
       FileLocation = {
@@ -114,7 +107,7 @@
       {
         font.name = "Rec Mono SemiCasual";
         font.size = 12;
-        colorScheme = "Everblush";
+        colorScheme = "Breeze";
         extraConfig = {
           Scrolling.HistoryMode = 2;
           "Interaction Options" = {
