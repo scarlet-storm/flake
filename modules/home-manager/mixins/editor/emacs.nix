@@ -4,6 +4,15 @@
   config,
   ...
 }:
+let
+  doomConfig = pkgs.linkFarm "doom-config" {
+    "init.el" = ./doom/init.el;
+    "packages.el" = ./doom/packages.el;
+    "config.el" = pkgs.replaceVars ./doom/config.el {
+      ghostel = config.programs.emacs.package.pkgs.ghostel.module;
+    };
+  };
+in
 {
   config = lib.mkIf (config.home.desktopEnvironment != null) {
     programs = {
@@ -12,10 +21,7 @@
         package = pkgs.emacs-pgtk;
         extraPackages =
           epkgs:
-          (with epkgs; [
-            treesit-grammars.with-all-grammars
-            vterm
-          ])
+          (with epkgs; [ treesit-grammars.with-all-grammars ])
           ++ (with pkgs; [
             fd
             pandoc
@@ -35,7 +41,7 @@
     };
     xdg.configFile = {
       doom = {
-        source = ./doom;
+        source = doomConfig;
         recursive = true;
       };
     };
