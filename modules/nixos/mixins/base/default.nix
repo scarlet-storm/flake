@@ -58,6 +58,7 @@
     efibootmgr
     gdb
     libarchive
+    lzop
     nix-output-monitor
     nvme-cli
     openssl
