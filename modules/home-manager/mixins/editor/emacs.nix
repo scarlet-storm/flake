@@ -8,9 +8,7 @@ let
   doomConfig = pkgs.linkFarm "doom-config" {
     "init.el" = ./doom/init.el;
     "packages.el" = ./doom/packages.el;
-    "config.el" = pkgs.replaceVars ./doom/config.el {
-      ghostel = config.programs.emacs.package.pkgs.ghostel.module;
-    };
+    "config.el" = ./doom/config.el;
   };
 in
 {
@@ -31,6 +29,7 @@ in
             python3Packages.grip
             clangStdenv.cc
             clang-tools
+            zig_0_15
           ]);
       };
     };

@@ -95,4 +95,3 @@
 (with-eval-after-load 'tramp
   (setq tramp-remote-path
         (append tramp-remote-path '(tramp-own-remote-path))))
-(setq ghostel-module-directory "@ghostel@")
