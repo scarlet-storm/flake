@@ -5,6 +5,7 @@
     pkg:
     builtins.elem (lib.getName pkg) [
       "discord"
+      "discord-unwrapped"
       "steam"
       "steam-unwrapped"
       "steam-run"
