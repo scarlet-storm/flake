@@ -87,12 +87,7 @@
         lib.nixosSystem {
           modules = [
             ./nixpkgs.nix
-            {
-              networking.hostName = systemName;
-              hardware.bluetooth.package =
-                (builtins.getFlake "github:NixOS/nixpkgs/02e08985a27c65ffd33d434eeb2e660a2e4dc84d")
-                .legacyPackages.x86_64-linux.bluez;
-            }
+            { networking.hostName = systemName; }
             {
               nixpkgs.overlays = [
                 (final: prev: inputs.self.packages.${prev.stdenv.hostPlatform.system} or { })
