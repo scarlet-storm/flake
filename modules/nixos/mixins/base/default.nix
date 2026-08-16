@@ -87,4 +87,12 @@
   security = {
     sudo.enable = false;
   };
+  hardware.bluetooth.package = pkgs.bluez.overrideAttrs (prevAttrs: {
+    patches = prevAttrs.patches or [ ] ++ [
+      (pkgs.fetchpatch {
+        url = "https://github.com/bluez/bluez/commit/82af2beafc39510e2c4a439bf44faea711d6503f.patch";
+        hash = "sha256-TdGgwxik/ZgqxlR6oM9E2B7UwE6+BKNWeWlL2DmXJ1Q=";
+      })
+    ];
+  });
 }

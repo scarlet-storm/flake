@@ -87,8 +87,8 @@
         lib.nixosSystem {
           modules = [
             ./nixpkgs.nix
-            { networking.hostName = systemName; }
             {
+              networking.hostName = systemName;
               nixpkgs.overlays = [
                 (final: prev: inputs.self.packages.${prev.stdenv.hostPlatform.system} or { })
                 overlays.wrappers
