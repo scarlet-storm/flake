@@ -26,12 +26,10 @@
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   programs.kdeconnect.enable = true;
   programs.kde-pim.enable = false;
-  i18n.inputMethod = {
-    type = "fcitx5";
-    enable = true;
-    fcitx5 = {
-      waylandFrontend = true;
-      addons = [ pkgs.fcitx5-mozc ];
+  environment.etc."xdg/kwinrc".text = lib.generators.toINI { } {
+    Wayland = {
+      InputMethod = "${pkgs.kdePackages.plasma-keyboard}/share/applications/org.kde.plasma.keyboard.desktop";
+      VirtualKeyboardEnabled = true;
     };
   };
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
