@@ -15,9 +15,13 @@
     };
     avahi = {
       enable = true;
-      publish.enable = false;
       nssmdns4 = false;
       openFirewall = true;
+      settings = {
+        publish = {
+          disable-publishing = true;
+        };
+      };
     };
     printing = {
       enable = true;
