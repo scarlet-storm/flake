@@ -3,8 +3,8 @@
 let
   ntsServers = [
     "time.cloudflare.com"
-    "nts.netnod.se"
-    # "ntp.miuku.net"
+    # "nts.netnod.net"
+    # "any.time.nl"
   ];
 in
 {
@@ -15,7 +15,10 @@ in
     "-F"
     "1"
   ];
-  services.chrony.extraConfig = lib.strings.concatMapStringsSep "\n" (
-    server: "server ${server} iburst nts"
-  ) ntsServers;
+  services.chrony.extraConfig =
+    (lib.strings.concatMapStringsSep "\n" (server: "server ${server} iburst nts") ntsServers)
+    + ''
+
+      nocerttimecheck 1
+    '';
 }
