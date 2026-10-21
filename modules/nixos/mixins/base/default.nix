@@ -24,7 +24,6 @@
   users.users.root.hashedPasswordFile = lib.mkDefault config.sops.secrets."users/root/password".path;
   boot = {
     initrd = {
-      systemd.enable = true;
       systemd.dbus.enable = true;
       availableKernelModules = [ "vfat" ];
     };
