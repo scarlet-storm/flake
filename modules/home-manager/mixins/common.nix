@@ -64,11 +64,10 @@ let
           show_banner = "short";
           completions.algorithm = "fuzzy";
         };
-        extraConfig = ''
-          load-env {
-            SHELL: $nu.current-exe
-          }
-        '';
+        environmentVariables = {
+          CARAPACE_BRIDGES = "zsh";
+          SHELL = lib.hm.nushell.mkNushellInline "$nu.current-exe";
+        };
         loadSessionVariables = true;
       };
       ripgrep.enable = true;
