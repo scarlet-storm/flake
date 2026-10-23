@@ -69,6 +69,7 @@ let
             SHELL: $nu.current-exe
           }
         '';
+        loadSessionVariables = true;
       };
       ripgrep.enable = true;
       skim.enable = true;
