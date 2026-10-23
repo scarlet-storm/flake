@@ -86,4 +86,7 @@
   security = {
     sudo.enable = false;
   };
+  documentation = {
+    man.cache.enable = true;
+  };
 }
