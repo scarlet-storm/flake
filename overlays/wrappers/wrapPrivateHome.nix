@@ -4,6 +4,7 @@
   writeShellScript,
   coreutils,
   xdg-dbus-proxy,
+  fetchpatch,
 }:
 {
   id,
@@ -18,6 +19,14 @@
   extraArgs ? [ ],
 }:
 let
+  dbusProxy = xdg-dbus-proxy.overrideAttrs {
+    patches = [
+      (fetchpatch {
+        url = "https://github.com/flatpak/xdg-dbus-proxy/commit/f83a73c7f142db01165b8818c7b012a1ee6988e6.patch";
+        hash = "sha256-gIGlYTg5ji38dP0gQiOdLGxQcG0Q5FqgWyhMrpWT9/g=";
+      })
+    ];
+  };
   dbusProxyArgs = {
     talks = lib.concatStringsSep " " (map (x: "--talk=${x}") (dbus.talks or [ ]));
     owns = lib.concatStringsSep " " (map (x: "--own=${x}") (dbus.owns or [ ] ++ [ "${id}.*" ])); # apparently flatpak's behaviour is to allow ownership for the id https://docs.flatpak.org/en/latest/sandbox-permissions.html
@@ -78,7 +87,7 @@ let
       # instance-id=$INSTANCE_ID
       # EOF
       # echo "{\"child-pid\": $$}" > "$XDG_RUNTIME_DIR/.flatpak/$INSTANCE_ID/bwrapinfo.json"
-      exec ${xdg-dbus-proxy}/bin/xdg-dbus-proxy --fd=3 "$@" --filter \
+      exec ${dbusProxy}/bin/xdg-dbus-proxy --fd=3 "$@" --filter \
       ${
         lib.optionalString (dbus ? log && dbus.log) "--log"
       } ${owns} ${talks} ${sees} ${calls} ${broadcasts} 3>"$READY_PIPE"
