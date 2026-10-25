@@ -19,7 +19,12 @@ let
           shell-integration-features = "sudo,ssh-env";
         };
         package =
-          if config.targets.genericLinux.enable then config.lib.nixGL.wrap pkgs.ghostty else pkgs.ghostty;
+          let
+            ghostty =
+              (builtins.getFlake "github:ghostty-org/ghostty/cec8b92f1ecd176a20a56aa405021e7ae991b996")
+              .packages.x86_64-linux.ghostty;
+          in
+          if config.targets.genericLinux.enable then config.lib.nixGL.wrap ghostty else ghostty;
       };
       mpv = {
         enable = true;
