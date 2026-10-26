@@ -26,8 +26,8 @@ in
         MulticastDNS = true;
         DNSSEC = false;
         DNSOverTLS = true;
-        Domains = [ ];
-        DNS = [ ];
+        Domains = null;
+        DNS = null;
       };
     };
   };
