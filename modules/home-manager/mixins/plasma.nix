@@ -13,7 +13,7 @@
     enable = true;
     fcitx5 = {
       waylandFrontend = true;
-      addons = [ pkgs.fcitx5-mozc ];
+      addons = [ pkgs.fcitx5-mozc-ut ];
       settings = {
         globalOptions = {
           "Hotkey/TriggerKeys"."0" = "Super+space";
