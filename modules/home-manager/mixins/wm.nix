@@ -20,10 +20,7 @@ let
         };
         package =
           let
-            ghostty =
-              lib.throwIf (lib.versionAtLeast pkgs.ghostty.version "1.4") "remove ghostty pin"
-                (builtins.getFlake "github:ghostty-org/ghostty/cec8b92f1ecd176a20a56aa405021e7ae991b996")
-                .packages.x86_64-linux.ghostty;
+            ghostty = pkgs.ghostty;
           in
           if config.targets.genericLinux.enable then config.lib.nixGL.wrap ghostty else ghostty;
       };
