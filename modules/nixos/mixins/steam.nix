@@ -3,7 +3,10 @@
     enable = true;
     remotePlay.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
-    extraCompatPackages = [ pkgs.proton-ge-bin ];
+    extraCompatPackages = [
+      pkgs.proton-ge-bin
+      pkgs.dwproton-bin
+    ];
     extraPackages = with pkgs; [ kdePackages.breeze ];
     package = pkgs.wrapPrivateHome {
       id = "com.valvesoftware.Steam";
