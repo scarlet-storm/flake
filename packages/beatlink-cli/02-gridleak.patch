@@ -1,0 +1,15 @@
+diff --git a/src/authentication.cpp b/src/authentication.cpp
+index eea3513..e092e9d 100644
+--- a/src/authentication.cpp
++++ b/src/authentication.cpp
+@@ -50,8 +50,8 @@ std::string GetSystemCaCertPath() {
+ void Authentication::GetToken() {
+     std::string provider_auth_url = "https://discord.com/oauth2/authorize";
+     std::string provider_token_url = "https://discord.com/api/oauth2/token";
+-    std::string client_id = "";
+-    std::string scope = "";
++    std::string client_id = "1266123618753052784";
++    std::string scope = "identify+guilds.members.read";
+ 
+     Pkce pkce;
+     PkceCode code = pkce.Generate();

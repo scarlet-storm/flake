@@ -13,6 +13,7 @@ in
     inputs.self.homeModules.mixins.users.violet
     inputs.self.homeModules.mixins.plasma
   ];
+  home.packages = [ pkgs.beatlink-cli ];
   sops.age.keyFile = lib.mkForce "${config.home.homeDirectory}/.local/share/sops-nix/key.txt";
   programs.plasma.workspace.wallpaper = "${pkgs.wallpapers.sifas.cards.f1KanataIdolized}";
   programs.plasma.configFile.kdeglobals.General.AccentColor = "166,100,160";
