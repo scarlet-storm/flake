@@ -1,11 +1,9 @@
-{ config, lib, ... }: {
+{ lib, ... }: {
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = true;
+    branch = lib.mkDefault "latest";
     open = true;
-    nvidiaSettings = true;
-    package = lib.mkDefault config.boot.kernelPackages.nvidiaPackages.stable;
+    powerManagement.enable = true;
     videoAcceleration = false;
   };
 }
